@@ -5,24 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="800"
+        >
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition MinHeight="10" MaxHeight="30"/>
-            <RowDefinition MinHeight="10" MaxHeight="30"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"  MinHeight="10" MaxHeight="30"/>
+            <RowDefinition Height="*" MinHeight="10" MaxHeight="30"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel  Grid.Column="0" Grid.Row="0" Orientation="Horizontal" 
-                    Background="#1A9" Grid.ColumnSpan="3">
-            <Menu x:Name="MainMenue" FontSize="10">
-                <MenuItem Header="TRAINING">
+                    Background="#1A9" Grid.ColumnSpan="3" Height="auto" Width="auto">
+            <Menu x:Name="MenueMain" FontSize="20" >
+                <MenuItem x:Name="MenueTraining" Header="TRAINING" PreviewMouseLeftButtonDown="MenueTraining_PreviewMouseLeftButtonDown">
                 <MenuItem Header="QuickOPEN"/>
                     <MenuItem Header="OPEN"/>
                     <MenuItem Header="OPENnext"/>
@@ -30,31 +31,25 @@
                     <MenuItem Header="CLOSE"/>
                     <MenuItem Header="NEW"/>
                     <MenuItem Header="OPENprevious"/>
-                    <MenuItem Header="Change actual YEAR"/>
+                    <MenuItem Header="Change actual YEAR" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown"/>
                     <MenuItem Header="Export Abos to CSV"/>
                 </MenuItem>
-                <MenuItem Header="SCAN">
-                    <MenuItem></MenuItem>
+                <MenuItem x:Name="MenueScan" Header="SCAN" Click="MenueScan_Click">
                 </MenuItem>
-                <MenuItem Header="TURNS">
-                    <MenuItem></MenuItem>
+                <MenuItem x:Name="MenueTurns" Header="TURNS" Click="MenueTurns_Click">
                 </MenuItem>
-                <MenuItem Header="BUY">
-                    <MenuItem></MenuItem>
+                <MenuItem x:Name="MenueBuy" Header="BUY" Click="MenueBuy_Click">
                 </MenuItem>
-                <MenuItem Header="PAY">
-                    <MenuItem></MenuItem>
+                <MenuItem x:Name="MenuePay" Header="PAY" Click="MenuePay_Click">
                 </MenuItem>
-                <MenuItem Header="PILOTS">
-                    <MenuItem></MenuItem>
+                <MenuItem x:Name="MenuePilots" Header="PILOTS">
                 </MenuItem>
-                <MenuItem Header="ABOS">
-                    <MenuItem></MenuItem>
+                <MenuItem x:Name="MenueAbos" Header="ABOS">
                 </MenuItem>
             </Menu>
         </StackPanel>
         <TextBlock Grid.Column="1" Grid.Row="1" Text="no Training chosen" />
-        <Frame x:Name="MainFrame" Grid.Column="1" Grid.Row="1"/>
+        <Frame x:Name="MainFrame" Grid.Column="1" Grid.Row="2"/>
     </Grid>
     
         

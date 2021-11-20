@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace ACBEO_TrainingsTool_NEW_WPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for PageTrainingg.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PageTrainingg : Page
     {
-        public MainWindow()
+        public PageTrainingg()
         {
             InitializeComponent();
-            MainFrame.Content = new PageTraining();
         }
     }
 }

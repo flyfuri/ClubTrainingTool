@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ACBEO_TrainingsTool_NEW_WPF
 {
     /// <summary>
-    /// Interaction logic for PageTraining.xaml
+    /// Interaction logic for PageDayPilotCosts.xaml
     /// </summary>
-    public partial class PageTraining : Page
+    public partial class PageDayPilotCosts : Page
     {
-        public PageTraining()
+        public PageDayPilotCosts()
         {
             InitializeComponent();
         }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trainingsraport_Tool
+namespace ACBEO_TrainingsTool_NEW_WPF
 {
     class DBHelper
     {

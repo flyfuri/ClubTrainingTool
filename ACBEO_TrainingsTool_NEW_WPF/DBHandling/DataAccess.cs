@@ -5,8 +5,9 @@ using System.Text;
 using Dapper;
 using System.Threading.Tasks;
 using System.Data;
+using System.Data.SqlClient;
 
-namespace Trainingsraport_Tool
+namespace ACBEO_TrainingsTool_NEW_WPF
 {
     class DataAccess
     {
