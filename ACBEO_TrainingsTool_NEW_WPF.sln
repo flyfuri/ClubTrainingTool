@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31829.152
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACBEO_TrainingsTool_NEW_WPF", "ACBEO_TrainingsTool_NEW_WPF\ACBEO_TrainingsTool_NEW_WPF.csproj", "{AC4B1649-09E2-4B22-9624-D3FA8F2008DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC4B1649-09E2-4B22-9624-D3FA8F2008DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC4B1649-09E2-4B22-9624-D3FA8F2008DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC4B1649-09E2-4B22-9624-D3FA8F2008DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC4B1649-09E2-4B22-9624-D3FA8F2008DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CCC162E7-D2CD-444B-89AB-61CBF1DCBFBC}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,63 @@
+﻿<Window x:Class="ACBEO_TrainingsTool_NEW_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="10" MaxHeight="30"/>
+            <RowDefinition MinHeight="10" MaxHeight="30"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel  Grid.Column="0" Grid.Row="0" Orientation="Horizontal" 
+                    Background="#1A9" Grid.ColumnSpan="3">
+            <Menu x:Name="MainMenue" FontSize="10">
+                <MenuItem Header="TRAINING">
+                <MenuItem Header="QuickOPEN"/>
+                    <MenuItem Header="OPEN"/>
+                    <MenuItem Header="OPENnext"/>
+                    <MenuItem Header="OPENprevious"/>
+                    <MenuItem Header="CLOSE"/>
+                    <MenuItem Header="NEW"/>
+                    <MenuItem Header="OPENprevious"/>
+                    <MenuItem Header="Change actual YEAR"/>
+                    <MenuItem Header="Export Abos to CSV"/>
+                </MenuItem>
+                <MenuItem Header="SCAN">
+                    <MenuItem></MenuItem>
+                </MenuItem>
+                <MenuItem Header="TURNS">
+                    <MenuItem></MenuItem>
+                </MenuItem>
+                <MenuItem Header="BUY">
+                    <MenuItem></MenuItem>
+                </MenuItem>
+                <MenuItem Header="PAY">
+                    <MenuItem></MenuItem>
+                </MenuItem>
+                <MenuItem Header="PILOTS">
+                    <MenuItem></MenuItem>
+                </MenuItem>
+                <MenuItem Header="ABOS">
+                    <MenuItem></MenuItem>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+        <TextBlock Grid.Column="1" Grid.Row="1" Text="no Training chosen" />
+        <Frame x:Name="MainFrame" Grid.Column="1" Grid.Row="1"/>
+    </Grid>
+    
+        
+        
+    
+</Window>
