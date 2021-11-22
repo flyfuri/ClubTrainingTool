@@ -1,0 +1,43 @@
+﻿<Window x:Class="ACBEO_TrainingsTool_NEW_WPF.WindowBelegPhot"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
+        mc:Ignorable="d"
+        Title="WindowBelegPhot" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Image x:Name="pictureBoxCam">
+                
+            </Image>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button x:Name="buttonSTART" Grid.Row="2" Grid.Column="1" Margin="5,5,5,5"
+            Grid.ColumnSpan="1" FontSize="20" Content="Start Pic CountDown" Click="buttonSTART_Click" >
+            </Button>
+            <Label x:Name="labelCountdown" Content="0" FontSize="30"/>
+        </StackPanel>
+        
+        <Button x:Name="buttonCANCEL" Grid.Row="2" Grid.Column="3" Margin="30,5,5,5"
+            Grid.ColumnSpan="1" FontSize="20" Content="CANCEL" Click="buttonCANCEL_Click" >
+       </Button>
+        <Button x:Name="buttonSAVE"  Grid.Row="2" Grid.Column="4" Margin="30,5,5,5"
+             FontSize="20" Content="SavePic" Click="buttonSAVE_Click" >
+        </Button>
+    </Grid>
+</Window>

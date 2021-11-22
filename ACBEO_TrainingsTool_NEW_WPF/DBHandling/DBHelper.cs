@@ -13,7 +13,9 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             try
             {
-                return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+                //return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+                return "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=somePathOnTargetMachine\\TrainingsRapport.mdf;Integrated Security" + "=True";
+                //TO DO...
             }
             catch
             {

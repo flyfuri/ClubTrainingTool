@@ -411,7 +411,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DBHelper.CnnVal("TrainingsRapportConnectionString")))
             {
-                return connection.Query<TrainingCost>("dbo.TrainingCosts_getByDate @TrainingDate", new { TrainingDate = trainingDate }).ToList();
+                return connection.Query<TrainingCost>("dbo.TrainingCosts_getByDate @TrainingDate", new { TrainingDate = trainingDate.AddHours(12) }).ToList();  ///provisorisch .AddHours(12)
             }
         }
 

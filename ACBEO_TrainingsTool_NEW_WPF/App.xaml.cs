@@ -13,5 +13,6 @@ namespace ACBEO_TrainingsTool_NEW_WPF
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }
