@@ -223,7 +223,223 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void dataGridViewDispTrnCosts_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            string pathBelegPhoto = "C:/ACBEO_TrainingsBelege";
+            string nameBelegPhoto;
+            string belegPathComplete;
 
+            DataGridCellClickRowColumnFormStyle e2 = new DataGridCellClickRowColumnFormStyle();  //provide RowIndex and ColumnIndex from e in forms style
+            e2.wpf_e = e;
+
+            if (e2.ColumnIndex >= 0
+                & e2.ColumnIndex < dataGridViewDispTrnCosts.Columns.Count
+                & e2.RowIndex >= 0
+                & e2.RowIndex < dataGridViewDispTrnCosts.Items.Count & e2.isCell)
+            {
+                DataAccess db = new DataAccess();
+                List<TrainingCost> rowTrainingCostToEdit = new List<TrainingCost>();
+                rowTrainingCostToEdit = db.getTrainingCostByDate(actTraining.TrainingDate);
+
+                int trainingCostID = 0;
+                if (rowTrainingCostToEdit.Count >= e2.RowIndex + 1)
+                {
+                    trainingCostID = rowTrainingCostToEdit[e2.RowIndex].TrainingCostID;
+                }
+
+                bool boolFormWasCancled = false;
+                bool picFormWasCancled = false;
+                decimal decimalFormKeyDecResult = 0;
+                string stringFormABCResult = "";
+                string oldBelegNrBeforeChanging = "";
+
+                if (e2.ColumnIndex == 1 || e2.ColumnIndex == 2) //alpanumeric ************************
+                {
+                    string defaultValue = "";
+                    bool useDefaultVal = false;
+                    rowTrainingCostToEdit = db.getTrainingCostByID(trainingCostID);
+                    if (rowTrainingCostToEdit.Count > 0)
+                    {
+                        switch (e2.ColumnIndex)
+                        {
+                            case 1:
+                                defaultValue = rowTrainingCostToEdit[0].Kommentar;
+                                useDefaultVal = true;
+                                break;
+
+                            case 2:
+                                defaultValue = rowTrainingCostToEdit[0].BelegNr;
+                                useDefaultVal = true;
+                                oldBelegNrBeforeChanging = rowTrainingCostToEdit[0].BelegNr;
+                                break;
+                        }
+                    }
+                    WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValue);
+                    formAlphanum.ShowDialog();
+                    boolFormWasCancled = formAlphanum.wasCanceled;
+                    stringFormABCResult = formAlphanum.return_string;
+                }
+                else if (e2.ColumnIndex == 3) //beleg photo************************
+                {
+                    if (rowTrainingCostToEdit.Count > 0)
+                    {
+                        if (rowTrainingCostToEdit[e2.RowIndex].BelegNr != ""
+                            & rowTrainingCostToEdit[e2.RowIndex].BelegNr != " ")
+                        {
+
+                            //pathBelegPhoto = new FileInfo(IniPath ?? EXE + ".ini").FullName.ToString();
+                            //nameBelegPhoto.Replace('.', '_');
+                            //nameBelegPhoto = $"{nameBelegPhoto}_{rowTrainingCostToEdit[0].BelegNr}";
+
+                            nameBelegPhoto = $"Beleg{actTraining.TrainingDate.Year.ToString()}_{actTraining.TrainingDate.Month.ToString()}_{actTraining.TrainingDate.Date.Day.ToString()}_{rowTrainingCostToEdit[e2.RowIndex].BelegNr}.jpg";
+
+                            WindowBelegPhoto formBelegPhoto = new WindowBelegPhoto(pathBelegPhoto, nameBelegPhoto);
+                            formBelegPhoto.ShowDialog();
+                            picFormWasCancled = formBelegPhoto.wasCanceled;
+                            stringFormABCResult = formBelegPhoto.return_string;
+                        }
+                        else
+                        {
+                            MessageBox.Show("First Enter BelegNr!/Zuerst BelegNr eingeben!");
+                            picFormWasCancled = true;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("First Enter BelegNr!/Zuerst BelegNr eingeben!");
+                        picFormWasCancled = true;
+                    }
+                }
+                else  //numeric column***************************************************************************
+                {
+                    int defaultValue = 0;
+                    bool useDefVal = true;
+
+                    rowTrainingCostToEdit = db.getTrainingCostByID(trainingCostID);
+
+                    if (e2.ColumnIndex == 0)
+                    {
+                        defaultValue = 0;
+                    }
+                    else
+                    {
+                        useDefVal = false;
+                    }
+                    WindowDialogKeyNumDecimal formBuyKeyNumInt = new WindowDialogKeyNumDecimal(true, defaultValue);
+                    formBuyKeyNumInt.ShowDialog();
+                    boolFormWasCancled = formBuyKeyNumInt.wasCanceled;
+                    decimalFormKeyDecResult = formBuyKeyNumInt.return_decimal;
+                }
+                //update TrainingCostTable
+                if (!boolFormWasCancled & !picFormWasCancled)
+                {
+                    if (rowTrainingCostToEdit.Count <= 0)
+                    {   //add
+                        TrainingCost trainingCostToAdd = new TrainingCost();
+                        rowTrainingCostToEdit.Add(trainingCostToAdd);
+                        rowTrainingCostToEdit[0].TrainingDate = actTraining.TrainingDate;
+                        rowTrainingCostToEdit[0].Betrag = 0;
+                        rowTrainingCostToEdit[0].Kommentar = "noch kein Kommentar!!!";
+                        switch (e2.ColumnIndex)
+                        {
+                            case 0:
+                                rowTrainingCostToEdit[0].Betrag = decimalFormKeyDecResult;
+                                break;
+
+                            case 1:
+                                rowTrainingCostToEdit[0].Kommentar = stringFormABCResult;
+                                break;
+
+                            case 2:
+                                rowTrainingCostToEdit[0].BelegNr = stringFormABCResult;
+                                break;
+
+                            case 3:
+                                rowTrainingCostToEdit[0].BelegPhotoName = stringFormABCResult;
+                                break;
+                        }
+                        db.addTrainingCosts(rowTrainingCostToEdit);
+                    }
+                    else
+                    {
+                        switch (e2.ColumnIndex)
+                        {
+                            case 0:
+                                rowTrainingCostToEdit[0].Betrag = decimalFormKeyDecResult;
+                                break;
+
+                            case 1:
+                                rowTrainingCostToEdit[0].Kommentar = stringFormABCResult;
+                                break;
+
+                            case 2:
+                                rowTrainingCostToEdit[0].BelegNr = stringFormABCResult;
+                                break;
+
+                            case 3:
+                                rowTrainingCostToEdit[0].BelegPhotoName = stringFormABCResult;
+                                break;
+                        }
+                        db.updateTrainingCosts(rowTrainingCostToEdit);
+                    }
+                    //update filename if "BelegNr" changed
+                    if (e2.ColumnIndex == 2 || e2.ColumnIndex == 3)
+                    {
+                        string oldNameBelegPhoto = $"Beleg{actTraining.TrainingDate.Year.ToString()}_{actTraining.TrainingDate.Month.ToString()}_{actTraining.TrainingDate.Date.Day.ToString()}_{oldBelegNrBeforeChanging}.jpg";
+                        string oldBelegPathComplete = $"{pathBelegPhoto}/{oldNameBelegPhoto}";
+
+                        nameBelegPhoto = $"Beleg{actTraining.TrainingDate.Year.ToString()}_{actTraining.TrainingDate.Month.ToString()}_{actTraining.TrainingDate.Date.Day.ToString()}_{rowTrainingCostToEdit[0].BelegNr}.jpg";
+                        belegPathComplete = $"{pathBelegPhoto}/{nameBelegPhoto}";
+
+                        if (System.IO.File.Exists(oldBelegPathComplete))
+                        {
+                            try
+                            {
+                                System.IO.File.Move(oldBelegPathComplete, belegPathComplete);
+                            }
+                            catch
+                            {
+                                MessageBox.Show($"Error while renaming");
+                            }
+                        }
+
+                        List<TrainingCost> costRecordsWithSameBelegNr = new List<TrainingCost>();
+                        costRecordsWithSameBelegNr = db.getTrainingCostByDateAndBelegNr(actTraining.TrainingDate, rowTrainingCostToEdit[0].BelegNr);
+
+                        if (costRecordsWithSameBelegNr.Count > 0)
+                        {
+                            bool belegPicExists = false;
+                            foreach (TrainingCost costRecord in costRecordsWithSameBelegNr)
+                            {
+                                if (costRecord.BelegPhotoName != "")
+                                {
+                                    belegPicExists = true;
+                                }
+                                costRecord.BelegPhotoName = belegPathComplete;
+                            }
+                            if (belegPicExists || e2.ColumnIndex == 3) //if BelegNr was updated, update pic paht only if at least one exists
+                            {
+                                db.updateTrainingCosts(costRecordsWithSameBelegNr);
+                            }
+                        }
+                        //delete BelegNr for all records with old BelegNr
+                        if (e2.ColumnIndex == 2 & oldBelegNrBeforeChanging != "" & oldBelegNrBeforeChanging != rowTrainingCostToEdit[0].BelegNr)
+                        {
+                            List<TrainingCost> costRecordsWithOldBelegNr = new List<TrainingCost>();
+                            costRecordsWithOldBelegNr = db.getTrainingCostByDateAndBelegNr(actTraining.TrainingDate, oldBelegNrBeforeChanging);
+
+                            bool belegPicExists = false;
+                            if (costRecordsWithOldBelegNr.Count > 0)
+                            {
+                                foreach (TrainingCost costRecord in costRecordsWithOldBelegNr)
+                                {
+                                    costRecord.BelegPhotoName = "";
+                                }
+                                db.updateTrainingCosts(costRecordsWithOldBelegNr);
+                            }
+                        }
+                    }
+                    updateDisplay();
+                }
+            }
         }
 
         private void dataGridViewSummary_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)

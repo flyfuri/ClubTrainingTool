@@ -87,7 +87,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void dataGridViewPilots_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            DataGridCellClickRowColumnFormStyle e2 = new DataGridCellClickRowColumnFormStyle();
+            DataGridCellClickRowColumnFormStyle e2 = new DataGridCellClickRowColumnFormStyle();  //provide RowIndex and ColumnIndex from e in forms style
             e2.wpf_e = e;
             
             if (e2.RowIndex >= 0 & e2.RowIndex < pilots.Count & e2.isCell)

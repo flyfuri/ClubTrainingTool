@@ -38,6 +38,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             {
                 comboBoxChoseToOpen.Items.Add(training.TrainingDate.ToShortDateString());
             }
+            comboBoxChoseToOpen.SelectedIndex = 0;
         }
 
         private void BtnOK_Click(object sender, RoutedEventArgs e)
