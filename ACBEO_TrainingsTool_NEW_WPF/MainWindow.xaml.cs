@@ -80,7 +80,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 else
                     m.IsEnabled = false;
             }
-            MainFrame.Content = new PageTurns();
+            MainFrame.Content = new PageTurns(actualTraining, actYEAR);
         }
 
         private void MenueBuy_Click(object sender, RoutedEventArgs e)
@@ -201,6 +201,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private void menuItemOPEN_Click(object sender, RoutedEventArgs e)
         {
             WindowOpenTraining formOpenTraining = new WindowOpenTraining(actYEAR);
+            formOpenTraining.Owner = App.Current.MainWindow;
             formOpenTraining.ShowDialog();
 
             if (!formOpenTraining.wasCanceled)
@@ -302,6 +303,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private void menuItemNEW_Click(object sender, RoutedEventArgs e)
         {
             WindowNewTraining windowNewTraining = new WindowNewTraining();
+            windowNewTraining.Owner = App.Current.MainWindow;
             windowNewTraining.ShowDialog();
 
             if (!windowNewTraining.wasCanceled)

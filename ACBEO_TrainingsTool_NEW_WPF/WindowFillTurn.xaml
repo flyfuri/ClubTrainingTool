@@ -1,0 +1,86 @@
+﻿<Window x:Class="ACBEO_TrainingsTool_NEW_WPF.WindowFillTurn"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
+        mc:Ignorable="d"
+        Title="WindowFillTurn" Height="600" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
+               Content="nichts(Pause)" VerticalAlignment="Center"/>
+        <Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
+               Content="Flug" VerticalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
+               Content="Boot" VerticalAlignment="Center"/>
+        <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
+               Content="Bus" VerticalAlignment="Center"/>
+        <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
+               Content="Boot und Bus" VerticalAlignment="Center"/>
+        <Label Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
+               Content="Flug und Bus(Fahrer mitgebracht))" VerticalAlignment="Center"/>
+        <Label Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
+               Content="Flug und Boot(Fahrer mitgebracht)" VerticalAlignment="Center"/>
+        <Label Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
+               Content="Flug und BunB(2Fahrer mitgebracht)" VerticalAlignment="Center"/>
+
+
+        <Button x:Name="buttonNone" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="" Click="buttonNone_Click" >
+        </Button>
+        <Button x:Name="buttonFlight" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="FLUG" Click="buttonFlight_Click" >
+        </Button>
+        <Button x:Name="buttonBoat" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="BOAT" Click="buttonBoat_Click" >
+        </Button>
+        <Button x:Name="buttonBus" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="BUS" Click="buttonBus_Click" >
+        </Button>
+        <Button x:Name="buttonBandB" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="BnB" Click="buttonBandB_Click" >
+        </Button>
+        <Button x:Name="buttonFlightnBus" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="FnBus" Click="buttonFlightnBus_Click" >
+        </Button>
+        <Button x:Name="buttonFlightnBoat" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="FnBoat" Click="buttonFlightnBoat_Click" >
+        </Button>
+        <Button x:Name="buttonFlightAndBusAndBoat" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="FnBnB" Click="buttonFlightAndBusAndBoat_Click" >
+        </Button>
+        <Button x:Name="buttonCancel" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="CANCEL" Click="buttonCancel_Click" >
+        </Button>
+
+        <TextBox x:Name="textBoxBusdriver"
+            Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="3" Margin="5">
+        </TextBox>
+        <TextBox x:Name="textBoxBoatdriver"
+            Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="3" Margin="5">
+        </TextBox>
+    </Grid>
+</Window>

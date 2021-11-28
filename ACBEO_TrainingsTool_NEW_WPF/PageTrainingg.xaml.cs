@@ -221,6 +221,18 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             dataGridViewSummary.ItemsSource = displaySummary.DefaultView;  //DefaultView new due to WPF
         }
 
+        private void updateTrainingInDB(Training trainingToUpdate)
+        {
+            //update Training in database
+            if (actTrningID > 0) //old: (trainingOpen)
+            {
+                DataAccess dbupdTrain = new DataAccess();
+                List<Training> trainingsToUpdate = new List<Training>();
+                trainingsToUpdate.Add(trainingToUpdate);
+                dbupdTrain.updateTraining(trainingsToUpdate);
+            } 
+        }
+
         private void dataGridViewDispTrnCosts_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             string pathBelegPhoto = "C:/ACBEO_TrainingsBelege";
@@ -273,6 +285,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         }
                     }
                     WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValue);
+                    formAlphanum.Owner = App.Current.MainWindow;
                     formAlphanum.ShowDialog();
                     boolFormWasCancled = formAlphanum.wasCanceled;
                     stringFormABCResult = formAlphanum.return_string;
@@ -292,6 +305,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                             nameBelegPhoto = $"Beleg{actTraining.TrainingDate.Year.ToString()}_{actTraining.TrainingDate.Month.ToString()}_{actTraining.TrainingDate.Date.Day.ToString()}_{rowTrainingCostToEdit[e2.RowIndex].BelegNr}.jpg";
 
                             WindowBelegPhoto formBelegPhoto = new WindowBelegPhoto(pathBelegPhoto, nameBelegPhoto);
+                            formBelegPhoto.Owner = App.Current.MainWindow;
                             formBelegPhoto.ShowDialog();
                             picFormWasCancled = formBelegPhoto.wasCanceled;
                             stringFormABCResult = formBelegPhoto.return_string;
@@ -324,6 +338,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         useDefVal = false;
                     }
                     WindowDialogKeyNumDecimal formBuyKeyNumInt = new WindowDialogKeyNumDecimal(true, defaultValue);
+                    formBuyKeyNumInt.Owner = App.Current.MainWindow;
                     formBuyKeyNumInt.ShowDialog();
                     boolFormWasCancled = formBuyKeyNumInt.wasCanceled;
                     decimalFormKeyDecResult = formBuyKeyNumInt.return_decimal;
@@ -444,7 +459,54 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void dataGridViewSummary_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            DataGridCellClickRowColumnFormStyle e2 = new DataGridCellClickRowColumnFormStyle();  //provide RowIndex and ColumnIndex from e in forms style
+            e2.wpf_e = e;
 
+            if (e2.ColumnIndex == 1
+                & e2.RowIndex == 5
+                || e2.ColumnIndex == 2
+                & e2.RowIndex == 7
+                & actTrningID > 0)  //old: & trainingOpen)
+            {
+                decimal defaultValue = 0;
+                bool useDefVal = true;
+                bool boolFormWasCancled;
+                decimal decimalFormKeyDecResult;
+
+                if (e2.ColumnIndex == 1) //Cash before
+                {
+                    defaultValue = actTraining.CashAtBegin;
+                }
+                if (e2.ColumnIndex == 2) //Cash to ACBEO
+                {
+                    defaultValue = actTraining.CashToACBEO;
+                }
+                else
+                {
+                    useDefVal = false;
+                }
+                WindowDialogKeyNumDecimal formBuyKeyNumDecimal = new WindowDialogKeyNumDecimal(true, defaultValue);
+                formBuyKeyNumDecimal.Owner = App.Current.MainWindow;
+                formBuyKeyNumDecimal.ShowDialog();
+                boolFormWasCancled = formBuyKeyNumDecimal.wasCanceled;
+                decimalFormKeyDecResult = formBuyKeyNumDecimal.return_decimal;
+
+                if (!boolFormWasCancled)
+                {
+                    if (e2.ColumnIndex == 1) //Cash before
+                    {
+                        actTraining.CashAtBegin = formBuyKeyNumDecimal.return_decimal;
+                    }
+                    if (e2.ColumnIndex == 2) //Cash to ACBEO
+                    {
+                        actTraining.CashToACBEO = formBuyKeyNumDecimal.return_decimal;
+                    }
+                    //update Training in database
+                    updateTrainingInDB(actTraining);
+
+                    updateDisplay();
+                }
+            }
         }
     }
 }

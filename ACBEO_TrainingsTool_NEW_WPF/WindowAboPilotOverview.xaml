@@ -1,0 +1,41 @@
+﻿<Window x:Name="Window_AboPilotOverview" x:Class="ACBEO_TrainingsTool_NEW_WPF.WindowAboPilotOverview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
+        mc:Ignorable="d"
+        Title="WindowAboPilotOverview" Height="450" Width="800" Loaded="FormAboPilotOverview_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="*" MinWidth="80"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*" MinHeight="50"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="labelPilotName" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="5"
+               Content="nichts(Pause)" VerticalAlignment="Center"/>
+
+        <Button x:Name="buttonCancel" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="CLOSE" Click="buttonCancel_Click" >
+        </Button>
+
+        <DataGrid x:Name="dataGridViewOverview" Grid.Row="2" Grid.Column="1" Margin="5"   
+                  Grid.ColumnSpan="1" Grid.RowSpan="1"
+                  CanUserReorderColumns="False"
+                  CanUserSortColumns="False"
+                  CanUserAddRows="true"
+                  CanUserDeleteRows="False">
+            <DataGrid.Columns>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>
