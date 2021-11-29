@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MyWPFExtentions;
 
 namespace ACBEO_TrainingsTool_NEW_WPF
 {
@@ -154,11 +155,11 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                                         + (dbParticpants.getDayPilotCostsByTrainIDParticipID(actTrningID, participant.ParticipantID)[0].payedWithAbo);
                 if (totalFlightToPay <= iNbrOfValidAboFlights)
                 {
-                    bgColorNames.Add(SystemColors.ControlColor);//OLD: ControlLight);
+                    bgColorNames.Add(Color.FromRgb(240, 240, 240));//OLD: ControlLight);
                 }
                 else
                 {
-                    bgColorNames.Add(Color.FromRgb(10, 10, 10));    //OLD: .Orange) ; 
+                    bgColorNames.Add(Color.FromRgb(255, 191, 0));    //OLD: .Orange) ; 
                 }
 
 
@@ -177,7 +178,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
                 i++;
             }
-
+           
             dataGridViewDisplay.ItemsSource = display.DefaultView;
 
             //set how table looks like
@@ -195,12 +196,16 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             {
                 //dataGridViewDisplay.Items[ii].Cells[0].Style.BackColor = bgColorNames[ii];
             }*/
-            for (int ii = 0; ii < dataGridViewDisplay.Items.Count && ii < bgColorNames.Count; ii++)
+            List< SolidColorBrush> bgBrushes= new List<SolidColorBrush>();
+            bgBrushes.Clear();
+            dataGridViewDisplay.SelectionUnit = DataGridSelectionUnit.Cell;
+            for (int ii = 0; ii < dataGridViewDisplay.Items.Count -1 & ii < bgColorNames.Count ; ii++)
             {
-                //dataGridViewDisplay.Items[ii].Cells[0].Style.BackColor = bgColorNames[ii];
-            }
-
-
+                //old: dataGridViewDisplay.Items[ii].Cells[0].Style.BackColor = bgColorNames[ii];
+                SolidColorBrush bgbrush = new SolidColorBrush(bgColorNames[ii]);
+                bgBrushes.Add(bgbrush);
+                dataGridViewDisplay.setBgColorByRowColIndexes(ii, 0, bgBrushes[ii]); //quick and vera durty workaround: whole list must live when last cell color is set (otherwise all get that last color)!
+            }   
         }
 
         private void SetCosts(int participantID, int displayRowIndex)
@@ -218,7 +223,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 dayPilotCostToUpdate.ParticipantID = participantID;
                 try
                 {
-                    dayPilotCostToUpdate.CostFlights = decimal.Parse(dataGridViewDisplay.Items[displayRowIndex].Cells[dataGridViewDisplay.Columns.Count - 1].Value.ToString());
+                    //OLD: dayPilotCostToUpdate.CostFlights = decimal.Parse(dataGridViewDisplay.Items[displayRowIndex].Cells[dataGridViewDisplay.Columns.Count - 1].Value.ToString());
+                   dayPilotCostToUpdate.CostFlights = decimal.Parse(dataGridViewDisplay.getValueTextStringByRowColIndexes(displayRowIndex,dataGridViewDisplay.Columns.Count - 1));
                 }
                 catch (Exception exept)
                 {
@@ -233,7 +239,9 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             {
                 try
                 {
-                    tempDayPilotCost[0].CostFlights = decimal.Parse(dataGridViewDisplay.Items[displayRowIndex].Cells[dataGridViewDisplay.Columns.Count - 1].Value.ToString());
+                    //old: tempDayPilotCost[0].CostFlights = decimal.Parse(dataGridViewDisplay.Items[displayRowIndex].Cells[dataGridViewDisplay.Columns.Count - 1].Value.ToString());
+                    string teststring = dataGridViewDisplay.getValueTextStringByRowColIndexes(displayRowIndex, dataGridViewDisplay.Columns.Count - 1);
+                    tempDayPilotCost[0].CostFlights = decimal.Parse(dataGridViewDisplay.getValueTextStringByRowColIndexes(displayRowIndex, dataGridViewDisplay.Columns.Count - 1));
                 }
                 catch (Exception exept)
                 {
@@ -251,7 +259,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             //show pilotinfos
             if (e2.ColumnIndex == 0
                 & e2.RowIndex >= 0
-                & e2.RowIndex < dataGridViewDisplay.Items.Count & e2.isCell) //dataGridViewDisplay.Items.Count - 1)
+                & e2.RowIndex < dataGridViewDisplay.Items.Count -1 & e2.isCell) //dataGridViewDisplay.Items.Count - 1)
             {
                 DataAccess db = new DataAccess();
                 List<AboFlight> validAboFlights = new List<AboFlight>();
@@ -286,7 +294,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 formFillTurn.ShowDialog();
                 if (formFillTurn.return_string != "CANCEL")
                 {
-                    dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value = formFillTurn.return_string;
+                    //old: dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value = formFillTurn.return_string;
+                    dataGridViewDisplay.setStringValueByRowColIndexes(e2.RowIndex,e2.ColumnIndex,formFillTurn.return_string);
                 }
 
                 //Get record by cell position via partitipant and turnNr
@@ -302,8 +311,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     tempTurn.TrainingID = actTrningID;
                     tempTurn.ParticipantID = participantID;
                     tempTurn.TurnNr = turnNr;
-                    tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
-
+                    //old: tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                    tempTurn.Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex,e2.ColumnIndex);
                     tempRowOfTurns.Clear();
                     tempRowOfTurns.Add(tempTurn);
 
@@ -321,7 +330,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         if (turn.TurnNr == turnNr)
                         {
                             turnID = turn.TurnID;
-                            tempRowOfTurns[i].Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                            //old: tempRowOfTurns[i].Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                            tempRowOfTurns[i].Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex,e2.ColumnIndex);
                             break;
                         }
                     }
@@ -338,8 +348,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                             tempTurn.TrainingID = actTrningID;
                             tempTurn.ParticipantID = participantID;
                             tempTurn.TurnNr = turnNr;
-                            tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
-
+                            //old tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                            tempTurn.Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex,e2.ColumnIndex);
                             tempRowOfTurns.Clear();
                             tempRowOfTurns.Add(tempTurn);
 
@@ -348,7 +358,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         else if (tempCheckTurns.Count == 1)
                         {
                             //update
-                            tempRowOfTurns[0].Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                            //old: tempRowOfTurns[0].Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                            tempRowOfTurns[0].Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex,e2.ColumnIndex);
                             db.updateTurns(tempRowOfTurns);
                         }
                     }
@@ -359,8 +370,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         tempTurn.TrainingID = actTrningID;
                         tempTurn.ParticipantID = participantID;
                         tempTurn.TurnNr = turnNr;
-                        tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
-
+                        //old: tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                        tempTurn.Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex,e2.ColumnIndex);
                         tempRowOfTurns.Clear();
                         tempRowOfTurns.Add(tempTurn);
 

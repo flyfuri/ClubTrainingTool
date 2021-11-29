@@ -20,7 +20,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private bool _isCell;
         private DataGridCell _act_cellObject;
 
-       private DependencyObject dep;
+        private DependencyObject dep;
 
         public MouseButtonEventArgs wpf_e
         {

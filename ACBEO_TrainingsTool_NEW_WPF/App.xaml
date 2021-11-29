@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <!--make scroolbar bigger-->
         <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
             <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
             <Style.Triggers>
@@ -17,6 +18,18 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <!--defualt style datagrids-->
+        <Style x:Key="{x:Type DataGrid}" TargetType="{x:Type DataGrid}">
+            <Setter Property="AlternatingRowBackground" Value="#C2C2C2"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="CanUserReorderColumns" Value="False"/>
+            <Setter Property="MinRowHeight" Value="35"/>
+            <Setter Property="MinColumnWidth" Value="20"/>
+        </Style>
+
+        <!--make calender picker bigger-->
         <Style x:Key="DatePickerCalendarStyleTablet" TargetType="{x:Type Calendar}">
             <Setter Property="Foreground" Value="#FF333333"/>
             <Setter Property="Background">

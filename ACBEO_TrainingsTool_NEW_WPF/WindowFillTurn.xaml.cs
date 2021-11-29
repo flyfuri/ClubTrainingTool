@@ -52,7 +52,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void buttonBandB_Click(object sender, RoutedEventArgs e)
         {
-            return_value = "BnB:";
+            return_value = "BnB";
             Close();
         }
 
