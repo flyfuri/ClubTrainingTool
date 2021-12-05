@@ -1,0 +1,40 @@
+﻿<Window x:Class="ACBEO_TrainingsTool_NEW_WPF.WindowSetLeiter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
+        mc:Ignorable="d"
+        Title="WindowSetLeiter" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Label Content="Training" Grid.Row="1" Grid.Column="1" Margin="5"/>
+        <Label Content="choosen" Grid.Row="2" Grid.Column="1" Margin="5"/>
+        <ComboBox x:Name="comboBoxChoseLeiter" Grid.Row="1" Grid.Column="2" Margin="5"
+                    Grid.ColumnSpan="3"  FontSize="30" SelectionChanged="comboBoxChoseToOpen_SelectionChanged" >
+        </ComboBox>
+        
+        <Button x:Name="BtnCancel" Grid.Row="4" Grid.Column="3" Margin="5"
+            Grid.ColumnSpan="1" FontSize="20" Content="CANCEL" Click="BtnCancel_Click" >
+        </Button>
+        
+        <Button x:Name="BtnOK" Grid.Row="4" Grid.Column="4" Margin="5"
+            Grid.ColumnSpan="1" FontSize="20" Content="OK" Click="BtnOK_Click" >
+        </Button>
+    </Grid>
+</Window>

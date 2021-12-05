@@ -68,7 +68,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 else
                    m.IsEnabled = false;
             }
-            MainFrame.Content = new PageParticipant ();
+            MainFrame.Content = new PageParticipant (actualTraining);
         }
 
         private void MenueTurns_Click(object sender, RoutedEventArgs e)
@@ -383,6 +383,28 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     }
                 }
 
+            }
+        }
+
+        private void textBoxLeiter1_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            WindowSetLeiter formSetLeiter = new WindowSetLeiter(participants, actTraining.Leiter1_ID);
+            formSetLeiter.ShowDialog();
+            if (!formSetLeiter.wasCanceled)
+            {
+                DataAccess db = new DataAccess();
+                List<Training> TrainingsToUpdate = new List<Training>();
+                TrainingsToUpdate.Clear();
+                actTraining.Leiter1_ID = formSetLeiter.return_participant.ParticipantID;
+                TrainingsToUpdate.Add(actTraining);
+                db.updateTraining(TrainingsToUpdate);
+                TurnsUpdateDisplay();
+                int i = 0;
+                foreach (Participant participant in participants)
+                {
+                    SetCosts(participant.ParticipantID, i);
+                    i++;
+                }
             }
         }
     }

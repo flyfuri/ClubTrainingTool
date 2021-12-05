@@ -24,7 +24,7 @@
                   Grid.ColumnSpan="6" Grid.RowSpan="3"
                   CanUserReorderColumns="False"
                   CanUserSortColumns="False"
-                  CanUserAddRows="true"
+                  CanUserAddRows="False"
                   CanUserDeleteRows="False" PreviewMouseLeftButtonUp="dataGridViewDisplay_PreviewMouseLeftButtonUp">
             <DataGrid.Columns>
             </DataGrid.Columns>

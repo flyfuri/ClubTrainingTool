@@ -55,7 +55,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             DataAccess dbParticpants = new DataAccess();
             participants = dbParticpants.getParticipants(actTrningID);
 
-            //add Pilot coumn
+            //add Pilot column
             if (display.Columns.Count == 0)
             {
                 display.Columns.Add();
@@ -67,118 +67,127 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             List<string> listTempRow = new List<string>();
             //List<string> listTempRowColor = new List<string>();
 
-            foreach (Participant participant in participants)
+            if (participants.Count >= 1)
             {
-                tempRowOfTurns = dbParticpants.getTurnsByTrainIDParticipID(actTrningID, participant.ParticipantID);
-                foreach (Turn turn in tempRowOfTurns)
+                foreach (Participant participant in participants)
                 {
-                    if (turn.TurnNr > highestTurnNbr)
-                    {
-                        highestTurnNbr = turn.TurnNr;
-                    }
-                }
-
-            }
-
-            foreach (Participant participant in participants)
-            {
-                totalFlightToPay = 0;
-
-                if (participant.ParticipantID == actTraining.Leiter1_ID)
-                {
-                    //old :textBoxLeiter1.Text = participant.ComplNameAndLicence;
-                    totalFlightToPay--;
-                }
-
-                if (participant.ParticipantID == actTraining.Leiter2_ID)
-                {
-                    //old: textBoxLeiter2.Text = participant.ComplNameAndLicence;
-                    totalFlightToPay--;
-                }
-
-                tempRowOfTurns = dbParticpants.getTurnsByTrainIDParticipID(actTrningID, participant.ParticipantID);
-
-                //add columns if needed
-                if (highestTurnNbr + 3 > display.Columns.Count)
-                {
-                    for (int ii = display.Columns.Count; ii < (highestTurnNbr + 3); ii++)
-                    {
-                        display.Columns.Add();
-                    }
-                }
-
-                //add rows
-                listTempRow.Clear();
-
-                for (int iii = 0; iii < highestTurnNbr; iii++)
-                {
-                    bool found = false;
+                    tempRowOfTurns = dbParticpants.getTurnsByTrainIDParticipID(actTrningID, participant.ParticipantID);
                     foreach (Turn turn in tempRowOfTurns)
                     {
-                        if (turn.TurnNr == (iii + 1))
+                        if (turn.TurnNr > highestTurnNbr)
                         {
-                            listTempRow.Add(turn.Flight);
-                            found = true;
-
-                            if (turn.Flight.StartsWith("FLIGHT"))
-                            {
-                                totalFlightToPay++;
-                            }
-                            else if (turn.Flight.StartsWith("BUS") || turn.Flight.StartsWith("BOAT")
-                                     || turn.Flight.StartsWith("BandB") || turn.Flight.StartsWith("FnBnB"))
-                            {
-                                totalFlightToPay--;
-                            }
-                            break;
+                            highestTurnNbr = turn.TurnNr;
                         }
                     }
-                    if (!found)
+
+                }
+
+                foreach (Participant participant in participants)
+                {
+                    totalFlightToPay = 0;
+
+                    if (participant.ParticipantID == actTraining.Leiter1_ID)
                     {
-                        listTempRow.Add("");
+                        //old :textBoxLeiter1.Text = participant.ComplNameAndLicence;
+                        totalFlightToPay--;
                     }
 
-                }
-
-                //name turn columns
-                for (int ii = 1; ii < display.Columns.Count; ii++)
-                {
-                    string colname = "Turn" + ii.ToString();
-                    display.Columns[ii].ColumnName = colname;
-                }
-
-                //add total cost column
-                display.Columns[display.Columns.Count - 1].ColumnName = "Cost";
-
-                listTempRow.Insert(0, participant.ComplNameAndLicence);
-
-                iNbrOfValidAboFlights = dbParticpants.getUsableAboFlightsByPilotID(participant.PilotID, actYear).Count
-                                        + (dbParticpants.getDayPilotCostsByTrainIDParticipID(actTrningID, participant.ParticipantID)[0].payedWithAbo);
-                if (totalFlightToPay <= iNbrOfValidAboFlights)
-                {
-                    bgColorNames.Add(Color.FromRgb(240, 240, 240));//OLD: ControlLight);
-                }
-                else
-                {
-                    bgColorNames.Add(Color.FromRgb(255, 191, 0));    //OLD: .Orange) ; 
-                }
-
-
-                display.Rows.Add();
-                totalFlightToPay = totalFlightToPay * 9;
-
-                if (listTempRow.Count < (display.Columns.Count - 1))
-                {
-                    for (int ii = listTempRow.Count; ii < (display.Columns.Count - 1); ii++)
+                    if (participant.ParticipantID == actTraining.Leiter2_ID)
                     {
-                        listTempRow.Add("");
+                        //old: textBoxLeiter2.Text = participant.ComplNameAndLicence;
+                        totalFlightToPay--;
                     }
-                }
-                listTempRow.Add(totalFlightToPay.ToString());
-                display.Rows[i].ItemArray = listTempRow.ToArray();
 
-                i++;
+                    tempRowOfTurns = dbParticpants.getTurnsByTrainIDParticipID(actTrningID, participant.ParticipantID);
+
+                    //add columns if needed
+                    if (highestTurnNbr + 3 > display.Columns.Count)
+                    {
+                        for (int ii = display.Columns.Count; ii < (highestTurnNbr + 3); ii++)
+                        {
+                            display.Columns.Add();
+                        }
+                    }
+
+                    //add rows
+                    listTempRow.Clear();
+
+                    for (int iii = 0; iii < highestTurnNbr; iii++)
+                    {
+                        bool found = false;
+                        foreach (Turn turn in tempRowOfTurns)
+                        {
+                            if (turn.TurnNr == (iii + 1))
+                            {
+                                listTempRow.Add(turn.Flight);
+                                found = true;
+
+                                if (turn.Flight.StartsWith("FLIGHT"))
+                                {
+                                    totalFlightToPay++;
+                                }
+                                else if (turn.Flight.StartsWith("BUS") || turn.Flight.StartsWith("BOAT")
+                                         || turn.Flight.StartsWith("BandB") || turn.Flight.StartsWith("FnBnB"))
+                                {
+                                    totalFlightToPay--;
+                                }
+                                break;
+                            }
+                        }
+                        if (!found)
+                        {
+                            listTempRow.Add("");
+                        }
+
+                    }
+
+                    //name turn columns
+                    for (int ii = 1; ii < display.Columns.Count; ii++)
+                    {
+                        string colname = "Turn" + ii.ToString();
+                        display.Columns[ii].ColumnName = colname;
+                    }
+
+                    //add total cost column
+                    display.Columns[display.Columns.Count - 1].ColumnName = "Cost";
+
+                    listTempRow.Insert(0, participant.ComplNameAndLicence);
+
+                    if (dbParticpants.getDayPilotCostsByTrainIDParticipID(actTrningID, participant.ParticipantID).Count > 0)
+                    {
+                        iNbrOfValidAboFlights = dbParticpants.getUsableAboFlightsByPilotID(participant.PilotID,actYear).Count
+                                            + (dbParticpants.getDayPilotCostsByTrainIDParticipID(actTrningID, participant.ParticipantID)[0].payedWithAbo);
+                    }
+                    else
+                    {
+                        iNbrOfValidAboFlights = dbParticpants.getUsableAboFlightsByPilotID(participant.PilotID, actYear).Count;
+                    }
+                    if (totalFlightToPay <= iNbrOfValidAboFlights)
+                    {
+                        bgColorNames.Add(Color.FromRgb(240, 240, 240));//OLD: ControlLight);
+                    }
+                    else
+                    {
+                        bgColorNames.Add(Color.FromRgb(255, 191, 0));    //OLD: .Orange) ; 
+                    }
+
+
+                    display.Rows.Add();
+                    totalFlightToPay = totalFlightToPay * 9;
+
+                    if (listTempRow.Count < (display.Columns.Count - 1))
+                    {
+                        for (int ii = listTempRow.Count; ii < (display.Columns.Count - 1); ii++)
+                        {
+                            listTempRow.Add("");
+                        }
+                    }
+                    listTempRow.Add(totalFlightToPay.ToString());
+                    display.Rows[i].ItemArray = listTempRow.ToArray();
+
+                    i++;
+                }
             }
-           
             dataGridViewDisplay.ItemsSource = display.DefaultView;
 
             //set how table looks like
@@ -204,7 +213,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 //old: dataGridViewDisplay.Items[ii].Cells[0].Style.BackColor = bgColorNames[ii];
                 SolidColorBrush bgbrush = new SolidColorBrush(bgColorNames[ii]);
                 bgBrushes.Add(bgbrush);
-                dataGridViewDisplay.setBgColorByRowColIndexes(ii, 0, bgBrushes[ii]); //quick and vera durty workaround: whole list must live when last cell color is set (otherwise all get that last color)!
+                dataGridViewDisplay.setBgColorByRowColIndexes(ii, 0, bgBrushes[ii]); //quick and very durty workaround: whole list must live when last cell color is set (otherwise all get that last color)!
             }   
         }
 
