@@ -1,11 +1,11 @@
-﻿<Window x:Class="ACBEO_TrainingsTool_NEW_WPF.MainWindow"
+﻿<Window x:Name="MainWindowShell" x:Class="ACBEO_TrainingsTool_NEW_WPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800"
+        Title="Main Window" Height="600" Width="800"
         >
 
     <Grid>
@@ -26,14 +26,18 @@
                     Background="#1A9" Grid.ColumnSpan="3" Height="auto" Width="auto">
             <Menu x:Name="MenueMain" FontSize="20" >
                 <MenuItem x:Name="MenueTraining" Header="TRAINING" PreviewMouseLeftButtonDown="MenueTraining_PreviewMouseLeftButtonDown">
-                    <MenuItem x:Name="menuItemQuickOpen" Header="QuickOPEN" MouseEnter="menuItemQuickOpen_MouseEnter" Click="menuItemQuickOpen_Click"/>
+                    <MenuItem x:Name="menuItemQuickOpen" Header="QuickOPEN" MouseEnter="menuItemQuickOpen_MouseEnter" Click="menuItemQuickOpen_Click" >
+                    </MenuItem>
                     <MenuItem x:Name="menuItemOPEN" Header="OPEN" Click="menuItemOPEN_Click"/>
                     <MenuItem x:Name="menuItemOPENnext" Header="OPENnext" Click="menuItemOPENnext_Click"/>
                     <MenuItem x:Name="menuItemOPENprevious" Header="OPENprevious" Click="menuItemOPENprevious_Click"/>
                     <MenuItem x:Name="menuItemCLOSE" Header="CLOSE" Click="menuItemCLOSE_Click"/>
                     <MenuItem x:Name="menuItemNEW" Header="NEW" Click="menuItemNEW_Click"/>
+                    <Separator/>
                     <MenuItem Header="Finis/Send"/>
+                    <Separator/>
                     <MenuItem x:Name="menuItemSetActYear" Header="Change actual YEAR" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown"/>
+                    <Separator/>
                     <MenuItem x:Name="menuItemExportAbos" Header="Export Abos to CSV" Click="menuItemExportAbos_Click"/>
                 </MenuItem>
                 <MenuItem x:Name="MenueScan" Header="SCAN" Click="MenueScan_Click">
@@ -58,7 +62,7 @@
                    Text="no Leiter1 chosen" FontSize="20" PreviewMouseLeftButtonUp="textBoxLeiter1_PreviewMouseLeftButtonUp" />
 
         <TextBlock x:Name="textBoxLeiter2" Grid.Column="3" Grid.Row="1" Margin="5,0,5,0"
-                   Text="no Leiter2 chosen" FontSize="20" />
+                   Text="no Leiter2 chosen" FontSize="20" PreviewMouseLeftButtonUp="textBoxLeiter2_PreviewMouseLeftButtonUp" />
 
         <Frame x:Name="MainFrame" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"/>
     </Grid>

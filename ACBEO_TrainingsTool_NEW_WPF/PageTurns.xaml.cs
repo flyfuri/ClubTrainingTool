@@ -26,13 +26,6 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private Training actTraining;
         private int actYear;
         int totalFlightToPay;
-        public PageTurns(Training actualTraining, int actualYear)
-        {
-            InitializeComponent();
-            actTraining = actualTraining;
-            actTrningID = actualTraining.TrainingID;
-            actYear = actualYear;
-        }
 
         List<Participant> participants = new List<Participant>();
         List<Turn> tempRowOfTurns = new List<Turn>();
@@ -41,6 +34,56 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         DataTable display = new DataTable();
         int iNbrOfValidAboFlights;
         //DataTable displaycolors = new DataTable();
+
+
+        public PageTurns(Training actualTraining, int actualYear)
+        {
+            InitializeComponent();
+            actTraining = actualTraining;
+            actTrningID = actualTraining.TrainingID;
+            actYear = actualYear;
+        }
+
+        public string setLeiter1or2(int nbr)
+        {
+            int tempLeiterID;
+            if (nbr == 2)
+            {
+                tempLeiterID = actTraining.Leiter2_ID;
+            }
+            else
+            {
+                tempLeiterID = actTraining.Leiter1_ID;
+            }
+            WindowSetLeiter formSetLeiter = new WindowSetLeiter(participants, actTraining.Leiter2_ID);
+            formSetLeiter.ShowDialog();
+            if (!formSetLeiter.wasCanceled)
+            {
+                DataAccess db = new DataAccess();
+                List<Training> TrainingsToUpdate = new List<Training>();
+                TrainingsToUpdate.Clear();
+                if (nbr == 2)
+                {
+                    actTraining.Leiter1_ID = formSetLeiter.return_participant.ParticipantID;
+                }
+                else
+                {
+                    actTraining.Leiter2_ID = formSetLeiter.return_participant.ParticipantID;
+                }
+                TrainingsToUpdate.Add(actTraining);
+                db.updateTraining(TrainingsToUpdate);
+                TurnsUpdateDisplay();
+                int i = 0;
+                foreach (Participant participant in participants)
+                {
+                    SetCosts(participant.ParticipantID, i);
+                    i++;
+                }
+                return formSetLeiter.return_participant.ComplNameAndLicence.ToString();
+            }
+            return null;
+        }
+       
 
         private void Page_Turns_Loaded(object sender, RoutedEventArgs e)
         {
@@ -249,7 +292,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 try
                 {
                     //old: tempDayPilotCost[0].CostFlights = decimal.Parse(dataGridViewDisplay.Items[displayRowIndex].Cells[dataGridViewDisplay.Columns.Count - 1].Value.ToString());
-                    string teststring = dataGridViewDisplay.getValueTextStringByRowColIndexes(displayRowIndex, dataGridViewDisplay.Columns.Count - 1);
+                    //string teststring = dataGridViewDisplay.getValueTextStringByRowColIndexes(displayRowIndex, dataGridViewDisplay.Columns.Count - 1);
                     tempDayPilotCost[0].CostFlights = decimal.Parse(dataGridViewDisplay.getValueTextStringByRowColIndexes(displayRowIndex, dataGridViewDisplay.Columns.Count - 1));
                 }
                 catch (Exception exept)
@@ -268,7 +311,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             //show pilotinfos
             if (e2.ColumnIndex == 0
                 & e2.RowIndex >= 0
-                & e2.RowIndex < dataGridViewDisplay.Items.Count -1 & e2.isCell) //dataGridViewDisplay.Items.Count - 1)
+                & e2.RowIndex < dataGridViewDisplay.Items.Count & e2.isCell) //dataGridViewDisplay.Items.Count - 1)
             {
                 DataAccess db = new DataAccess();
                 List<AboFlight> validAboFlights = new List<AboFlight>();
@@ -297,7 +340,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             else if (e2.ColumnIndex > 0
                 & e2.ColumnIndex < dataGridViewDisplay.Columns.Count - 1
                 & e2.RowIndex >= 0
-                & e2.RowIndex < dataGridViewDisplay.Items.Count - 1)
+                & e2.RowIndex < dataGridViewDisplay.Items.Count)
             {
                 WindowFillTurn formFillTurn = new WindowFillTurn();
                 formFillTurn.ShowDialog();

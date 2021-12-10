@@ -24,7 +24,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
     {
         private bool trainingOpen;
         public static int actYEAR;
-        public Training actualTraining { get; set; } //actual training 
+        public Training actualTraining { get; private set; } //actual training 
         public MainWindow()
         {
             InitializeComponent();
@@ -41,8 +41,28 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             this.Title = actYEAR.ToString();
         }
-                
-/**********Main Menue Events**********************************************************/
+
+        public void updateDisplayActTrainingAndLeiter1and2()
+        {
+            List<Participant> participants = new List<Participant>();
+            DataAccess dbParticpants = new DataAccess();
+            participants = dbParticpants.getParticipants(actualTraining.TrainingID);
+
+            foreach (Participant participant in participants)
+            {
+                if (participant.ParticipantID == actualTraining.Leiter1_ID)
+                {
+                    textBoxLeiter1.Text = participant.ComplNameAndLicence;
+                }
+                else if (participant.ParticipantID == actualTraining.Leiter2_ID)
+                {
+                    textBoxLeiter2.Text = participant.ComplNameAndLicence;
+                }
+            }
+        }
+
+
+        /**********Main Menue Events**********************************************************/
         private void MenueTraining_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)  //routed event (tunneling mode) see https://docs.microsoft.com/en-us/archive/msdn-magazine/2008/september/advanced-wpf-understanding-routed-events-and-commands-in-wpf
         {   
             if (((MainFrame.Content as Page).Name.Equals("Page_Training") == false) & (e.Source as ItemsControl).Name.Equals(MenueTraining.Name))
@@ -56,7 +76,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private void MenueTraining_Click(object sender, RoutedEventArgs e)
         {
             foreach (ItemsControl m in MenueMain.Items) 
-                m.IsEnabled = true;
+            m.IsEnabled = true;
             MainFrame.Content = new PageTrainingg(actualTraining);
         }
         private void MenueScan_Click(object sender, RoutedEventArgs e)
@@ -92,7 +112,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 else
                     m.IsEnabled = false;
             }
-            MainFrame.Content = new PageBuy();
+            MainFrame.Content = new PageBuy(actualTraining);
         }
 
         private void MenuePay_Click(object sender, RoutedEventArgs e)
@@ -164,7 +184,6 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
                 // Add menu item as child to pre-defined menu item
                 menuItemQuickOpen.Items.Add(subitem); // Add menu item as child to pre-defined menu item
-                
             }
 
             /**toolStripMenuItemQuickOpen.DropDown = ListToOpen;
@@ -191,6 +210,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     textBoxActualTrainingDate.Text = actualTraining.TrainingDate.Date.ToShortDateString();
                     trainingOpen = true;
                     MainFrame.Content = new PageTrainingg(actualTraining);
+                    updateDisplayActTrainingAndLeiter1and2();
                 }
                 else
                 {
@@ -211,6 +231,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 textBoxActualTrainingDate.Text = actualTraining.TrainingDate.Date.ToShortDateString();
                 trainingOpen = true;
                 MainFrame.Content = new PageTrainingg(actualTraining);
+                updateDisplayActTrainingAndLeiter1and2();
             }
         }
 
@@ -250,6 +271,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 textBoxActualTrainingDate.Text = actualTraining.TrainingDate.Date.ToShortDateString();
                 trainingOpen = true;
                 MainFrame.Content = new PageTrainingg(actualTraining);
+                updateDisplayActTrainingAndLeiter1and2();
             }
         }
 
@@ -289,12 +311,15 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 textBoxActualTrainingDate.Text = actualTraining.TrainingDate.Date.ToShortDateString();
                 trainingOpen = true;
                 MainFrame.Content = new PageTrainingg(actualTraining);
+                updateDisplayActTrainingAndLeiter1and2();
             }
         }
 
         private void menuItemCLOSE_Click(object sender, RoutedEventArgs e)
         {
             textBoxActualTrainingDate.Text = "kein Training geöffnet";
+            textBoxLeiter1.Text = "";
+            textBoxLeiter2.Text = "";
             trainingOpen = false;
             actualTraining = null;
             MainFrame.Content = new PageTrainingg(actualTraining);
@@ -388,22 +413,24 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void textBoxLeiter1_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            WindowSetLeiter formSetLeiter = new WindowSetLeiter(participants, actTraining.Leiter1_ID);
-            formSetLeiter.ShowDialog();
-            if (!formSetLeiter.wasCanceled)
+            if (MainFrame.Content.GetType().Name == "PageTurns")
             {
-                DataAccess db = new DataAccess();
-                List<Training> TrainingsToUpdate = new List<Training>();
-                TrainingsToUpdate.Clear();
-                actTraining.Leiter1_ID = formSetLeiter.return_participant.ParticipantID;
-                TrainingsToUpdate.Add(actTraining);
-                db.updateTraining(TrainingsToUpdate);
-                TurnsUpdateDisplay();
-                int i = 0;
-                foreach (Participant participant in participants)
+                string leiter1Text = (MainFrame.Content as PageTurns).setLeiter1or2(1);
+                if (leiter1Text != null)
                 {
-                    SetCosts(participant.ParticipantID, i);
-                    i++;
+                    textBoxLeiter1.Text = leiter1Text;
+                }
+            }
+        }
+
+        private void textBoxLeiter2_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (MainFrame.Content.GetType().Name == "PageTurns")
+            {
+                string leiter2Text = (MainFrame.Content as PageTurns).setLeiter1or2(2);
+                if (leiter2Text != null)
+                {
+                    textBoxLeiter2.Text = leiter2Text;
                 }
             }
         }

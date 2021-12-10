@@ -1,15 +1,14 @@
-﻿<Window x:Class="ACBEO_TrainingsTool_NEW_WPF.WindowSetLeiter"
+﻿<Window x:Class="ACBEO_TrainingsTool_NEW_WPF.WindowPlusMinusDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
         mc:Ignorable="d"
-        Title="WindowSetLeiter" Height="450" Width="800">
+        Title="WindowPlusMinusDialog" Height="400" Width="500">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -20,19 +19,16 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <Label Content="Chose Leiter" Grid.Row="1" Grid.Column="1" Margin="5"/>
-         <ComboBox x:Name="comboBoxChoseLeiter" Grid.Row="1" Grid.Column="2" Margin="5"
-                    Grid.ColumnSpan="3"  FontSize="30" />
-
-        <Button x:Name="BtnCancel" Grid.Row="4" Grid.Column="3" Margin="5"
-            Grid.ColumnSpan="1" FontSize="20" Content="CANCEL" Click="BtnCancel_Click" >
+        <Button x:Name="buttonMinus" Grid.Row="1" Grid.Column="1" Margin="5"
+            Grid.ColumnSpan="1" FontSize="20" Content="-" Click="buttonMinus_Click" >
         </Button>
-        
-        <Button x:Name="BtnOK" Grid.Row="4" Grid.Column="4" Margin="5"
-            Grid.ColumnSpan="1" FontSize="20" Content="OK" Click="BtnOK_Click" >
+        <Button x:Name="buttonPlus" Grid.Row="1" Grid.Column="3" Margin="5"
+            Grid.ColumnSpan="1" FontSize="20" Content="+" Click="buttonPlus_Click" >
+        </Button>
+        <Button x:Name="buttonCANCEL" Grid.Row="3" Grid.Column="3" Margin="5"
+            Grid.ColumnSpan="1" FontSize="20" Content="CANCEL" Click="buttonCANCEL_Click" >
         </Button>
     </Grid>
 </Window>
