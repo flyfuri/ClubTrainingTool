@@ -16,6 +16,7 @@ using System.Drawing;
 using AForge.Video;
 using AForge.Video.DirectShow;
 using System.IO;
+using MyWPFExtentions;
 
 namespace ACBEO_TrainingsTool_NEW_WPF
 {
@@ -41,22 +42,6 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         bool return_canceled = true;
         public bool wasCanceled { get { return return_canceled; } }
-
-        BitmapImage BitmapToImageSource(Bitmap bitmap)
-        {
-            using (MemoryStream memory = new MemoryStream())
-            {
-                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
-                memory.Position = 0;
-                BitmapImage bitmapimage = new BitmapImage();
-                bitmapimage.BeginInit();
-                bitmapimage.StreamSource = memory;
-                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapimage.EndInit();
-
-                return bitmapimage;
-            }
-        }
 
         //transform image to Bitmap (like old forms pictureBox.drawToBitmap
         private static void CreateBitmapFromVisual(Visual target, string fileName)
@@ -201,7 +186,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 using (var showBitmap = new Bitmap(belegPathComplete))
                 {
                     //old forms: pictureBoxCam.Image = (Bitmap)showBitmap.Clone();
-                    pictureBoxCam.Source = BitmapToImageSource(showBitmap);
+                    pictureBoxCam.Source = showBitmap.toImageSource();
                 }
             }
         }

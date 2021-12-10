@@ -6,11 +6,29 @@
       xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PageDayPilotCosts">
+      Title="PageDayPilotCosts" Loaded="Page_DayPilotCosts_Loaded">
 
     <Grid>
-        <TextBlock Grid.Column="1" Grid.Row="1" 
-                   Text="DayPilotCosts" FontSize="100" HorizontalAlignment="Center" VerticalAlignment="Center">
-        </TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid x:Name="dataGridViewDisplay" Grid.Row="1" Grid.Column="1" Margin="5"   
+                  Grid.ColumnSpan="6" Grid.RowSpan="3"
+                  CanUserReorderColumns="False"
+                  CanUserSortColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False" PreviewMouseLeftButtonUp="dataGridViewDisplay_PreviewMouseLeftButtonUp" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
+                  FrozenColumnCount="1">
+            <DataGrid.Columns>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

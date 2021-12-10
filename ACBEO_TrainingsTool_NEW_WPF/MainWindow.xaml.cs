@@ -124,7 +124,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 else
                     m.IsEnabled = false;
             }
-            MainFrame.Content = new PageDayPilotCosts();
+            MainFrame.Content = new PageDayPilotCosts(actualTraining);
         }
 
         private void MenuePilots_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

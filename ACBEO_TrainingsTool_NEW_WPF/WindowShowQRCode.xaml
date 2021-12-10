@@ -1,0 +1,36 @@
+﻿<Window x:Name="Window_ShowQRCode" x:Class="ACBEO_TrainingsTool_NEW_WPF.WindowShowQRCode"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
+        mc:Ignorable="d"
+        Title="WindowShowQRCode" Height="600" Width="800" Loaded="Window_ShowQRCode_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="textBox_stringQRCode" Grid.Row="3" Grid.Column="2" 
+                   Margin="5,0,5,5" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+        </TextBlock>
+        
+        <Image x:Name="pictureBox_ShowCode" Grid.Row="2" Grid.Column="1" Margin="0,0,5,0"
+            Grid.RowSpan="2" Grid.ColumnSpan="1" >
+        </Image>
+        
+        <Button x:Name="buttonClose" Grid.Row="2" Grid.Column="2" Margin="5"
+            Grid.ColumnSpan="2" FontSize="20" Content="CLOSE" Click="buttonCLOSE_Click" >
+        </Button>
+    </Grid>
+</Window>
