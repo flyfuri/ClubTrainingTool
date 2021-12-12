@@ -153,7 +153,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                & (e2.ColumnIndex == 0
                || e2.ColumnIndex == 6
                || e2.ColumnIndex == 8
-               || e2.ColumnIndex == 9))
+               || e2.ColumnIndex == 9
+               || e2.ColumnIndex == 7))
             {
                 int actCellPilotID = participants[e2.RowIndex].PilotID;
                 Participant actCellParticipant = participants[e2.RowIndex];
@@ -233,9 +234,10 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     stringFormABCResult = formAlphanum.return_string;
                 }
                 //TWINT payment with SwissQR code
-                if (e2.ColumnIndex == 7)
+                else if (e2.ColumnIndex == 7)
                 {
-                    string swissQRCodeString = "SPC" + 
+                    WindowCreateShowSwissQR formShowSwissQRBill = new WindowCreateShowSwissQR(actTraining.TrainingDate.ToString(),"Fritzli", "Fritzli hat bezahlt");
+                    formShowSwissQRBill.ShowDialog();
                 }
                 //add or update PilotCostTable
                 if (!boolFormWasCancled & (e2.ColumnIndex == 8 || e2.ColumnIndex == 9))

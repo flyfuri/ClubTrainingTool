@@ -10,7 +10,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
     {
         private string _QRType = "SPC";     //Fixed value "SPC" (Swiss Payments Code)
         private string _Version = "0200";   //
-        private string _Coding_Type = 1;    // Character set code.Fixed value 1 (indicates UTF-8 restricted to the Latin character set)
+        private string _Coding_Type = "1";    // Character set code.Fixed value 1 (indicates UTF-8 restricted to the Latin character set)
 
         private string _IBAN = "CH07 9999 9999 9999 9999 9";  //default
         private string _AdressType = "S";       //"S" - structured address; "K" - combined address elements(2 lines)
@@ -24,11 +24,6 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private string _Amt = "0";  //Amount  0.01 and CHF/EUR 999999999.99 only . as separator, no leading 0's
         private string _Ccy = "CHF";  //Currency
-        private string _ = "";  //
-        private string _ = "";  //
-        private string _ = "";  //
-        private string _ = "";  //
-        private string _ = "";  //
 
 
 
