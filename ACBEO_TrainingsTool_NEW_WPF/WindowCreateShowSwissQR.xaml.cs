@@ -20,47 +20,50 @@ namespace ACBEO_TrainingsTool_NEW_WPF
     /// </summary>
     public partial class WindowCreateShowSwissQR : Window
     {
-        public WindowCreateShowSwissQR(string trainingDate, string pilotName, string billMessage)
+        private string _billMessage;
+        private string _twintTitle = "twint";
+        private string _twintLink_part1 = "twint/light/02:...#";
+        private string _twintLink_part2 = "rn/twint/a...A/rn";
+
+        public WindowCreateShowSwissQR(decimal billAmount, string billMessage, bool includeTwint)
         {
             InitializeComponent();
 
+            AlternativeScheme twintScheme = new AlternativeScheme();
+            twintScheme.Name = _twintTitle;
+            twintScheme.Instruction = _twintLink_part1;  //first part twint link
+            List<AlternativeScheme> altSchemes = new List<AlternativeScheme>();
+            altSchemes.Clear();
+            if (includeTwint)
+            {
+                altSchemes.Add(twintScheme);
+                if (billMessage.Length > 138 - _twintLink_part2.Length)
+                {
+                    _billMessage = $"{billMessage.Substring(0, 138 - _twintLink_part2.Length)}  {_twintLink_part2}";
+                }
+                else
+                {
+                    _billMessage = $"{billMessage}  {_twintLink_part2}";
+                }
+            }
+            else 
+            {
+                if (billMessage.Length > 140)
+                {
+                    _billMessage = billMessage.Substring(0, 140);
+                }
+                else
+                {
+                    _billMessage = billMessage;
+                }
+            }
             // create bill data
             try
             {
                 Bill bill = new Bill
                 {
-                    /*// creditor data
-                    Account = "CH0799999999999999999",
-                    Creditor = new Address
-                    {
-                        Name = "Some Club",
-                        AddressLine1 = "test 9",
-                        AddressLine2 = "3000 Bern",
-                        CountryCode = "CH"
-                    },
-
-                    // payment data
-                    Amount = 199.95m,
-                    Currency = "CHF",
-
-                    // debtor data
-                    Debtor = new Address
-                    {
-                        Name = pilotName,         
-                        AddressLine1 = "Grosse Marktgasse 28",
-                        AddressLine2 = "9400 Rorschach",
-                        CountryCode = "CH"
-                    },
-
-                    // more payment data
-                    ReferenceType = "NON",
-                    Reference = "0",
-                    //Reference = "21000000000313947143000 9017",
-                    UnstructuredMessage = "Abonnement für 2020"*/
-
-                    
                     // creditor data
-                    
+                    Account = "CH0799999999999999999",
                     Creditor = new Address
                     {
                         Name = "Some Club",
@@ -70,23 +73,23 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     },
 
                     // payment data
-                    Amount = 199.95m,
+                    Amount = billAmount,
                     Currency = "CHF",
 
-                    // debtor data
-                    Debtor = new Address
+                    // debtor data  (only working when all lines used)
+                    /*Debtor = new Address
                     {
-                        Name = "Pia-Maria Rutschmann-Schnyder",
-                        AddressLine1 = "Grosse Marktgasse 28",
-                        AddressLine2 = "9400 Rorschach",
-                        CountryCode = "CH"
-                    },
+                        Name = pilotName,
+                        AddressLine1 = "0",
+                        AddressLine2 = "0",
+                        CountryCode = "0"
+                    },*/
 
                     // more payment data
-                    ReferenceType = Bill.ReferenceTypeNoRef,
-                    Reference = "0",
-                    //Reference = "21000000000313947143000 9017",
-                    UnstructuredMessage = "Abonnement für 2020"
+                    ReferenceType = Bill.ReferenceTypeNoRef,  
+                    Reference = null,  //needs to be Null, otherwise the dll sets Reference Type to automatically back to ReferenceTypeQrRef and the IBAN will not be accepted!
+                    UnstructuredMessage = _billMessage,
+                    AlternativeSchemes = altSchemes
                 };
                 billImage.Source = QrBillImage.CreateImage(bill);
             }

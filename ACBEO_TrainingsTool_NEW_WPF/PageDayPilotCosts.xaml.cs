@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
+using MyWPFExtentions;
 
 namespace ACBEO_TrainingsTool_NEW_WPF
 {
@@ -236,7 +237,18 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 //TWINT payment with SwissQR code
                 else if (e2.ColumnIndex == 7)
                 {
-                    WindowCreateShowSwissQR formShowSwissQRBill = new WindowCreateShowSwissQR(actTraining.TrainingDate.ToString(),"Fritzli", "Fritzli hat bezahlt");
+                    decimal paymentamount = 0;
+                    try
+                    {
+                        paymentamount = decimal.Parse(dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex, e2.ColumnIndex));
+                    }
+                    catch (Exception exept)
+                    {
+                        MessageBox.Show("Error parsing TotalCost : '{exept}'");
+                        return;
+                    }
+                    string paymentmessage = $"{actTraining.TrainingDate.ToShortDateString()}{";"}{ actCellParticipant.ComplNameAndLicence}{";Bezahlung Training Pilot;"}{paymentamount.ToString()} ";
+                    WindowCreateShowSwissQR formShowSwissQRBill = new WindowCreateShowSwissQR(paymentamount, paymentmessage, true); 
                     formShowSwissQRBill.ShowDialog();
                 }
                 //add or update PilotCostTable

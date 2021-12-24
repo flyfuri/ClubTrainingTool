@@ -500,6 +500,11 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     if (e2.ColumnIndex == 2) //Cash to ACBEO
                     {
                         actTraining.CashToACBEO = formBuyKeyNumDecimal.return_decimal;
+
+                        decimal paymentamount = formBuyKeyNumDecimal.return_decimal;
+                        string paymentmessage = $"{actTraining.TrainingDate.ToShortDateString()};Abschöpfung Training;{string.Format("{0:0.00}", paymentamount)}";
+                        WindowCreateShowSwissQR formShowSwissQRBill = new WindowCreateShowSwissQR(paymentamount, paymentmessage, false);
+                        formShowSwissQRBill.ShowDialog();
                     }
                     //update Training in database
                     updateTrainingInDB(actTraining);
