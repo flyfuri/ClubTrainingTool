@@ -46,5 +46,10 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
             buttonClose.Focus();
         }
+
+        private void checkBoxTwintInQR_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

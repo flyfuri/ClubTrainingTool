@@ -25,7 +25,12 @@
                   CanUserReorderColumns="False"
                   CanUserSortColumns="False"
                   CanUserAddRows="False"
-                  CanUserDeleteRows="False" PreviewMouseLeftButtonUp="dataGridViewDisplay_PreviewMouseLeftButtonUp">
+                  CanUserDeleteRows="False" 
+                  PreviewMouseLeftButtonUp="dataGridViewDisplay_PreviewMouseLeftButtonUp"
+                  FrozenColumnCount="1"
+                  ColumnWidth="*" 
+                  MinColumnWidth="50" MaxColumnWidth="60" 
+                  AutoGeneratingColumn="dataGridViewDisplay_AutoGeneratingColumn">
             <DataGrid.Columns>
             </DataGrid.Columns>
         </DataGrid>

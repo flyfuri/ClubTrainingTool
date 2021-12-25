@@ -470,5 +470,30 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 }*/
             }
         }
+
+        //wraping the data grid header
+        private void dataGridViewDisplay_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (dataGridViewDisplay.Columns.Count == 1)
+            {
+                dataGridViewDisplay.Columns[0].MaxWidth = 200;
+                dataGridViewDisplay.Columns[0].MinWidth = 200;
+            }
+            TextBlock tbHeader = new TextBlock();
+            tbHeader.TextWrapping = TextWrapping.Wrap;  //for wrapping the Header  
+            tbHeader.Text = e.Column.Header.ToString();
+            tbHeader.SizeChanged += TbHeader_SizeChanged;
+
+            e.Column.Header = tbHeader;
+        }
+
+        //change dategrid header height when wrapping
+        private void TbHeader_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Height > dataGridViewDisplay.ColumnHeaderHeight)
+            {
+                dataGridViewDisplay.ColumnHeaderHeight = e.NewSize.Height + 5;
+            }
+        }
     }
 }

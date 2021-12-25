@@ -19,6 +19,9 @@
             </Style.Triggers>
         </Style>
 
+        <!--new style for datagrids with wrapped header text-->
+        
+
         <!--defualt style datagrids-->
         <Style x:Key="{x:Type DataGrid}" TargetType="{x:Type DataGrid}">
             <Setter Property="AlternatingRowBackground" Value="#C2C2C2"/>
@@ -28,6 +31,7 @@
             <Setter Property="MinRowHeight" Value="35"/>
             <Setter Property="MinColumnWidth" Value="20"/>
         </Style>
+            
 
         <!--make calender picker bigger-->
         <Style x:Key="DatePickerCalendarStyleTablet" TargetType="{x:Type Calendar}">

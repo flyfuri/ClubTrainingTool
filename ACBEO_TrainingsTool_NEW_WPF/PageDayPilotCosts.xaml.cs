@@ -150,7 +150,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             e2.wpf_e = e;
 
             if (e2.RowIndex >= 0
-               & e2.RowIndex < dataGridViewDisplay.Items.Count - 1
+               & e2.RowIndex <= dataGridViewDisplay.Items.Count - 1
                & (e2.ColumnIndex == 0
                || e2.ColumnIndex == 6
                || e2.ColumnIndex == 8
@@ -308,6 +308,30 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         TotalCostUpdateDisplay();
                     }
                 }
+            }
+        }
+
+        //wraping the data grid header
+        private void dataGridViewDisplay_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (dataGridViewDisplay.Columns.Count == 1)
+            {
+                dataGridViewDisplay.Columns[0].MinWidth = 200;
+            }
+            TextBlock tbHeader = new TextBlock();
+            tbHeader.TextWrapping = TextWrapping.Wrap;  //for wrapping the Header  
+            tbHeader.Text = e.Column.Header.ToString();
+            tbHeader.SizeChanged += TbHeader_SizeChanged;
+
+            e.Column.Header = tbHeader;
+        }
+
+        //change dategrid header height when wrapping
+        private void TbHeader_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Height > dataGridViewDisplay.ColumnHeaderHeight)
+            {
+                dataGridViewDisplay.ColumnHeaderHeight = e.NewSize.Height + 5;
             }
         }
     }

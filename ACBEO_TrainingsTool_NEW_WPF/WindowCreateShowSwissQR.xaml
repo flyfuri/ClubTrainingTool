@@ -6,12 +6,42 @@
         xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
         mc:Ignorable="d"
         Title="WindowCreateShowSwissQR" Height="450" Width="800">
-    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
-        
-        <Label Content="Swiss QR Bill" HorizontalAlignment="Left" Margin="20,16,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-        <Image x:Name="billImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,60,20,50"/>
-        <Button x:Name="buttonClose" Content="CLOSE" HorizontalAlignment="Right" Margin="0,0,20,20" 
-                VerticalAlignment="Bottom" Padding="10,2" Click="buttonClose_Click">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Swiss QR Bill"
+               Grid.Row="1" Grid.Column="1"  Margin="5" 
+               VerticalAlignment="Top" FontSize="18" FontWeight="Bold">
+        </Label>
+
+        <Image x:Name="billImage" Grid.Row="2" Grid.Column="1" Margin="5"
+            Grid.ColumnSpan="3"
+               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        </Image>
+
+        <Button x:Name="buttonClose" Content="CLOSE"  
+                Grid.Row="1" Grid.Column="3" Margin="5" 
+                Click="buttonClose_Click">
         </Button>
+
+        <CheckBox x:Name="checkBoxTwintInQR"   
+                    Grid.Row="1" Grid.Column="2" Margin="5"
+                    Content="Twint in QR integrated" 
+                    Checked="checkBoxTwintInQR_Checked" Unchecked="checkBoxTwintInQR_Unchecked"
+                    >
+
+        </CheckBox>
     </Grid>
 </Window>

@@ -26,7 +26,10 @@
                   CanUserSortColumns="False"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False" PreviewMouseLeftButtonUp="dataGridViewDisplay_PreviewMouseLeftButtonUp" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible"
-                  FrozenColumnCount="1">
+                  FrozenColumnCount="1"
+                  ColumnWidth="*" 
+                  MinColumnWidth="60"
+                  AutoGeneratingColumn="dataGridViewDisplay_AutoGeneratingColumn">
             <DataGrid.Columns>
             </DataGrid.Columns>
         </DataGrid>
