@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>SQL_DB_ACBEO_Trainingstool</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{2233bcd0-ba71-43d5-bb1e-1897c2c9dbd8}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>SQL_DB_ACBEO_Trainingstool</RootNamespace>
+    <AssemblyName>SQL_DB_ACBEO_Trainingstool</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Stored Procedures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\TableAbos.sql" />
+    <Build Include="dbo\Tables\TablePilots.sql" />
+    <Build Include="dbo\Tables\TableTrainings.sql" />
+    <Build Include="dbo\Tables\TableAboFlight.sql" />
+    <Build Include="dbo\Tables\TblDayPilotCosts.sql" />
+    <Build Include="dbo\Tables\Payments.sql" />
+    <Build Include="dbo\Tables\TableTurns.sql" />
+    <Build Include="dbo\Tables\TblParticipants.sql" />
+    <Build Include="dbo\Tables\TableTrainingCost.sql" />
+    <Build Include="dbo\Tables\TableDayPilotBuy.sql" />
+    <Build Include="dbo\Stored Procedures\Pilots_getAllActiv.sql" />
+    <Build Include="dbo\Stored Procedures\Trainings_getLatest.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_Fees.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlights_getAllUsableByPilotID.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlights_update.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_onlyComments.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlights_updateDateFlightPayedWith.sql" />
+    <Build Include="dbo\Stored Procedures\Turns_update.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_JobMoneyPayed.sql" />
+    <Build Include="dbo\Stored Procedures\Turns_add.sql" />
+    <Build Include="dbo\Stored Procedures\DayPilotCostsByTrainingID.sql" />
+    <Build Include="dbo\Stored Procedures\getAllAbosFlightsUnused_sortedByName.sql" />
+    <Build Include="dbo\Stored Procedures\getAboUsable_byPilotID.sql" />
+    <Build Include="dbo\Stored Procedures\TrainingCosts_getAllCurrentYear.sql" />
+    <Build Include="dbo\Stored Procedures\Trainings_orderdByDate.sql" />
+    <Build Include="dbo\Stored Procedures\MaterialSold_OverviewCurrentYear.sql" />
+    <Build Include="dbo\Stored Procedures\Training_GetByID.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlight_getUsableOfPilotBoughtThisTraining.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlights_deleteByID.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_LeiterJobs.sql" />
+    <Build Include="dbo\Stored Procedures\Trainings_add.sql" />
+    <Build Include="dbo\Stored Procedures\TrainingCosts_getByBelegNr.sql" />
+    <Build Include="dbo\Stored Procedures\getAllAbosCurrentYear.sql" />
+    <Build Include="dbo\Stored Procedures\Abos_add.sql" />
+    <Build Include="dbo\Stored Procedures\Training_GetByTrainingDate.sql" />
+    <Build Include="dbo\Stored Procedures\getAbos_byPilotID.sql" />
+    <Build Include="dbo\Stored Procedures\Turns_getByTrainID.sql" />
+    <Build Include="dbo\Stored Procedures\Pilots_add.sql" />
+    <Build Include="dbo\Stored Procedures\Pilots_update.sql" />
+    <Build Include="dbo\Stored Procedures\Pilots_delete.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_LeiterJobs_COUNT.sql" />
+    <Build Include="dbo\Stored Procedures\TrainingCosts_getByDateAndBelegNr.sql" />
+    <Build Include="dbo\Stored Procedures\DayPilotBuyByTrainingIDParticipantIDtest.sql" />
+    <Build Include="dbo\Stored Procedures\TrainingCosts_OverviewGivenYear.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlight_getAboFlightsPayedBackWithDayPilotID.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_Material.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_Others.sql" />
+    <Build Include="dbo\Stored Procedures\Training_update.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_TotalJobsBus.sql" />
+    <Build Include="dbo\Stored Procedures\Participants_delete.sql" />
+    <Build Include="dbo\Stored Procedures\getAbo_byAboID.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_TotalAboFlights0fromJobs.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlights_getAllByPilotIDinValidPeriod.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlight_getAboNrsOfDayPilot.sql" />
+    <Build Include="dbo\Stored Procedures\Participants_add.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_AbosSold.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_FligthsPayedWithoutAbo_COUNT.sql" />
+    <Build Include="dbo\Stored Procedures\TrainingCosts_getByID.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_differentPilots_COUNT.sql" />
+    <Build Include="dbo\Stored Procedures\TrainingCosts_getByDate.sql" />
+    <Build Include="dbo\Stored Procedures\Paricipants_delete.sql" />
+    <Build Include="dbo\Stored Procedures\DayPilotCostsByTrainingIDParticipantID.sql" />
+    <Build Include="dbo\Stored Procedures\DayPilotCosts_add.sql" />
+    <Build Include="dbo\Stored Procedures\DayPiloCost_ByTrainingIDParticipantID.sql" />
+    <Build Include="dbo\Stored Procedures\DayPilotCosts_update.sql" />
+    <Build Include="dbo\Stored Procedures\Pilots_getAll.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlights_getAllOfCurrentYear.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlights_add.sql" />
+    <Build Include="dbo\Stored Procedures\TurnsByTrainingIDParticipantID.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_AbosFlightsUnused.sql" />
+    <Build Include="dbo\Stored Procedures\getAllTrainingsGivenYear.sql" />
+    <Build Include="dbo\Stored Procedures\Participants_deleteFromAllTables.sql" />
+    <Build Include="dbo\Stored Procedures\Abos_update.sql" />
+    <Build Include="dbo\Stored Procedures\Pilots_getByID.sql" />
+    <Build Include="dbo\Stored Procedures\ParticipantsByTrainingID.sql" />
+    <Build Include="dbo\Stored Procedures\Trainings_getOverviewCurrentYear.sql" />
+    <Build Include="dbo\Stored Procedures\DayPilotBuyByTrainingIDParticipantID.sql" />
+    <Build Include="dbo\Stored Procedures\AboFlight_getAboFlightsPayedWithDayPilotID.sql" />
+    <Build Include="dbo\Stored Procedures\Turns_getByTurnID.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_TotalFlightsToPay.sql" />
+    <Build Include="dbo\Stored Procedures\Turn_getByTurnID.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_TotalFlightsPayedWithAbo.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_TotalJobsDone.sql" />
+    <Build Include="dbo\Stored Procedures\TrainingCosts_add.sql" />
+    <Build Include="dbo\Stored Procedures\getPilotBuysOverviewGivenYear_TotalAboFlights_0_unused.sql" />
+    <Build Include="dbo\Stored Procedures\TrainingCosts_update.sql" />
+    <Build Include="dbo\Stored Procedures\DayPilotBuy_add.sql" />
+    <Build Include="dbo\Stored Procedures\Training_GetByYEAR.sql" />
+    <Build Include="dbo\Stored Procedures\DayPilotBuy_update.sql" />
+  </ItemGroup>
+</Project>

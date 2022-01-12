@@ -1,0 +1,61 @@
+﻿<Page x:Name="Page_TrainingOverview" x:Class="ACBEO_TrainingsTool_NEW_WPF.PageTrainingOverview"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PageTrainingOverview" Loaded="Page_TrainingOverview_Loaded">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*" MinHeight="50"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="labelPilotName" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="5"
+               Content="" VerticalAlignment="Center"/>
+
+        <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" Margin="5"
+               Content="FROM" VerticalAlignment="Center" HorizontalContentAlignment="Right"/>
+        <ComboBox x:Name="comboBoxFrom" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+                  VerticalAlignment="Center" SelectionChanged="comboBoxFrom_SelectionChanged">
+        </ComboBox>
+        <Label Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="1" Margin="5"
+               Content="TO" VerticalAlignment="Center" HorizontalContentAlignment="Right"/>
+        <ComboBox x:Name="comboBoxTo" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="1" Margin="5"
+                  VerticalAlignment="Center" SelectionChanged="comboBoxTo_SelectionChanged">
+        </ComboBox>
+
+        <Label x:Name="labelCntTraining" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="1" Margin="5"
+               Content="FROM" VerticalAlignment="Center" HorizontalContentAlignment="Right"/>
+
+        <Button x:Name="buttonClose" Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="1" Margin="5"
+                FontSize="20" Content="CLOSE" Click="buttonClose_Click" >
+        </Button>
+
+        <DataGrid x:Name="dataGridViewDisplay" Grid.Row="2" Grid.Column="1"
+                  Margin="5" Grid.RowSpan="1" Grid.ColumnSpan="7"
+                  CanUserAddRows="False"
+                  CanUserSortColumns="False"
+                  CanUserDeleteRows="False"
+                  CanUserResizeRows="False"
+                  AutoGenerateColumns="True">
+        </DataGrid>
+
+    </Grid>
+</Page>

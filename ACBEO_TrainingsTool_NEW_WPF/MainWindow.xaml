@@ -34,6 +34,8 @@
                     <MenuItem x:Name="menuItemCLOSE" Header="CLOSE" Click="menuItemCLOSE_Click"/>
                     <MenuItem x:Name="menuItemNEW" Header="NEW" Click="menuItemNEW_Click"/>
                     <Separator/>
+                    <MenuItem x:Name="menuItemOverView" Header="Overview" Click="menuItemOverView_Click"/>
+                    <Separator/>
                     <MenuItem Header="Finis/Send"/>
                     <Separator/>
                     <MenuItem x:Name="menuItemSetActYear" Header="Change actual YEAR" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown"/>

@@ -434,6 +434,13 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 }
             }
         }
+
+        private void menuItemOverView_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (ItemsControl m in MenueMain.Items)
+                m.IsEnabled = true;
+            MainFrame.Content = new PageTrainingOverview();
+        }
     }
 }
 
