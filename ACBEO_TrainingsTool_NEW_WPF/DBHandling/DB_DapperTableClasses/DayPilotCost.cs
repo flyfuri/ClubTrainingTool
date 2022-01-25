@@ -56,8 +56,9 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 }
             }
         }
-        public decimal PayedAmount { get; set; }
+        public decimal PayedAmount { get; set; } //cash
         public bool PayedFlag { get; set; }
+        public decimal PayedTwint { get; set; }
 
         public List<string> valueList
         {

@@ -8,6 +8,7 @@
     [PayWithAbo]        INT   NULL,
     [PayedAmount]       MONEY NULL,
     [PayedFlag]         BIT   NULL,
+    [PayedTwint] MONEY NULL, 
     PRIMARY KEY CLUSTERED ([DayPilotCostID] ASC)
 );
 
