@@ -116,11 +116,13 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             //update total payed by pilots
             dayPilotCosts = dbUpdate.getDayPilotCostsByTrainID(actTrningID);
             decimal totalPayedByPilots = 0;
+            decimal totalPayedByPltsTwint = 0;
             bool flagAllPilotsHavePayed = true;
             List<string> tempRowSummary = new List<string>();
             foreach (DayPilotCost dayPilotCost in dayPilotCosts)
             {
                 totalPayedByPilots = totalPayedByPilots + dayPilotCost.PayedAmount;
+                totalPayedByPltsTwint = totalPayedByPltsTwint + dayPilotCost.PayedTwint;
                 if (!dayPilotCost.PayedFlag)
                 {
                     flagAllPilotsHavePayed = false;
@@ -145,8 +147,15 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             displaySummary.Rows.Add();
 
             tempRowSummary.Clear();
-            tempRowSummary.Add("Total Payed by Pilots");
+            tempRowSummary.Add("Total Payed by Pilots CASH");
             tempRowSummary.Add(totalPayedByPilots.ToString());
+            tempRowSummary.Add("");
+            tempRowSummary.Add("");
+            displaySummary.Rows.Add(tempRowSummary.ToArray());
+
+            tempRowSummary.Clear();
+            tempRowSummary.Add("Total Payed by Pilots TWINT");
+            tempRowSummary.Add(totalPayedByPltsTwint.ToString());
             tempRowSummary.Add("");
             tempRowSummary.Add("");
             displaySummary.Rows.Add(tempRowSummary.ToArray());
@@ -155,7 +164,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             tempRowSummary.Add("Win/loss of this Training");
             tempRowSummary.Add("");
             tempRowSummary.Add("");
-            decimal totThisTraining = totalPayedByPilots - totalCostTraining;
+            decimal totThisTraining = totalPayedByPilots + totalPayedByPltsTwint - totalCostTraining;
             tempRowSummary.Add(totThisTraining.ToString());
             displaySummary.Rows.Add(tempRowSummary.ToArray());
             displaySummary.Rows.Add();
@@ -180,7 +189,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             tempRowSummary.Add("Money left");
             tempRowSummary.Add("");
             tempRowSummary.Add("");
-            tempRowSummary.Add((totThisTraining + actTraining.CashAtBegin - actTraining.CashToACBEO).ToString());
+            tempRowSummary.Add((totThisTraining + actTraining.CashAtBegin - actTraining.CashToACBEO - totalPayedByPltsTwint).ToString());
             displaySummary.Rows.Add(tempRowSummary.ToArray());
             dataGridViewSummary.ItemsSource = displaySummary.DefaultView;  //DefaultView new due to WPF
 

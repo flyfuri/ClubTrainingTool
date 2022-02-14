@@ -154,4 +154,7 @@
     <Build Include="dbo\Stored Procedures\Training_GetByYEAR.sql" />
     <Build Include="dbo\Stored Procedures\DayPilotBuy_update.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SQL_DB_ACBEO_Trainingstool_laptopBF.publish.publish.xml" />
+  </ItemGroup>
 </Project>

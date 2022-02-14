@@ -62,9 +62,11 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 display.Columns.Add();
                 display.Columns[7].ColumnName = "Total noch zu bezahlen";
                 display.Columns.Add();
-                display.Columns[8].ColumnName = "Bezahlt (genauer Betrag)";
+                display.Columns[8].ColumnName = "Bezahlt (genauer Betrag)"; 
                 display.Columns.Add();
-                display.Columns[9].ColumnName = "OK alles Bezahlt";
+                display.Columns[9].ColumnName = "Bezahlt (TWINT)";
+                display.Columns.Add();
+                display.Columns[10].ColumnName = "OK alles Bezahlt";
 
             }
 
@@ -96,7 +98,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 {
                     listTempRow.Clear();
                     listTempRow.Add(participant.ComplNameAndLicence);
-                    for (int i = 1; i < 8; i++)
+                    for (int i = 1; i < 9; i++)
                     {
                         listTempRow.Add("");
                     }
@@ -155,6 +157,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                || e2.ColumnIndex == 6
                || e2.ColumnIndex == 8
                || e2.ColumnIndex == 9
+               || e2.ColumnIndex == 10
                || e2.ColumnIndex == 7))
             {
                 int actCellPilotID = participants[e2.RowIndex].PilotID;
@@ -252,7 +255,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     formShowSwissQRBill.ShowDialog();
                 }
                 //add or update PilotCostTable
-                if (!boolFormWasCancled & (e2.ColumnIndex == 8 || e2.ColumnIndex == 9))
+                if (!boolFormWasCancled & (e2.ColumnIndex == 8 || e2.ColumnIndex == 9 || e2.ColumnIndex == 10))
                 {
                     //Get record by cell position via partitipant and trainingNr
                     tempRowOfTotCosts = db.getDayPilotCostsByTrainIDParticipID(actTraining.TrainingID, actCellParticipant.ParticipantID);
@@ -269,6 +272,10 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                                 break;
 
                             case 9:
+                                tempDayPilotCost.PayedTwint = decimalFormKeyDecResult;
+                                break;
+
+                            case 10:
                                 if (stringFormABCResult == "OK")
                                 {
                                     tempDayPilotCost.PayedFlag = true;
@@ -294,6 +301,10 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                                 break;
 
                             case 9:
+                                tempRowOfTotCosts[0].PayedTwint = decimalFormKeyDecResult;
+                                break;
+
+                            case 10:
                                 if (stringFormABCResult == "OK")
                                 {
                                     tempRowOfTotCosts[0].PayedFlag = true;
