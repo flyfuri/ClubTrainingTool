@@ -59,8 +59,37 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         public decimal PayedAmount { get; set; } //cash
         public bool PayedFlag { get; set; }
         public decimal PayedTwint { get; set; }
+        public string PayedTwintReference { get; set; }
 
-        public List<string> valueList
+        public List<string> valueList //order for view
+        {
+            get
+            {
+                List<string> tempList = new List<string>();
+                tempList.Clear();
+                tempList.Add(CostFlights.ToString());
+                tempList.Add(CostOtherServices.ToString());
+                tempList.Add(BalanceFlighAndServices.ToString());
+                tempList.Add(CostBuy.ToString());
+                tempList.Add(payableWithAbo.ToString());
+                tempList.Add(payedWithAbo.ToString());
+                tempList.Add(TotalToPay.ToString());
+                tempList.Add(PayedAmount.ToString());
+                tempList.Add(PayedTwint.ToString());
+                tempList.Add(PayedTwintReference);
+                if (PayedFlag)
+                {
+                    tempList.Add("OK");
+                }
+                else
+                {
+                    tempList.Add("");
+                }     
+                return tempList;
+            }
+        }
+
+        public List<string> valueListinDBOrder
         {
             get
             {
@@ -81,7 +110,9 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 else
                 {
                     tempList.Add("");
-                }              
+                }
+                tempList.Add(PayedTwint.ToString());
+                tempList.Add(PayedTwintReference);
                 return tempList;
             }
         }

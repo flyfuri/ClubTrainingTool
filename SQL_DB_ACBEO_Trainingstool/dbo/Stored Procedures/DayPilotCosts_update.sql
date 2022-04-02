@@ -6,7 +6,9 @@
 	@CostOtherServices MONEY,
 	@CostBuy MONEY,
 	@PayedAmount MONEY,
-	@PayedFlag MONEY
+	@PayedFlag BIT,
+	@PayedTwint MONEY,
+	@PayedTwintReference TEXT
 AS
 BEGIN
 	UPDATE TblDayPilotCosts 	
@@ -16,7 +18,8 @@ BEGIN
 			CostOtherServices = @CostOtherServices,
 			CostBuy = @CostBuy,
 			PayedAmount = @PayedAmount,
-			PayedFlag = @PayedFlag
-
+			PayedFlag = @PayedFlag,
+			PayedTwint = @PayedTwint, 
+			PayedTwintReference = @PayedTwintReference
 	WHERE   DayPilotCostID = @DayPilotCostsID
 END

@@ -9,6 +9,7 @@
     [PayedAmount]       MONEY NULL,
     [PayedFlag]         BIT   NULL,
     [PayedTwint] MONEY NULL, 
+    [PayedTwintReference] TEXT NULL, 
     PRIMARY KEY CLUSTERED ([DayPilotCostID] ASC)
 );
 

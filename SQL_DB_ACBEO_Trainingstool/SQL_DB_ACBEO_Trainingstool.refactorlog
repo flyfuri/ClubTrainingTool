@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="948983a5-be5c-4615-a71e-98af27f7269f" ChangeDateTime="04/02/2022 11:13:45">
+    <Property Name="ElementName" Value="[dbo].[TblDayPilotCosts].[PayedTwintReferenz]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TblDayPilotCosts]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PayedTwintReference" />
+  </Operation>
+</Operations>

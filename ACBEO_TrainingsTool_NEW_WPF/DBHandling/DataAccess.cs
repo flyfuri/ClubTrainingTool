@@ -225,7 +225,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DBHelper.CnnVal("TrainingsRapportConnectionString")))
             {
-                connection.Execute("dbo.DayPilotCosts_add @TrainingID, @ParticipantID, @CostFlights, @CostOtherServices, @CostBuy, @PayedAmount, @PayedFlag", listDayPilotCostsToAdd);
+                connection.Execute("dbo.DayPilotCosts_add @TrainingID, @ParticipantID, @CostFlights, @CostOtherServices, @CostBuy, @PayedAmount, @PayedFlag, @PayedTwint, @PayedTwintReference", listDayPilotCostsToAdd);
             }
         }
 
@@ -234,7 +234,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DBHelper.CnnVal("TrainingsRapportConnectionString")))
             {
-                connection.Execute("dbo.DayPilotCosts_update @DayPilotCostID, @TrainingID, @ParticipantID, @CostFlights, @CostOtherServices, @CostBuy, @PayedAmount, @PayedFlag", listDayPilotCostsToUpdate);
+                connection.Execute("dbo.DayPilotCosts_update @DayPilotCostID, @TrainingID, @ParticipantID, @CostFlights, @CostOtherServices, @CostBuy, @PayedAmount, @PayedFlag, @PayedTwint, @PayedTwintReference", listDayPilotCostsToUpdate);
             }
         }
 

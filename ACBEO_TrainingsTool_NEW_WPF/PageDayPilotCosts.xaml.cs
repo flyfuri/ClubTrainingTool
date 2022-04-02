@@ -62,11 +62,13 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 display.Columns.Add();
                 display.Columns[7].ColumnName = "Total noch zu bezahlen";
                 display.Columns.Add();
-                display.Columns[8].ColumnName = "Bezahlt (genauer Betrag)"; 
+                display.Columns[8].ColumnName = "Bezahlt (Cash - genauer Betrag)"; 
                 display.Columns.Add();
-                display.Columns[9].ColumnName = "Bezahlt (TWINT)";
+                display.Columns[9].ColumnName = "Bezahlt (TWINT - genauer Betrag)";
                 display.Columns.Add();
-                display.Columns[10].ColumnName = "OK alles Bezahlt";
+                display.Columns[10].ColumnName = "Date/Time from TWINT App";
+                display.Columns.Add();
+                display.Columns[11].ColumnName = "OK alles Bezahlt";
 
             }
 
@@ -98,7 +100,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 {
                     listTempRow.Clear();
                     listTempRow.Add(participant.ComplNameAndLicence);
-                    for (int i = 1; i < 9; i++)
+                    for (int i = 1; i < 11; i++)
                     {
                         listTempRow.Add("");
                     }
@@ -157,8 +159,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                || e2.ColumnIndex == 6
                || e2.ColumnIndex == 8
                || e2.ColumnIndex == 9
-               || e2.ColumnIndex == 10
-               || e2.ColumnIndex == 7))
+               || e2.ColumnIndex == 10))
             {
                 int actCellPilotID = participants[e2.RowIndex].PilotID;
                 Participant actCellParticipant = participants[e2.RowIndex];
@@ -203,15 +204,22 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     formPayWithAbo.ShowDialog();
                     TotalCostUpdateDisplay();
                 }
-                else if (e2.ColumnIndex == 8) //numeric ************************
+                else if (e2.ColumnIndex == 8 || e2.ColumnIndex == 9) //numeric ************************
                 {
-                    decimal defaultValueDecimal;
-                    bool flagUseDefaultValue;
+                    decimal defaultValueDecimal = 0;
+                    bool flagUseDefaultValue = false;
 
                     tempRowOfTotCosts = db.getDayPilotCostsByTrainIDParticipID(actTraining.TrainingID, actCellParticipant.ParticipantID);
                     if (tempRowOfTotCosts.Count > 0)
                     {
-                        defaultValueDecimal = tempRowOfTotCosts[0].PayedAmount;
+                        if(e2.ColumnIndex == 8)
+                        {
+                            defaultValueDecimal = tempRowOfTotCosts[0].PayedAmount;
+                        }
+                        else if (e2.ColumnIndex == 9)
+                        {
+                            defaultValueDecimal = tempRowOfTotCosts[0].PayedTwint;
+                        }
                         flagUseDefaultValue = true;
                     }
                     else
@@ -224,7 +232,106 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     boolFormWasCancled = formKeyNumDecimal.wasCanceled;
                     decimalFormKeyDecResult = formKeyNumDecimal.return_decimal;
                 }
-                else if (e2.ColumnIndex == 9) //alpanumeric ************************
+                //TWINT payment with SwissQR code
+                else if (e2.ColumnIndex == 10)
+                {
+                    
+                    bool twintModifyCanceled = false;
+                    string twintRef = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex, 10);
+
+                    //in case theres already a value, ask if want to modifie...
+                    if (twintRef != "")
+                    {
+                        MessageBoxResult msgBoxResult = MessageBox.Show("Do you really want to modify date and time of Twint Payment reference?",
+                                                                "",
+                                                                MessageBoxButton.YesNo,
+                                                                MessageBoxImage.Question);
+                        twintModifyCanceled = !(msgBoxResult.Equals(MessageBoxResult.Yes));
+                    }
+
+                    if (!twintModifyCanceled)
+                    {
+                        decimal paymentamount = 0;
+
+                        try
+                        {
+                            paymentamount = decimal.Parse(dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex, 9));
+                        }
+                        catch (Exception exept)
+                        {
+                            MessageBox.Show("Error parsing TotalCost : '{exept}'");
+                            return;
+                        }
+
+                        //open window to set payment amount if 0..
+                        if (paymentamount <= 0)  //open window for amountif 0
+                        {
+                            decimal defaultValueDecimal;
+                            bool flagUseDefaultValue;
+
+                            tempRowOfTotCosts = db.getDayPilotCostsByTrainIDParticipID(actTraining.TrainingID, actCellParticipant.ParticipantID);
+                            if (tempRowOfTotCosts.Count > 0)
+                            {
+                                defaultValueDecimal = tempRowOfTotCosts[0].PayedTwint;
+                                flagUseDefaultValue = true;
+                            }
+                            else
+                            {
+                                defaultValueDecimal = 0;
+                                flagUseDefaultValue = false;
+                            }
+                            WindowDialogKeyNumDecimal formKeyNumDecimal = new WindowDialogKeyNumDecimal(flagUseDefaultValue, (int)defaultValueDecimal);
+                            formKeyNumDecimal.ShowDialog();
+                            boolFormWasCancled = formKeyNumDecimal.wasCanceled;
+                            decimalFormKeyDecResult = formKeyNumDecimal.return_decimal;
+                            paymentamount = decimalFormKeyDecResult;
+                        }
+                        else
+                        {
+                            decimalFormKeyDecResult = paymentamount;
+                        }
+
+                        // open window with TWINT QR..
+                        if (paymentamount > 0 & !boolFormWasCancled)
+                        {
+                            string paymentmessage = $"{actTraining.TrainingDate.ToShortDateString()}{";"}{ actCellParticipant.ComplNameAndLicence}{";Bezahlung Training Pilot;"}{paymentamount.ToString()} ";
+                            WindowCreateShowSwissQR formShowSwissQRBill = new WindowCreateShowSwissQR(paymentamount, paymentmessage, true);
+                            formShowSwissQRBill.ShowDialog();
+
+                            //open alphanumeric to set timestamp from TWINT...
+                            string defaultValueString;
+                            //bool flagUseDefaultValue = false;
+
+                            // open window to set TWINT payment reference (currently date, time)...
+                            if (twintRef == "")
+                            {
+                                int actMinute = DateTime.Now.Minute;
+                                if (actMinute < 10)
+                                {
+                                    defaultValueString = $"{DateTime.Now.Year}{"."}{DateTime.Now.Month}{"."}{DateTime.Now.Day}{" "}{DateTime.Now.Hour}{":0"}{actMinute}";
+                                }
+                                else
+                                {
+                                    defaultValueString = $"{DateTime.Now.Year}{"."}{DateTime.Now.Month}{"."}{DateTime.Now.Day}{" "}{DateTime.Now.Hour}{":"}{actMinute}";
+                                }
+                            }
+                            else
+                            {
+                                defaultValueString = twintRef;
+                            }
+
+                            WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValueString);
+                            formAlphanum.ShowDialog();
+                            boolFormWasCancled = formAlphanum.wasCanceled;
+                            stringFormABCResult = formAlphanum.return_string;
+                        }
+                        else if (!boolFormWasCancled)
+                        {
+                            MessageBox.Show("Error: Amount is less than or 0!");
+                        }
+                    }
+                }
+                else if (e2.ColumnIndex == 10) //alpanumeric ************************
                 {
                     string defaultValueString;
                     //bool flagUseDefaultValue = false;
@@ -237,25 +344,9 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     boolFormWasCancled = formAlphanum.wasCanceled;
                     stringFormABCResult = formAlphanum.return_string;
                 }
-                //TWINT payment with SwissQR code
-                else if (e2.ColumnIndex == 7)
-                {
-                    decimal paymentamount = 0;
-                    try
-                    {
-                        paymentamount = decimal.Parse(dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex, e2.ColumnIndex));
-                    }
-                    catch (Exception exept)
-                    {
-                        MessageBox.Show("Error parsing TotalCost : '{exept}'");
-                        return;
-                    }
-                    string paymentmessage = $"{actTraining.TrainingDate.ToShortDateString()}{";"}{ actCellParticipant.ComplNameAndLicence}{";Bezahlung Training Pilot;"}{paymentamount.ToString()} ";
-                    WindowCreateShowSwissQR formShowSwissQRBill = new WindowCreateShowSwissQR(paymentamount, paymentmessage, true); 
-                    formShowSwissQRBill.ShowDialog();
-                }
+
                 //add or update PilotCostTable
-                if (!boolFormWasCancled & (e2.ColumnIndex == 8 || e2.ColumnIndex == 9 || e2.ColumnIndex == 10))
+                if (!boolFormWasCancled & (e2.ColumnIndex == 6 || e2.ColumnIndex == 8 || e2.ColumnIndex == 9 || e2.ColumnIndex == 10 || e2.ColumnIndex == 11))
                 {
                     //Get record by cell position via partitipant and trainingNr
                     tempRowOfTotCosts = db.getDayPilotCostsByTrainIDParticipID(actTraining.TrainingID, actCellParticipant.ParticipantID);
@@ -276,6 +367,11 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                                 break;
 
                             case 10:
+                                tempDayPilotCost.PayedTwint = decimalFormKeyDecResult;
+                                tempDayPilotCost.PayedTwintReference = stringFormABCResult;
+                                break;
+
+                            case 11:
                                 if (stringFormABCResult == "OK")
                                 {
                                     tempDayPilotCost.PayedFlag = true;
@@ -305,6 +401,11 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                                 break;
 
                             case 10:
+                                tempRowOfTotCosts[0].PayedTwint = decimalFormKeyDecResult;
+                                tempRowOfTotCosts[0].PayedTwintReference = stringFormABCResult;
+                                break;
+
+                            case 11:
                                 if (stringFormABCResult == "OK")
                                 {
                                     tempRowOfTotCosts[0].PayedFlag = true;

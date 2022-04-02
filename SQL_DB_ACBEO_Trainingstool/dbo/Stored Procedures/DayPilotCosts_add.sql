@@ -5,9 +5,11 @@
 	@CostOtherServices MONEY,
 	@CostBuy MONEY,
 	@PayedAmount MONEY,
-	@PayedFlag MONEY
+	@PayedFlag BIT,
+	@PayedTwint MONEY,
+	@PayedTwintReference TEXT
 AS
 BEGIN
-	INSERT INTO TblDayPilotCosts(TrainingID, ParticipantID, CostFlights, CostOtherServices, CostBuy, PayedAmount, PayedFlag) 
-	VALUES (@TrainingID, @ParticipantID, @CostFlights, @CostOtherServices, @CostBuy, @PayedAmount, @PayedFlag)
+	INSERT INTO TblDayPilotCosts(TrainingID, ParticipantID, CostFlights, CostOtherServices, CostBuy, PayedAmount, PayedFlag, PayedTwint, PayedTwintReference) 
+	VALUES (@TrainingID, @ParticipantID, @CostFlights, @CostOtherServices, @CostBuy, @PayedAmount, @PayedFlag, @PayedTwint, @PayedTwintReference)
 END
