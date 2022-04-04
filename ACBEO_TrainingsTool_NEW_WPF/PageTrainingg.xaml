@@ -42,11 +42,13 @@
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid x:Name="dataGridViewSummary"  Grid.Row="4" Grid.Column="2" Margin="3"   
-                  Grid.ColumnSpan="5" Grid.RowSpan="4"
+                  Grid.ColumnSpan="6" Grid.RowSpan="4"
                   CanUserReorderColumns="False"
                   CanUserSortColumns="False"
                   CanUserAddRows="False"
-                  CanUserDeleteRows="False" PreviewMouseLeftButtonUp="dataGridViewSummary_PreviewMouseLeftButtonUp">
+                  CanUserDeleteRows="False" PreviewMouseLeftButtonUp="dataGridViewSummary_PreviewMouseLeftButtonUp" 
+                  Background="#C2C2C2" 
+                  AlternatingRowBackground="#C2C2C2" AlternationCount="-1">
             <DataGrid.Columns>
             </DataGrid.Columns>
         </DataGrid>

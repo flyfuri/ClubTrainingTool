@@ -7,6 +7,7 @@
     [Remarks]      TEXT  NULL,
     [Leiter1_ID]   INT   NULL,
     [Leiter2_ID]   INT   NULL,
+    [CashToACBEO_payedBy] TEXT NULL, 
     PRIMARY KEY CLUSTERED ([TrainingID] ASC)
 );
 

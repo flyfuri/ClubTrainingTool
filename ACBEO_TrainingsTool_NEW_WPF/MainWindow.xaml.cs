@@ -27,11 +27,42 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         public Training actualTraining { get; private set; } //actual training 
         public MainWindow()
         {
+            DataAccess db = new DataAccess();
+            List<Training> trainings = new List<Training>();
+
             InitializeComponent();
 
             actYEAR = DateTime.Today.Year;
+
+            do
+            {
+                trainings = db.getTrainingByYEAR(actYEAR);
+                if (trainings.Count <= 0)
+                {
+                    actYEAR = actYEAR - 1;
+                }
+
+            }
+            while (trainings.Count <= 0 & actYEAR > 2016);  //first year of use of this software was 2017...
+            if(actYEAR <= 2016)
+            {
+                actYEAR = DateTime.Today.Year;
+                trainingOpen = false;
+            }
+            else
+            {
+                trainings.Sort((x, y) => y.TrainingDate.CompareTo(x.TrainingDate));
+                if(trainings.Count > 0)
+                {
+                    actualTraining = trainings[0];
+                    textBoxActualTrainingDate.Text = actualTraining.TrainingDate.Date.ToShortDateString();
+                    trainingOpen = true;
+                    MainFrame.Content = new PageTrainingg(actualTraining);
+                    updateDisplayActTrainingAndLeiter1and2();
+                }
+            }
+
             updateWindowTitle();
-            trainingOpen = false;
 
             MainFrame.Content = new PageTrainingg(actualTraining);
         }
@@ -170,7 +201,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             List<Training> trainings = new List<Training>();
 
             trainings = db.getTrainingByYEAR(actYEAR);
-            trainings.Sort((x, y) => x.TrainingDate.CompareTo(y.TrainingDate));
+            //trainings.Sort((x, y) => x.TrainingDate.CompareTo(y.TrainingDate));
+            trainings.Sort((x, y) => y.TrainingDate.CompareTo(x.TrainingDate));
 
             menuItemQuickOpen.Items.Clear();
 

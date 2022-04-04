@@ -66,7 +66,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 display.Columns.Add();
                 display.Columns[9].ColumnName = "Bezahlt (TWINT - genauer Betrag)";
                 display.Columns.Add();
-                display.Columns[10].ColumnName = "Date/Time from TWINT App";
+                display.Columns[10].ColumnName = "Date and Time from TWINT App";
                 display.Columns.Add();
                 display.Columns[11].ColumnName = "OK alles Bezahlt";
 
@@ -227,7 +227,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         defaultValueDecimal = 0;
                         flagUseDefaultValue = false;
                     }
-                    WindowDialogKeyNumDecimal formKeyNumDecimal = new WindowDialogKeyNumDecimal(flagUseDefaultValue, (int)defaultValueDecimal);
+                    WindowDialogKeyNumDecimal formKeyNumDecimal = new WindowDialogKeyNumDecimal(flagUseDefaultValue, defaultValueDecimal);
                     formKeyNumDecimal.ShowDialog();
                     boolFormWasCancled = formKeyNumDecimal.wasCanceled;
                     decimalFormKeyDecResult = formKeyNumDecimal.return_decimal;
