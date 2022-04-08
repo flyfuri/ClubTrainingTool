@@ -31,6 +31,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private List<TrainingCost> trainingCosts = new List<TrainingCost>();
         private List<DayPilotCost> dayPilotCosts = new List<DayPilotCost>();
         private decimal totalCostTraining;
+        private string tempMemory_Remark;
 
         public PageTrainingg(Training actualTraining)
         {
@@ -196,14 +197,15 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             tempRowSummary.Add("Money left");
             tempRowSummary.Add("");
             tempRowSummary.Add("");
-            tempRowSummary.Add((totThisTraining + actTraining.CashAtBegin - actTraining.CashToACBEO - totalPayedByPltsTwint).ToString());
+            tempRowSummary.Add((actTraining.CashAtBegin + totalPayedByPilots - totalCostTraining - actTraining.CashToACBEO - totalPayedByPltsTwint).ToString());
             tempRowSummary.Add("");
             displaySummary.Rows.Add(tempRowSummary.ToArray());
             dataGridViewSummary.ItemsSource = displaySummary.DefaultView;  //DefaultView new due to WPF
 
             //set how table looks like
-            SolidColorBrush bgbrush = new SolidColorBrush(Color.FromRgb(40, 40, 40));
-            dataGridViewSummary.setBgColorByRowColIndexes(2, 2, bgbrush);
+            
+                //SolidColorBrush bgbrush = new SolidColorBrush(Color.FromRgb(40, 40, 40));
+                //dataGridViewSummary.setBgColorByRowColIndexes(2, 2, bgbrush);
 
             ///dataGridViewSummary.ReadOnly = true;
             //dataGridViewSummary.Columns[0].Width = 200;
@@ -231,6 +233,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             dataGridViewSummary.Rows[8].Height = 5;
             dataGridViewSummary.Rows[5].Cells[1].Style.BackColor = Color.White;
             dataGridViewSummary.Rows[7].Cells[2].Style.BackColor = Color.White;**/
+            textBoxRemark.Text = actTraining.Remarks;
+            tempMemory_Remark = actTraining.Remarks;
         }
 
         private void emptyDisplays()
@@ -565,6 +569,23 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         updateDisplay();
                     }
                 }
+            }
+        }
+
+        private void textBoxRemark_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tempMemory_Remark = textBoxRemark.Text.ToString();
+        }
+
+        private void textBoxRemark_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if(tempMemory_Remark != textBoxRemark.Text.ToString())
+            {
+                actTraining.Remarks = textBoxRemark.Text.ToString();
+                //update Training in database
+                updateTrainingInDB(actTraining);
+
+                updateDisplay();
             }
         }
     }
