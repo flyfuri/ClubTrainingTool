@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PageTraining">
+      Title="PageTraining" Loaded="Page_Training_Loaded">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -42,14 +42,32 @@
             <DataGrid.Columns>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="dataGridViewSummary"  Grid.Row="4" Grid.Column="2" Margin="3"   
+        <DataGrid x:Name="dataGridViewSummary"  
+                  Grid.Row="4" Grid.Column="2" Margin="3"   
                   Grid.ColumnSpan="6" Grid.RowSpan="4" 
                   CanUserReorderColumns="False"
                   CanUserSortColumns="False"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False" 
+                  RowBackground="LightGray"
+                  AlternatingRowBackground="LightGray"
+                  AlternationCount="0"
+                  EnableRowVirtualization="false"
                   PreviewMouseLeftButtonUp="dataGridViewSummary_PreviewMouseLeftButtonUp">
-
+            <!--<DataGridTextColumn Binding="{Binding displaySummary}">
+                <DataGridTextColumn.ElementStyle>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="Background" Value="LightGray"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="*">
+                                <Setter Property="Background" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGridTextColumn.ElementStyle>
+            </DataGridTextColumn>-->
         </DataGrid>
         <TextBox x:Name="textBoxRemark" Grid.Row="8" Grid.Column="2" Margin="5"   
                   Grid.ColumnSpan="6" Grid.RowSpan="1" AcceptsReturn="True" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" GotFocus="textBoxRemark_GotFocus" LostFocus="textBoxRemark_LostFocus">

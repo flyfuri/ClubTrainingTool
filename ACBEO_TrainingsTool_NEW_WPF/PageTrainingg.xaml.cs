@@ -51,6 +51,16 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             }
         }
 
+        private void Page_Training_Loaded(object sender, RoutedEventArgs e)
+        {
+            //set how table looks like
+            //dataGridViewSummary.SelectionUnit = DataGridSelectionUnit.Cell;
+            SolidColorBrush bgbrush = new SolidColorBrush(Colors.White);
+            dataGridViewSummary.setBgColorByRowColIndexes(4, 1, bgbrush);
+            dataGridViewSummary.setBgColorByRowColIndexes(5, 2, bgbrush);
+            dataGridViewSummary.setBgColorByRowColIndexes(5, 5, bgbrush);
+            dataGridViewSummary.UnselectAll();
+        }
         private void updateDisplay()
         {
             /**if (textBoxActualTrainingDate.Text.Equals(DateTime.Today.ToShortDateString()))
@@ -203,9 +213,12 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             dataGridViewSummary.ItemsSource = displaySummary.DefaultView;  //DefaultView new due to WPF
 
             //set how table looks like
-            
-                //SolidColorBrush bgbrush = new SolidColorBrush(Color.FromRgb(40, 40, 40));
-                //dataGridViewSummary.setBgColorByRowColIndexes(2, 2, bgbrush);
+            //dataGridViewSummary.SelectionUnit = DataGridSelectionUnit.Cell;
+            SolidColorBrush bgbrush = new SolidColorBrush(Colors.White);
+            dataGridViewSummary.setBgColorByRowColIndexes(4, 1, bgbrush);
+            dataGridViewSummary.setBgColorByRowColIndexes(5, 2, bgbrush);
+            dataGridViewSummary.setBgColorByRowColIndexes(5, 5, bgbrush);
+            dataGridViewSummary.UnselectAll();
 
             ///dataGridViewSummary.ReadOnly = true;
             //dataGridViewSummary.Columns[0].Width = 200;
@@ -479,6 +492,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     updateDisplay();
                 }
             }
+            dataGridViewDispTrnCosts.UnselectAllCells();
         }
 
         private void dataGridViewSummary_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -570,13 +584,14 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     }
                 }
             }
+            dataGridViewSummary.UnselectAllCells();
         }
 
+        //update remark when changed after focus lost...
         private void textBoxRemark_GotFocus(object sender, RoutedEventArgs e)
         {
             tempMemory_Remark = textBoxRemark.Text.ToString();
         }
-
         private void textBoxRemark_LostFocus(object sender, RoutedEventArgs e)
         {
             if(tempMemory_Remark != textBoxRemark.Text.ToString())

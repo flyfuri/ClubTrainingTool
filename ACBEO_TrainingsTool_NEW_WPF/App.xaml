@@ -24,14 +24,20 @@
 
         <!--defualt style datagrids-->
         <Style x:Key="{x:Type DataGrid}" TargetType="{x:Type DataGrid}">
-            <Setter Property="AlternatingRowBackground" Value="#C2C2C2"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="SelectionUnit" Value="Cell"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="WhiteSmoke"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
             <Setter Property="CanUserReorderColumns" Value="False"/>
             <Setter Property="MinRowHeight" Value="35"/>
             <Setter Property="MinColumnWidth" Value="20"/>
         </Style>
-            
+        <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Focusable" Value="False"/>
+        </Style>
+
 
         <!--make calender picker bigger-->
         <Style x:Key="DatePickerCalendarStyleTablet" TargetType="{x:Type Calendar}">

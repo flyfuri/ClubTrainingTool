@@ -207,13 +207,19 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     }
                     if (totalFlightToPay <= iNbrOfValidAboFlights)
                     {
-                        bgColorNames.Add(Color.FromRgb(240, 240, 240));//OLD: ControlLight);
+                        if((bgColorNames.Count)%2 == 0) //check if even (to alternate colors)
+                        {
+                            bgColorNames.Add(Colors.White);
+                        }
+                        else
+                        {
+                            bgColorNames.Add(Colors.WhiteSmoke);
+                        }
                     }
                     else
                     {
-                        bgColorNames.Add(Color.FromRgb(255, 191, 0));    //OLD: .Orange) ; 
+                        bgColorNames.Add(Colors.Orange);    //OLD: .Orange) ; 
                     }
-
 
                     display.Rows.Add();
                     totalFlightToPay = totalFlightToPay * 9;
@@ -250,14 +256,16 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             }*/
             List< SolidColorBrush> bgBrushes= new List<SolidColorBrush>();
             bgBrushes.Clear();
-            dataGridViewDisplay.SelectionUnit = DataGridSelectionUnit.Cell;
+            //dataGridViewDisplay.SelectionUnit = DataGridSelectionUnit.Cell;
             for (int ii = 0; ii < dataGridViewDisplay.Items.Count -1 & ii < bgColorNames.Count ; ii++)
             {
                 //old: dataGridViewDisplay.Items[ii].Cells[0].Style.BackColor = bgColorNames[ii];
+                //ols WPF wrong made: SolidColorBrush bgbrush = new SolidColorBrush(bgColorNames[ii]);
+                //bgBrushes.Add(bgbrush);
+                //dataGridViewDisplay.setBgColorByRowColIndexes(ii, 0, bgBrushes[ii]); //quick and very durty workaround: whole list must live when last cell color is set (otherwise all get that last color)!
                 SolidColorBrush bgbrush = new SolidColorBrush(bgColorNames[ii]);
-                bgBrushes.Add(bgbrush);
-                dataGridViewDisplay.setBgColorByRowColIndexes(ii, 0, bgBrushes[ii]); //quick and very durty workaround: whole list must live when last cell color is set (otherwise all get that last color)!
-            }   
+                dataGridViewDisplay.setBgColorByRowColIndexes(ii, 0, bgbrush);
+            }
         }
 
         private void SetCosts(int participantID, int displayRowIndex)
@@ -469,6 +477,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     db.updateDayPilotCosts(tempDayPilotCost);
                 }*/
             }
+            dataGridViewDisplay.UnselectAllCells();
         }
 
         //wraping the data grid header
