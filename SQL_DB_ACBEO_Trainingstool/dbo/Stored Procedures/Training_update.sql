@@ -7,7 +7,8 @@
 	@Remarks TEXT,
 	@Leiter1_ID INT,
 	@Leiter2_ID INT,
-	@CashToACBEO_PayedBy TEXT
+	@CashToACBEO_PayedBy TEXT,
+	@PayedTwintReference TEXT
 AS
 BEGIN
 	UPDATE TableTrainings
@@ -18,6 +19,7 @@ BEGIN
 			Remarks = @Remarks,
 			Leiter1_ID = @Leiter1_ID,
 			Leiter2_ID = @Leiter2_ID,
-			CashToACBEO_payedBy = @CashToACBEO_PayedBy
+			CashToACBEO_payedBy = @CashToACBEO_PayedBy,
+			PayedTwintReference = @PayedTwintReference
 	WHERE   TrainingID = @TrainingID
 END

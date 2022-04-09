@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel  Grid.Column="0" Grid.Row="0" Orientation="Horizontal" 
-                    Background="#1A9" Grid.ColumnSpan="3" Height="auto" Width="auto">
+                    Background="#009090" Grid.ColumnSpan="3" Height="auto" Width="auto">
             <Menu x:Name="MenueMain" FontSize="20" >
                 <MenuItem x:Name="MenueTraining" Header="TRAINING" PreviewMouseLeftButtonDown="MenueTraining_PreviewMouseLeftButtonDown">
                     <MenuItem x:Name="menuItemQuickOpen" Header="QuickOPEN" MouseEnter="menuItemQuickOpen_MouseEnter" Click="menuItemQuickOpen_Click" >

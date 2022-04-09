@@ -281,12 +281,15 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 else if (e2.ColumnIndex == 8) //alpanumeric ************************
                 {
                     string defaultValue = "";
+                    string windowTitle = "";
                     tempRowOfBuys = db.getDayPilotBuyByTrainIDParticipID(actTrning.TrainingID, participID);
-                    if (tempRowOfBuys.Count > 0)
+                    if (tempRowOfBuys.Count > 0 & e2.ColumnIndex == 8)
                     {
                         defaultValue = tempRowOfBuys[0].Remarks;
+                        windowTitle = "Enter any remarks";
                     }
                     WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValue);
+                    formAlphanum.Title = windowTitle;
                     formAlphanum.ShowDialog();
                     boolFormWasCancled = formAlphanum.wasCanceled;
                     stringFormABCResult = formAlphanum.return_string;
@@ -295,32 +298,40 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 {
                     int defaultValue = 0;
                     bool useDefVal = true;
+                    string windowTitle = "";
 
                     if (e2.ColumnIndex == 2) //LifewestBuy
                     {
                         defaultValue = 85;
+                        windowTitle = "Enter prize lifewest (to buy)";
                     }
                     else if (e2.ColumnIndex == 3) //LifewestRent
                     {
                         defaultValue = 5;
+                        windowTitle = "Enter prize lifewest (to rent)";
                     }
                     else if (e2.ColumnIndex == 4) //YearFee
                     {
                         defaultValue = 100;
+                        windowTitle = "Enter membership fee (YEAR)";
                     }
                     else if (e2.ColumnIndex == 5) //DayFee
                     {
                         defaultValue = 30;
+                        windowTitle = "Enter membership fee (Day)";
                     }
                     else if (e2.ColumnIndex == 6) //AxalpWeekFee
                     {
                         defaultValue = 50;
+                        windowTitle = "Enter membership fee (Axalpweek)";
                     }
                     else if (e2.ColumnIndex == 7) //Others
                     {
                         useDefVal = false;
+                        windowTitle = "Enter prize (others)";
                     }
                     WindowDialogKeyNumDecimal formBuyKeyNumInt = new WindowDialogKeyNumDecimal(true, defaultValue);
+                    formBuyKeyNumInt.Title = windowTitle;
                     formBuyKeyNumInt.ShowDialog();
                     boolFormWasCancled = formBuyKeyNumInt.wasCanceled;
                     decimalFormKeyDecResult = formBuyKeyNumInt.return_decimal;

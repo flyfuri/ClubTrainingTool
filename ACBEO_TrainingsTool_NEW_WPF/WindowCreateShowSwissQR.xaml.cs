@@ -27,12 +27,16 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private string _twintLink_part1 = "twint/light/02:...#";
         private string _twintLink_part2 = "rn/twint/a...A/rn";
 
+        public bool twintIcludedInQR { get; }  //Twint included in QR is or was chosen
+
         public WindowCreateShowSwissQR(decimal billAmount, string billMessage, bool includeTwint)
         {
             InitializeComponent();
+            this.WindowStyle = WindowStyle.None;
             _billAmount = billAmount;
             _billMessage = billMessage;
             _includeTwint = includeTwint;
+            checkBoxTwintInQR.IsChecked = includeTwint;
             refreshDisplay();
         }
 

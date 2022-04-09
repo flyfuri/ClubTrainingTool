@@ -123,6 +123,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
             WindowDialogKeyNumDecimal formBuyKeyNumInt = new WindowDialogKeyNumDecimal(false,0);
             formBuyKeyNumInt.Owner = App.Current.MainWindow;
+            formBuyKeyNumInt.Title = "Enter cash in briefcase before training (please count!)";
             formBuyKeyNumInt.ShowDialog();
             boolFormWasCancled = formBuyKeyNumInt.wasCanceled;
             decimalFormKeyDecResult = formBuyKeyNumInt.return_decimal;

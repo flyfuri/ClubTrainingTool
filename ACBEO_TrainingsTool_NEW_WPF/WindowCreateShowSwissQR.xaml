@@ -15,33 +15,38 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-
+        <Label x:Name="WinTitle" Content="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}"
+               Background="#009090"
+               Grid.Row="0" Grid.Column="0" 
+               Grid.RowSpan="1" Grid.ColumnSpan="7" FontSize="20">
+        </Label>
         <Label Content="Swiss QR Bill"
-               Grid.Row="1" Grid.Column="1"  Margin="5" 
+               Grid.Row="2" Grid.Column="1"  Margin="5" 
                VerticalAlignment="Top" FontSize="18" FontWeight="Bold">
         </Label>
 
-        <Image x:Name="billImage" Grid.Row="2" Grid.Column="1" Margin="5"
+        <Image x:Name="billImage" Grid.Row="3" Grid.Column="1" Margin="5"
             Grid.ColumnSpan="3"
                HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
         </Image>
 
         <Button x:Name="buttonClose" Content="CLOSE"  
-                Grid.Row="1" Grid.Column="3" Margin="5" 
+                Grid.Row="2" Grid.Column="3" Margin="5" 
                 Click="buttonClose_Click">
         </Button>
 
         <CheckBox x:Name="checkBoxTwintInQR"   
-                    Grid.Row="1" Grid.Column="2" Margin="5"
+                    Grid.Row="2" Grid.Column="2" Margin="5"
+                    FontSize="15" Grid.IsSharedSizeScope="True"
                     Content="Twint in QR integrated" 
-                    Checked="checkBoxTwintInQR_Checked" Unchecked="checkBoxTwintInQR_Unchecked"
-                    >
-
+                    Checked="checkBoxTwintInQR_Checked" 
+                    Unchecked="checkBoxTwintInQR_Unchecked" Width="245" BorderThickness="3,3,3,3">
         </CheckBox>
     </Grid>
 </Window>

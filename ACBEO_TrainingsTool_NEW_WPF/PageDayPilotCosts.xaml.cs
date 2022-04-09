@@ -208,6 +208,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 {
                     decimal defaultValueDecimal = 0;
                     bool flagUseDefaultValue = false;
+                    string windowTitle = "";
 
                     tempRowOfTotCosts = db.getDayPilotCostsByTrainIDParticipID(actTraining.TrainingID, actCellParticipant.ParticipantID);
                     if (tempRowOfTotCosts.Count > 0)
@@ -215,10 +216,12 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         if(e2.ColumnIndex == 8)
                         {
                             defaultValueDecimal = tempRowOfTotCosts[0].PayedAmount;
+                            windowTitle = "Enter amount payed cash";
                         }
                         else if (e2.ColumnIndex == 9)
                         {
                             defaultValueDecimal = tempRowOfTotCosts[0].PayedTwint;
+                            windowTitle = "Enter amount payed with TWINT";
                         }
                         flagUseDefaultValue = true;
                     }
@@ -228,6 +231,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         flagUseDefaultValue = false;
                     }
                     WindowDialogKeyNumDecimal formKeyNumDecimal = new WindowDialogKeyNumDecimal(flagUseDefaultValue, defaultValueDecimal);
+                    formKeyNumDecimal.Title = windowTitle;
                     formKeyNumDecimal.ShowDialog();
                     boolFormWasCancled = formKeyNumDecimal.wasCanceled;
                     decimalFormKeyDecResult = formKeyNumDecimal.return_decimal;
@@ -281,6 +285,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                                 flagUseDefaultValue = false;
                             }
                             WindowDialogKeyNumDecimal formKeyNumDecimal = new WindowDialogKeyNumDecimal(flagUseDefaultValue, (int)defaultValueDecimal);
+                            formKeyNumDecimal.Title = "Enter amount payed with TWINT";
                             formKeyNumDecimal.ShowDialog();
                             boolFormWasCancled = formKeyNumDecimal.wasCanceled;
                             decimalFormKeyDecResult = formKeyNumDecimal.return_decimal;
@@ -296,6 +301,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         {
                             string paymentmessage = $"{actTraining.TrainingDate.ToShortDateString()}{";"}{ actCellParticipant.ComplNameAndLicence}{";Bezahlung Training Pilot;"}{paymentamount.ToString()} ";
                             WindowCreateShowSwissQR formShowSwissQRBill = new WindowCreateShowSwissQR(paymentamount, paymentmessage, true);
+                            formShowSwissQRBill.Title = "Scan QR code to pay with TWINT and press CLOSE button";
                             formShowSwissQRBill.ShowDialog();
 
                             //open alphanumeric to set timestamp from TWINT...
@@ -321,6 +327,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                             }
 
                             WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValueString);
+                            formAlphanum.Title = "Please enter date and time of payment shown in TWINT app as reference";
                             formAlphanum.ShowDialog();
                             boolFormWasCancled = formAlphanum.wasCanceled;
                             stringFormABCResult = formAlphanum.return_string;
@@ -335,6 +342,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 {
                     string defaultValueString;
                     //bool flagUseDefaultValue = false;
+                    string windowTitle = "";
 
                     tempRowOfTotCosts = db.getDayPilotCostsByTrainIDParticipID(actTraining.TrainingID, actCellParticipant.ParticipantID);
                     defaultValueString = "OK";

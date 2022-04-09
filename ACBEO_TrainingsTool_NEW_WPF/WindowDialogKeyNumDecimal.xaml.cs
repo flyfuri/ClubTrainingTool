@@ -28,6 +28,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         public WindowDialogKeyNumDecimal(bool useDefaultValue, decimal defaultDecimal)
         {
             InitializeComponent();
+            this.WindowStyle = WindowStyle.None;
             useDefVal = useDefaultValue;
             defDecimal = defaultDecimal;
 

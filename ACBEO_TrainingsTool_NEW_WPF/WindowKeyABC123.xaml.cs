@@ -31,13 +31,14 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private bool return_canceled;
         public bool wasCanceled { get { return return_canceled; } }
 
-        public WindowKeyABC123(bool useDefaultValue, string defaultString)
+        public WindowKeyABC123(bool useDefaultValue = false, string defaultString = null)
         {
             InitializeComponent();
+            this.WindowStyle = WindowStyle.None;
             useDefVal = useDefaultValue;
             defInt = defaultString;
 
-            if (useDefVal)
+            if (useDefVal & defaultString != null)
             {
                 TextBoxABC.Text = defInt;
             }

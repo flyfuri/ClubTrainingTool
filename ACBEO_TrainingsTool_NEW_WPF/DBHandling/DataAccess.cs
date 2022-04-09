@@ -55,7 +55,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DBHelper.CnnVal("TrainingsRapportConnectionString")))
             {
-                connection.Execute("dbo.Training_update @TrainingID, @TrainingDate, @CashAtBegin, @CashToACBEO, @CashAtEnd, @Remarks, @Leiter1_ID, @Leiter2_ID, @CashToACBEO_PayedBy", listTrainingsToUpdate);
+                connection.Execute("dbo.Training_update @TrainingID, @TrainingDate, @CashAtBegin, @CashToACBEO, @CashAtEnd, @Remarks, @Leiter1_ID, @Leiter2_ID, @CashToACBEO_PayedBy, @PayedTwintReference", listTrainingsToUpdate);
             }
         }
 
@@ -63,7 +63,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DBHelper.CnnVal("TrainingsRapportConnectionString")))
             {
-                connection.Execute("dbo.Trainings_add @TrainingDate, @CashAtBegin, @CashToACBEO, @CashAtEnd, @Remarks, @Leiter1_ID, @Leiter2_ID, @CashToACBEO_PayedBy", listTrainingsToAdd);
+                connection.Execute("dbo.Trainings_add @TrainingDate, @CashAtBegin, @CashToACBEO, @CashAtEnd, @Remarks, @Leiter1_ID, @Leiter2_ID, @CashToACBEO_PayedBy, @PayedTwintReference", listTrainingsToAdd);
             }
         }
 

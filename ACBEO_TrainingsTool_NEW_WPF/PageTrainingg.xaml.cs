@@ -141,7 +141,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 }
             }
             displaySummary.Clear();
-            while (displaySummary.Columns.Count < 6)
+            while (displaySummary.Columns.Count < 7)  //create table with headers
             {
                 displaySummary.Columns.Add();
             }
@@ -151,32 +151,39 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             displaySummary.Columns[3].ColumnName = "totals";
             displaySummary.Columns[4].ColumnName = "Comment1";
             displaySummary.Columns[5].ColumnName = "Comment2";
+            displaySummary.Columns[6].ColumnName = "Date and Time from TWINT App";
 
-
+            //Row 0
             tempRowSummary.Clear();
             tempRowSummary.Add("Total Cost Training");
             tempRowSummary.Add("");
             tempRowSummary.Add(totalCostTraining.ToString());
             tempRowSummary.Add("");
             tempRowSummary.Add("");
+            tempRowSummary.Add("");
             displaySummary.Rows.Add(tempRowSummary.ToArray());
 
+            //Row 1
             tempRowSummary.Clear();
-            tempRowSummary.Add("Total Payed by Pilots CASH");
+            tempRowSummary.Add("Total Payed by Pilots CASH"); 
             tempRowSummary.Add(totalPayedByPilots.ToString());
             tempRowSummary.Add("");
             tempRowSummary.Add("");
             tempRowSummary.Add("");
+            tempRowSummary.Add("");
             displaySummary.Rows.Add(tempRowSummary.ToArray());
 
+            //Row 2
             tempRowSummary.Clear();
             tempRowSummary.Add("Total Payed by Pilots TWINT");
             tempRowSummary.Add(totalPayedByPltsTwint.ToString());
             tempRowSummary.Add("");
             tempRowSummary.Add("");
             tempRowSummary.Add("");
+            tempRowSummary.Add("");
             displaySummary.Rows.Add(tempRowSummary.ToArray());
 
+            //Row 3
             tempRowSummary.Clear();
             tempRowSummary.Add("Win/loss of this Training");
             tempRowSummary.Add("");
@@ -184,16 +191,20 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             decimal totThisTraining = totalPayedByPilots + totalPayedByPltsTwint - totalCostTraining;
             tempRowSummary.Add(totThisTraining.ToString());
             tempRowSummary.Add("");
+            tempRowSummary.Add("");
             displaySummary.Rows.Add(tempRowSummary.ToArray());
 
+            //Row 4
             tempRowSummary.Clear();
             tempRowSummary.Add("Money Before Training");
             tempRowSummary.Add(actTraining.CashAtBegin.ToString());
             tempRowSummary.Add("");
             tempRowSummary.Add("");
             tempRowSummary.Add("");
+            tempRowSummary.Add("");
             displaySummary.Rows.Add(tempRowSummary.ToArray());
 
+            //Row 5
             tempRowSummary.Clear();
             tempRowSummary.Add("Money Payed to ACBEO");
             tempRowSummary.Add("");
@@ -201,13 +212,16 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             tempRowSummary.Add("");
             tempRowSummary.Add("payed by:");
             tempRowSummary.Add(actTraining.CashToACBEO_PayedBy);
+            tempRowSummary.Add(actTraining.PayedTwintReference);
             displaySummary.Rows.Add(tempRowSummary.ToArray());
 
+            //Row 6
             tempRowSummary.Clear();
             tempRowSummary.Add("Money left");
             tempRowSummary.Add("");
             tempRowSummary.Add("");
             tempRowSummary.Add((actTraining.CashAtBegin + totalPayedByPilots - totalCostTraining - actTraining.CashToACBEO - totalPayedByPltsTwint).ToString());
+            tempRowSummary.Add("");
             tempRowSummary.Add("");
             displaySummary.Rows.Add(tempRowSummary.ToArray());
             dataGridViewSummary.ItemsSource = displaySummary.DefaultView;  //DefaultView new due to WPF
@@ -218,6 +232,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             dataGridViewSummary.setBgColorByRowColIndexes(4, 1, bgbrush);
             dataGridViewSummary.setBgColorByRowColIndexes(5, 2, bgbrush);
             dataGridViewSummary.setBgColorByRowColIndexes(5, 5, bgbrush);
+            dataGridViewSummary.setBgColorByRowColIndexes(5, 6, bgbrush);
             dataGridViewSummary.UnselectAll();
 
             ///dataGridViewSummary.ReadOnly = true;
@@ -304,6 +319,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 {
                     string defaultValue = "";
                     bool useDefaultVal = false;
+                    string windowTitle = "";
                     rowTrainingCostToEdit = db.getTrainingCostByID(trainingCostID);
                     if (rowTrainingCostToEdit.Count > 0)
                     {
@@ -312,17 +328,20 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                             case 1:
                                 defaultValue = rowTrainingCostToEdit[0].Kommentar;
                                 useDefaultVal = true;
+                                windowTitle = "Enter comment (what was the expense)";
                                 break;
 
                             case 2:
                                 defaultValue = rowTrainingCostToEdit[0].BelegNr;
                                 useDefaultVal = true;
+                                windowTitle = "Enter receipt nbr (BelegNr)";
                                 oldBelegNrBeforeChanging = rowTrainingCostToEdit[0].BelegNr;
                                 break;
                         }
                     }
                     WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValue);
                     formAlphanum.Owner = App.Current.MainWindow;
+                    formAlphanum.Title = windowTitle;
                     formAlphanum.ShowDialog();
                     boolFormWasCancled = formAlphanum.wasCanceled;
                     stringFormABCResult = formAlphanum.return_string;
@@ -363,12 +382,14 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 {
                     int defaultValue = 0;
                     bool useDefVal = true;
+                    string windowTitle = "";
 
                     rowTrainingCostToEdit = db.getTrainingCostByID(trainingCostID);
 
                     if (e2.ColumnIndex == 0)
                     {
                         defaultValue = 0;
+                        windowTitle = "Enter amount (Betrag)";
                     }
                     else
                     {
@@ -376,6 +397,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     }
                     WindowDialogKeyNumDecimal formBuyKeyNumInt = new WindowDialogKeyNumDecimal(true, defaultValue);
                     formBuyKeyNumInt.Owner = App.Current.MainWindow;
+                    formBuyKeyNumInt.Title = windowTitle;
                     formBuyKeyNumInt.ShowDialog();
                     boolFormWasCancled = formBuyKeyNumInt.wasCanceled;
                     decimalFormKeyDecResult = formBuyKeyNumInt.return_decimal;
@@ -506,24 +528,24 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 & e2.RowIndex == 5
                 & actTrningID > 0 //old: & trainingOpen)
                 || e2.ColumnIndex == 5
-                & e2.RowIndex == 5 )
+                & e2.RowIndex == 5
+                || e2.ColumnIndex == 6
+                & e2.RowIndex == 5)
             {
                 decimal defaultValue = 0;
                 string defaultValueStr = "";
                 bool useDefVal = true;
+                string windowTitle = "";
                 bool boolFormWasCancled = false;
                 decimal decimalFormKeyDecResult = 0;
                 string stringFormABCResult = "";
 
-                if (e2.ColumnIndex == 1 || e2.ColumnIndex == 2) //numeric column***************************************************************************
+                if (e2.ColumnIndex == 1 /*|| e2.ColumnIndex == 2* handeled in its own case*/) //numeric column***************************************************************************
                 {
                     if (e2.ColumnIndex == 1) //Cash before
                     {
                         defaultValue = actTraining.CashAtBegin;
-                    }
-                    if (e2.ColumnIndex == 2) //Cash to ACBEO
-                    {
-                        defaultValue = actTraining.CashToACBEO;
+                        windowTitle = "Enter cash in briefcase before training (please count!)";
                     }
                     else
                     {
@@ -531,6 +553,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     }
                     WindowDialogKeyNumDecimal formBuyKeyNumDecimal = new WindowDialogKeyNumDecimal(true, defaultValue);
                     formBuyKeyNumDecimal.Owner = App.Current.MainWindow;
+                    formBuyKeyNumDecimal.Title = windowTitle;
                     formBuyKeyNumDecimal.ShowDialog();
                     boolFormWasCancled = formBuyKeyNumDecimal.wasCanceled;
                     decimalFormKeyDecResult = formBuyKeyNumDecimal.return_decimal;
@@ -541,15 +564,6 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         {
                             actTraining.CashAtBegin = formBuyKeyNumDecimal.return_decimal;
                         }
-                        if (e2.ColumnIndex == 2) //Cash to ACBEO
-                        {
-                            actTraining.CashToACBEO = formBuyKeyNumDecimal.return_decimal;
-
-                            decimal paymentamount = formBuyKeyNumDecimal.return_decimal;
-                            string paymentmessage = $"{actTraining.TrainingDate.ToShortDateString()};Abschöpfung Training;{string.Format("{0:0.00}", paymentamount)}";
-                            WindowCreateShowSwissQR formShowSwissQRBill = new WindowCreateShowSwissQR(paymentamount, paymentmessage, false);
-                            formShowSwissQRBill.ShowDialog();
-                        }
                         //update Training in database
                         updateTrainingInDB(actTraining);
 
@@ -557,32 +571,103 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     }
 
                 }
-                else if (e2.ColumnIndex == 5) //alpanumeric ************************
+                else if (e2.ColumnIndex == 2 || e2.ColumnIndex == 5 || e2.ColumnIndex == 6) //special payed to acbeo with amount and payed by ************************
                 {
-                    if (e2.ColumnIndex == 5)
-                    {
-
-                    }
+                    defaultValue = actTraining.CashToACBEO;
+                    WindowDialogKeyNumDecimal formBuyKeyNumDecimal = new WindowDialogKeyNumDecimal(true, defaultValue);
+                    formBuyKeyNumDecimal.Title = "Please put here amount transfaired to ACBEO";
                     defaultValueStr = actTraining.CashToACBEO_PayedBy;
                     WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValueStr);
-                    formAlphanum.Owner = App.Current.MainWindow;
-                    formAlphanum.ShowDialog();
-                    boolFormWasCancled = formAlphanum.wasCanceled;
-                    stringFormABCResult = formAlphanum.return_string;
-
-                    if (!boolFormWasCancled)
+                    formAlphanum.Title = "Please put here name of person who pays to ACBEO";
+                    bool dbupdate_needed = false;
+                    
+                    if (e2.ColumnIndex == 2 || actTraining.CashToACBEO <= 0) //edit "amount" when clicked or when still 0
                     {
-                        if (e2.ColumnIndex == 5) //payed by
+                        formBuyKeyNumDecimal.Owner = App.Current.MainWindow;
+                        formBuyKeyNumDecimal.ShowDialog();
+                        boolFormWasCancled = formBuyKeyNumDecimal.wasCanceled;
+                        dbupdate_needed = !formBuyKeyNumDecimal.wasCanceled;
+                        decimalFormKeyDecResult = formBuyKeyNumDecimal.return_decimal;
+
+                        if (!boolFormWasCancled)
+                        {
+                            actTraining.CashToACBEO = formBuyKeyNumDecimal.return_decimal;
+                        }
+                    }
+
+                    if (!boolFormWasCancled & (e2.ColumnIndex == 5 || actTraining.CashToACBEO_PayedBy == "")) //edit "payed by" when clicked or still empty
+                    {
+                        formAlphanum.Owner = App.Current.MainWindow;
+                        formAlphanum.ShowDialog();
+                        boolFormWasCancled = formAlphanum.wasCanceled;
+                        dbupdate_needed = dbupdate_needed ||!formAlphanum.wasCanceled;
+                        stringFormABCResult = formAlphanum.return_string;
+
+                        if (!boolFormWasCancled)
                         {
                             actTraining.CashToACBEO_PayedBy = formAlphanum.return_string;
                         }
-                        
+                    }
+
+                    if (actTraining.CashToACBEO > 0 & actTraining.CashToACBEO_PayedBy != "")  //show QR when both were filled
+                    {
+                        decimal paymentamount = formBuyKeyNumDecimal.return_decimal;
+                        string paymentmessage = $"{actTraining.TrainingDate.ToShortDateString()};Abschöpfung Training;{string.Format("{0:0.00}", paymentamount)}";
+                        WindowCreateShowSwissQR formShowSwissQRBill = new WindowCreateShowSwissQR(paymentamount, paymentmessage, false);
+                        formShowSwissQRBill.Title = "Here you can photograph or scan QR code to pay the money to ACBEO via TWINT or e-banking";
+                        formShowSwissQRBill.ShowDialog();
+                        if (e2.ColumnIndex == 6 || actTraining.PayedTwintReference == "" & formShowSwissQRBill.twintIcludedInQR) //edit "TwintRef" when clicked or still empty
+                        {
+                            defaultValueStr = actTraining.PayedTwintReference;
+                            WindowKeyABC123 formAlphanum2 = new WindowKeyABC123(true, defaultValueStr);
+                            formAlphanum2.Title = "Please put here Date and Time from Twint-App as Reference";
+                            formAlphanum2.Owner = App.Current.MainWindow;
+                            formAlphanum2.ShowDialog();
+                            boolFormWasCancled = formAlphanum2.wasCanceled;
+                            dbupdate_needed = dbupdate_needed || !formAlphanum2.wasCanceled;
+                            stringFormABCResult = formAlphanum2.return_string;
+
+                            if (!boolFormWasCancled)
+                            {
+                                actTraining.PayedTwintReference = formAlphanum2.return_string;
+                            }
+                        }
+                    }
+
+                    if (dbupdate_needed)
+                    { 
                         //update Training in database
                         updateTrainingInDB(actTraining);
 
                         updateDisplay();
                     }
                 }
+                //else if (e2.ColumnIndex == ) //alpanumeric ************************
+                //{
+                //    if (e2.ColumnIndex == )
+                //    {
+
+                //    }
+                //    defaultValueStr = 
+                //    WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValueStr);
+                //    formAlphanum.Owner = App.Current.MainWindow;
+                //    formAlphanum.ShowDialog();
+                //    boolFormWasCancled = formAlphanum.wasCanceled;
+                //    stringFormABCResult = formAlphanum.return_string;
+
+                //    if (!boolFormWasCancled)
+                //    {
+                //        if (e2.ColumnIndex == ) //
+                //        {
+                //            actTraining. = formAlphanum.return_string;
+                //        }
+                        
+                //        //update Training in database
+                //        updateTrainingInDB(actTraining);
+
+                //        updateDisplay();
+                //    }
+                //}
             }
             dataGridViewSummary.UnselectAllCells();
         }

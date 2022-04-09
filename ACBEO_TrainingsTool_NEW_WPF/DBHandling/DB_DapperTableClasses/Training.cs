@@ -17,5 +17,6 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         public int Leiter1_ID { get; set; }
         public int Leiter2_ID { get; set; }
         public string CashToACBEO_PayedBy { get; set; }
+        public string PayedTwintReference { get; set; }
     }
 }
