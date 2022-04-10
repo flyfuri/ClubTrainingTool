@@ -190,7 +190,11 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
                     switch (formPlusMinusDialog.return_string.ToLower())
                     {
-                        case "plus":
+                        case "CANCEL":
+                            boolNewAboCancled = true;
+                            break;
+
+                        case "PLUS":
                             if (listAbos.Count > 10)
                             {
                                 MessageBox.Show("Noch 2 Abos angefangen! Kein Abo-Kauf möglich");
@@ -247,7 +251,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                             }
                             break;
 
-                        case "minus":
+                        case "MINUS":
 
                             if (listAbos.Count > 0)
                             {

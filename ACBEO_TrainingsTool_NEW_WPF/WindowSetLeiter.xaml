@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
         mc:Ignorable="d"
-        Title="WindowSetLeiter" Height="450" Width="800">
+        Title="Set Leiter" Height="450" Width="800"
+        WindowStyle="None">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
@@ -16,22 +17,28 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="15"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
+        <Label x:Name="WinTitle" Content="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}"
+               Background="#009090"
+               Grid.Row="0" Grid.Column="0" 
+               Grid.RowSpan="1" Grid.ColumnSpan="7" FontSize="20">
+        </Label>
         <Label Content="Chose Leiter" Grid.Row="1" Grid.Column="1" Margin="5"/>
-         <ComboBox x:Name="comboBoxChoseLeiter" Grid.Row="1" Grid.Column="2" Margin="5"
+         <ComboBox x:Name="comboBoxChoseLeiter" Grid.Row="2" Grid.Column="2" Margin="5"
                     Grid.ColumnSpan="3"  FontSize="30" />
 
-        <Button x:Name="BtnCancel" Grid.Row="4" Grid.Column="3" Margin="5"
+        <Button x:Name="BtnCancel" Grid.Row="5" Grid.Column="3" Margin="5"
             Grid.ColumnSpan="1" FontSize="20" Content="CANCEL" Click="BtnCancel_Click" >
         </Button>
         
-        <Button x:Name="BtnOK" Grid.Row="4" Grid.Column="4" Margin="5"
+        <Button x:Name="BtnOK" Grid.Row="5" Grid.Column="4" Margin="5"
             Grid.ColumnSpan="1" FontSize="20" Content="OK" Click="BtnOK_Click" >
         </Button>
     </Grid>

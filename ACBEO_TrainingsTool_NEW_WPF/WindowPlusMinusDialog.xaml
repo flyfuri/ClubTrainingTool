@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
         mc:Ignorable="d"
-        Title="WindowPlusMinusDialog" Height="400" Width="500">
+        Title="Plus Minus Abo" Height="300" Width="400"
+        WindowStyle="None">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
@@ -15,19 +16,25 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="15"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <Button x:Name="buttonMinus" Grid.Row="1" Grid.Column="1" Margin="5"
+        <Label x:Name="WinTitle" Content="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}"
+               Background="#009090"
+               Grid.Row="0" Grid.Column="0" 
+               Grid.RowSpan="1" Grid.ColumnSpan="7" FontSize="20">
+        </Label>
+        <Button x:Name="buttonMinus" Grid.Row="2" Grid.Column="1" Margin="5"
             Grid.ColumnSpan="1" FontSize="20" Content="-" Click="buttonMinus_Click" >
         </Button>
-        <Button x:Name="buttonPlus" Grid.Row="1" Grid.Column="3" Margin="5"
+        <Button x:Name="buttonPlus" Grid.Row="2" Grid.Column="3" Margin="5"
             Grid.ColumnSpan="1" FontSize="20" Content="+" Click="buttonPlus_Click" >
         </Button>
-        <Button x:Name="buttonCANCEL" Grid.Row="3" Grid.Column="3" Margin="5"
+        <Button x:Name="buttonCANCEL" Grid.Row="4" Grid.Column="3" Margin="5"
             Grid.ColumnSpan="1" FontSize="20" Content="CANCEL" Click="buttonCANCEL_Click" >
         </Button>
     </Grid>

@@ -32,6 +32,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         public WindowOpenTraining(int actYear)
         {
             InitializeComponent();
+            WindowStyle = WindowStyle.None;
             trainings = db.getTrainingByYEAR(actYear);
             comboBoxChoseToOpen.Items.Clear();
             foreach (Training training in trainings)

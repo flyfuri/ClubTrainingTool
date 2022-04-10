@@ -47,15 +47,20 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         public string setLeiter1or2(int nbr)
         {
             int tempLeiterID;
+            string windowTitle = "";
             if (nbr == 2)
             {
                 tempLeiterID = actTraining.Leiter2_ID;
+                windowTitle = "Choose Leiter 2";
             }
             else
             {
                 tempLeiterID = actTraining.Leiter1_ID;
+                windowTitle = "Choose Leiter 1";
             }
-            WindowSetLeiter formSetLeiter = new WindowSetLeiter(participants, actTraining.Leiter2_ID);
+            //WindowSetLeiter formSetLeiter = new WindowSetLeiter(participants, actTraining.Leiter2_ID);
+            WindowSetLeiter formSetLeiter = new WindowSetLeiter(participants, tempLeiterID);
+            formSetLeiter.Title = windowTitle;
             formSetLeiter.ShowDialog();
             if (!formSetLeiter.wasCanceled)
             {
@@ -351,6 +356,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 & e2.RowIndex < dataGridViewDisplay.Items.Count)
             {
                 WindowFillTurn formFillTurn = new WindowFillTurn();
+                formFillTurn.Title = $"Select turn for {participants[e2.RowIndex].FirstName} {participants[e2.RowIndex].LastName}";
                 formFillTurn.ShowDialog();
                 if (formFillTurn.return_string != "CANCEL")
                 {

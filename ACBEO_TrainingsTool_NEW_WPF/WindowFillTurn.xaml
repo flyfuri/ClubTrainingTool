@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
         mc:Ignorable="d"
-        Title="WindowFillTurn" Height="600" Width="800">
+        Title="Fill turn" Height="600" Width="800"
+        WindowStyle="None">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -18,7 +19,8 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -29,58 +31,63 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
+        <Label x:Name="WinTitle" Content="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}"
+               Background="#009090"
+               Grid.Row="0" Grid.Column="0" 
+               Grid.RowSpan="1" Grid.ColumnSpan="8" FontSize="15">
+        </Label>
 
-        <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
-               Content="nichts(Pause)" VerticalAlignment="Center"/>
         <Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
-               Content="Flug" VerticalAlignment="Center"/>
+               Content="nichts(Pause)" VerticalAlignment="Center"/>
         <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
-               Content="Boot" VerticalAlignment="Center"/>
+               Content="Flug" VerticalAlignment="Center"/>
         <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
-               Content="Bus" VerticalAlignment="Center"/>
+               Content="Boot" VerticalAlignment="Center"/>
         <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
-               Content="Boot und Bus" VerticalAlignment="Center"/>
+               Content="Bus" VerticalAlignment="Center"/>
         <Label Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
-               Content="Flug und Bus(Fahrer mitgebracht))" VerticalAlignment="Center"/>
+               Content="Boot und Bus" VerticalAlignment="Center"/>
         <Label Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
-               Content="Flug und Boot(Fahrer mitgebracht)" VerticalAlignment="Center"/>
+               Content="Flug und Bus(Fahrer mitgebracht))" VerticalAlignment="Center"/>
         <Label Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
+               Content="Flug und Boot(Fahrer mitgebracht)" VerticalAlignment="Center"/>
+        <Label Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
                Content="Flug und BunB(2Fahrer mitgebracht)" VerticalAlignment="Center"/>
 
 
-        <Button x:Name="buttonNone" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+        <Button x:Name="buttonNone" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
                 FontSize="20" Content="" Click="buttonNone_Click" >
         </Button>
-        <Button x:Name="buttonFlight" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+        <Button x:Name="buttonFlight" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
                 FontSize="20" Content="FLUG" Click="buttonFlight_Click" >
         </Button>
-        <Button x:Name="buttonBoat" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+        <Button x:Name="buttonBoat" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
                 FontSize="20" Content="BOAT" Click="buttonBoat_Click" >
         </Button>
-        <Button x:Name="buttonBus" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+        <Button x:Name="buttonBus" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
                 FontSize="20" Content="BUS" Click="buttonBus_Click" >
         </Button>
-        <Button x:Name="buttonBandB" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+        <Button x:Name="buttonBandB" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
                 FontSize="20" Content="BnB" Click="buttonBandB_Click" >
         </Button>
-        <Button x:Name="buttonFlightnBus" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+        <Button x:Name="buttonFlightnBus" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
                 FontSize="20" Content="FnBus" Click="buttonFlightnBus_Click" >
         </Button>
-        <Button x:Name="buttonFlightnBoat" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+        <Button x:Name="buttonFlightnBoat" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
                 FontSize="20" Content="FnBoat" Click="buttonFlightnBoat_Click" >
         </Button>
-        <Button x:Name="buttonFlightAndBusAndBoat" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
+        <Button x:Name="buttonFlightAndBusAndBoat" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="1" Margin="5"
                 FontSize="20" Content="FnBnB" Click="buttonFlightAndBusAndBoat_Click" >
         </Button>
-        <Button x:Name="buttonCancel" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="1" Margin="5"
+        <Button x:Name="buttonCancel" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="1" Margin="5"
                 FontSize="20" Content="CANCEL" Click="buttonCancel_Click" >
         </Button>
 
         <TextBox x:Name="textBoxBusdriver"
-            Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="3" Margin="5">
+            Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="3" Margin="5">
         </TextBox>
         <TextBox x:Name="textBoxBoatdriver"
-            Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="3" Margin="5">
+            Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="3" Margin="5">
         </TextBox>
     </Grid>
 </Window>

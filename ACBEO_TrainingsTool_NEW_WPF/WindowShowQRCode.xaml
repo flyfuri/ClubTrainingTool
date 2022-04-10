@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
         mc:Ignorable="d"
-        Title="WindowShowQRCode" Height="600" Width="800" Loaded="Window_ShowQRCode_Loaded">
+        Title="WindowShowQRCode" Height="600" Width="800" 
+        Loaded="Window_ShowQRCode_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>

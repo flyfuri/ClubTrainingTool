@@ -174,6 +174,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private void MenuItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             WindowDialogKeyNumDecimal formBuyKeyNumInt = new WindowDialogKeyNumDecimal(true, actYEAR);
+            formBuyKeyNumInt.Title = "Enter year to work in";
             formBuyKeyNumInt.Owner = App.Current.MainWindow;
             formBuyKeyNumInt.ShowDialog();
             if (formBuyKeyNumInt.wasCanceled == false)

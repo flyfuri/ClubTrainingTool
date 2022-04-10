@@ -29,6 +29,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         public WindowNewTraining()
         {
             InitializeComponent();
+            WindowStyle = WindowStyle.None;
             datePickerTrainingDate.SelectedDate = DateTime.Today.Date;
         }
 

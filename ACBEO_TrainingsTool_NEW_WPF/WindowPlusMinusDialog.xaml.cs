@@ -30,19 +30,19 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void buttonMinus_Click(object sender, RoutedEventArgs e)
         {
-            return_value = "Minus";
+            return_value = "MINUS";
             Close();
         }
 
         private void buttonPlus_Click(object sender, RoutedEventArgs e)
         {
-            return_value = "Plus";
+            return_value = "PLUS";
             Close();
         }
 
         private void buttonCANCEL_Click(object sender, RoutedEventArgs e)
         {
-            return_value = "Canceled";
+            return_value = "CANCEL";
             Close();
         }
     }
