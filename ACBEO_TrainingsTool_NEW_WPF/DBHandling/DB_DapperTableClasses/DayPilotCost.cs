@@ -18,7 +18,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             get
             {
                 decimal tempTotal = CostFlights - CostOtherServices;
-                if(tempTotal < 0)
+                if (tempTotal < 0)
                 {
                     return ((tempTotal / 9) * 7);
                 }
@@ -46,7 +46,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             get
             {
-                if(payableWithAbo >= 0)
+                if (payableWithAbo >= 0)
                 {
                     return (BalanceFlighAndServices + payedWithAbo * (-9) + CostBuy);
                 }
@@ -84,7 +84,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 else
                 {
                     tempList.Add("");
-                }     
+                }
                 return tempList;
             }
         }
@@ -114,6 +114,22 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 tempList.Add(PayedTwint.ToString());
                 tempList.Add(PayedTwintReference);
                 return tempList;
+            }
+        }
+
+        public bool testIfPayed()
+        {
+            if ((TotalToPay - PayedAmount) > 3 & (TotalToPay - PayedTwint) > 0)
+            {
+                return false;
+            }
+            else if(!PayedFlag)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }

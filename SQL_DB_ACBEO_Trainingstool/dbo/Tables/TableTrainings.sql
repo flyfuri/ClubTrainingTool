@@ -9,6 +9,7 @@
     [Leiter2_ID]   INT   NULL,
     [CashToACBEO_payedBy] TEXT NULL, 
     [PayedTwintReference] TEXT NULL, 
+    [Finalized] BIT NULL, 
     PRIMARY KEY CLUSTERED ([TrainingID] ASC)
 );
 

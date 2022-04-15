@@ -159,7 +159,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                || e2.ColumnIndex == 6
                || e2.ColumnIndex == 8
                || e2.ColumnIndex == 9
-               || e2.ColumnIndex == 10))
+               || e2.ColumnIndex == 10
+               || e2.ColumnIndex == 11))
             {
                 int actCellPilotID = participants[e2.RowIndex].PilotID;
                 Participant actCellParticipant = participants[e2.RowIndex];
@@ -168,7 +169,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 decimal decimalFormKeyDecResult = 0;
                 string stringFormABCResult = "";
 
-                //show pilotinfos
+                //show pilotinfos***********************************************************************************************
                 if (e2.ColumnIndex == 0)
                 {
                     List<AboFlight> validAboFlights = new List<AboFlight>();
@@ -193,9 +194,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         formAboOverview.ShowDialog();
                     }
                 }
-
-                //number of Abos to Pay
-                if (e2.ColumnIndex == 6)
+                else if (e2.ColumnIndex == 6) //number of Abos to Pay **********************************************************************************************
                 {
                     tempRowOfTotCosts = db.getDayPilotCostsByTrainIDParticipID(actTraining.TrainingID, actCellParticipant.ParticipantID);
                     int flightsPayedYet = db.getAboFlightPayedWithDayPilot(actCellParticipant.PilotID, actTraining.TrainingID).Count;
@@ -204,7 +203,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     formPayWithAbo.ShowDialog();
                     TotalCostUpdateDisplay();
                 }
-                else if (e2.ColumnIndex == 8 || e2.ColumnIndex == 9) //numeric ************************
+                else if (e2.ColumnIndex == 8 || e2.ColumnIndex == 9) //numeric **********************************************************************************************
                 {
                     decimal defaultValueDecimal = 0;
                     bool flagUseDefaultValue = false;
@@ -236,7 +235,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     boolFormWasCancled = formKeyNumDecimal.wasCanceled;
                     decimalFormKeyDecResult = formKeyNumDecimal.return_decimal;
                 }
-                //TWINT payment with SwissQR code
+                //TWINT payment with SwissQR code **********************************************************************************************
                 else if (e2.ColumnIndex == 10)
                 {
                     
@@ -338,20 +337,30 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         }
                     }
                 }
-                else if (e2.ColumnIndex == 10) //alpanumeric ************************
+                else if (e2.ColumnIndex == 11) //alpanumeric **********************************************************************************************
                 {
-                    string defaultValueString;
-                    //bool flagUseDefaultValue = false;
+                    string defaultValueString = "";
+                    //bool flagUseDefaultValue = false
                     string windowTitle = "";
 
                     tempRowOfTotCosts = db.getDayPilotCostsByTrainIDParticipID(actTraining.TrainingID, actCellParticipant.ParticipantID);
-                    defaultValueString = "OK";
+                    switch (e2.ColumnIndex)
+                    {
+                        case 11:
+                            windowTitle = "Here you can only set empty (for not OK yet) or OK";
+                            defaultValueString = "OK";
+                            break;
+                    }
 
+                    tempRowOfTotCosts = db.getDayPilotCostsByTrainIDParticipID(actTraining.TrainingID, actCellParticipant.ParticipantID);
+                            
                     WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValueString);
+                    formAlphanum.Title = windowTitle;
                     formAlphanum.ShowDialog();
                     boolFormWasCancled = formAlphanum.wasCanceled;
                     stringFormABCResult = formAlphanum.return_string;
                 }
+
 
                 //add or update PilotCostTable
                 if (!boolFormWasCancled & (e2.ColumnIndex == 6 || e2.ColumnIndex == 8 || e2.ColumnIndex == 9 || e2.ColumnIndex == 10 || e2.ColumnIndex == 11))

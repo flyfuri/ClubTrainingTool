@@ -3,7 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
              StartupUri="MainWindow.xaml">
+    
     <Application.Resources>
+
+        <!--standard background for Pages-->
+        <Style x:Key="{x:Type Window}" TargetType="{x:Type Window}">
+            <Setter Property="Background" Value="Gold" />
+        </Style>
+        
         <!--make scroolbar bigger-->
         <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
             <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
@@ -19,9 +26,9 @@
             </Style.Triggers>
         </Style>
 
+       
         <!--new style for datagrids with wrapped header text-->
-        
-
+       
         <!--defualt style datagrids-->
         <Style x:Key="{x:Type DataGrid}" TargetType="{x:Type DataGrid}">
             <Setter Property="IsReadOnly" Value="True"/>

@@ -37,7 +37,9 @@
                   CanUserReorderColumns="False"
                   CanUserSortColumns="False"
                   CanUserAddRows="true"
-                  CanUserDeleteRows="False" SelectionChanged="dataGridViewParticipants_SelectionChanged">
+                  CanUserDeleteRows="False" 
+                  SelectionUnit="FullRow"
+                  SelectionChanged="dataGridViewParticipants_SelectionChanged">
             <DataGrid.Columns>
             </DataGrid.Columns>
         </DataGrid>
@@ -46,7 +48,9 @@
                   CanUserReorderColumns="False"
                   CanUserSortColumns="False"
                   CanUserAddRows="False"
-                  CanUserDeleteRows="False" SelectionChanged="dataGridPilots_SelectionChanged">
+                  CanUserDeleteRows="False" 
+                  SelectionUnit="FullRow"
+                  SelectionChanged="dataGridPilots_SelectionChanged" >
             <DataGrid.Columns>
             </DataGrid.Columns>
         </DataGrid>

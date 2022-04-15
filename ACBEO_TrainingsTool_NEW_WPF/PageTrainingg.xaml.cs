@@ -53,12 +53,18 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void Page_Training_Loaded(object sender, RoutedEventArgs e)
         {
-            //set how table looks like
+            setDataGridSummaryLooking();
+        }
+
+        private void setDataGridSummaryLooking()
+        {//set how table looks like
             //dataGridViewSummary.SelectionUnit = DataGridSelectionUnit.Cell;
             SolidColorBrush bgbrush = new SolidColorBrush(Colors.White);
             dataGridViewSummary.setBgColorByRowColIndexes(4, 1, bgbrush);
             dataGridViewSummary.setBgColorByRowColIndexes(5, 2, bgbrush);
             dataGridViewSummary.setBgColorByRowColIndexes(5, 5, bgbrush);
+            dataGridViewSummary.setBgColorByRowColIndexes(5, 6, bgbrush);
+            dataGridViewSummary.setBgColorByRowColIndexes(6, 5, bgbrush);
             dataGridViewSummary.UnselectAll();
         }
         private void updateDisplay()
@@ -202,6 +208,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             tempRowSummary.Add("");
             tempRowSummary.Add("");
             tempRowSummary.Add("");
+            tempRowSummary.Add("");
             displaySummary.Rows.Add(tempRowSummary.ToArray());
 
             //Row 5
@@ -221,18 +228,14 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             tempRowSummary.Add("");
             tempRowSummary.Add("");
             tempRowSummary.Add((actTraining.CashAtBegin + totalPayedByPilots - totalCostTraining - actTraining.CashToACBEO - totalPayedByPltsTwint).ToString());
-            tempRowSummary.Add("");
-            tempRowSummary.Add("");
+            tempRowSummary.Add("finalized");
+            if (actTraining.Finalized) { tempRowSummary.Add("YES"); } else { tempRowSummary.Add("NOT YET"); }
             displaySummary.Rows.Add(tempRowSummary.ToArray());
             dataGridViewSummary.ItemsSource = displaySummary.DefaultView;  //DefaultView new due to WPF
 
             //set how table looks like
+            setDataGridSummaryLooking();
             //dataGridViewSummary.SelectionUnit = DataGridSelectionUnit.Cell;
-            SolidColorBrush bgbrush = new SolidColorBrush(Colors.White);
-            dataGridViewSummary.setBgColorByRowColIndexes(4, 1, bgbrush);
-            dataGridViewSummary.setBgColorByRowColIndexes(5, 2, bgbrush);
-            dataGridViewSummary.setBgColorByRowColIndexes(5, 5, bgbrush);
-            dataGridViewSummary.setBgColorByRowColIndexes(5, 6, bgbrush);
             dataGridViewSummary.UnselectAll();
 
             ///dataGridViewSummary.ReadOnly = true;
@@ -530,7 +533,9 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 || e2.ColumnIndex == 5
                 & e2.RowIndex == 5
                 || e2.ColumnIndex == 6
-                & e2.RowIndex == 5)
+                & e2.RowIndex == 5
+                || e2.ColumnIndex == 5
+                & e2.RowIndex == 6)
             {
                 decimal defaultValue = 0;
                 string defaultValueStr = "";
@@ -571,7 +576,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     }
 
                 }
-                else if (e2.ColumnIndex == 2 || e2.ColumnIndex == 5 || e2.ColumnIndex == 6) //special payed to acbeo with amount and payed by ************************
+                else if (e2.RowIndex == 5 & (e2.ColumnIndex == 2 || e2.ColumnIndex == 5 || e2.ColumnIndex == 6)) //special payed to acbeo with amount and payed by ************************
                 {
                     defaultValue = actTraining.CashToACBEO;
                     WindowDialogKeyNumDecimal formBuyKeyNumDecimal = new WindowDialogKeyNumDecimal(true, defaultValue);
@@ -580,7 +585,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValueStr);
                     formAlphanum.Title = "Please put here name of person who pays to ACBEO";
                     bool dbupdate_needed = false;
-                    
+
                     if (e2.ColumnIndex == 2 || actTraining.CashToACBEO <= 0) //edit "amount" when clicked or when still 0
                     {
                         formBuyKeyNumDecimal.Owner = App.Current.MainWindow;
@@ -600,7 +605,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         formAlphanum.Owner = App.Current.MainWindow;
                         formAlphanum.ShowDialog();
                         boolFormWasCancled = formAlphanum.wasCanceled;
-                        dbupdate_needed = dbupdate_needed ||!formAlphanum.wasCanceled;
+                        dbupdate_needed = dbupdate_needed || !formAlphanum.wasCanceled;
                         stringFormABCResult = formAlphanum.return_string;
 
                         if (!boolFormWasCancled)
@@ -635,40 +640,79 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     }
 
                     if (dbupdate_needed)
-                    { 
+                    {
                         //update Training in database
                         updateTrainingInDB(actTraining);
 
                         updateDisplay();
                     }
                 }
-                //else if (e2.ColumnIndex == ) //alpanumeric ************************
-                //{
-                //    if (e2.ColumnIndex == )
-                //    {
+                else if (e2.ColumnIndex == 5 & e2.RowIndex == 6) //special finalize ************************
+                {
+                    WindowFinalizeTraining formFinalizeTraining = new WindowFinalizeTraining(actTraining.Finalized);
+                    formFinalizeTraining.Title = $"finalize the Training from {actTraining.TrainingDate.ToShortDateString()}";
+                    formFinalizeTraining.Owner = App.Current.MainWindow;
+                    formFinalizeTraining.ShowDialog();
+                    boolFormWasCancled = false;
+                    switch (formFinalizeTraining.return_string)
+                    {
+                        case "FINALIZE":
+                            DataAccess dbUpdate = new DataAccess();
+                            trainingCosts = dbUpdate.getTrainingCostByDate(actTraining.TrainingDate);
+                            actTraining.Finalized = true;
+                            foreach (DayPilotCost dayPilotCost in dayPilotCosts)
+                            {
+                                if (!dayPilotCost.testIfPayed()) 
+                                {
+                                    actTraining.Finalized = false;
+                                    break;
+                                }
+                            }
+                            break;
 
-                //    }
-                //    defaultValueStr = 
-                //    WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValueStr);
-                //    formAlphanum.Owner = App.Current.MainWindow;
-                //    formAlphanum.ShowDialog();
-                //    boolFormWasCancled = formAlphanum.wasCanceled;
-                //    stringFormABCResult = formAlphanum.return_string;
+                        case "UNFINALIZE":
+                            actTraining.Finalized = false;
+                            break;
 
-                //    if (!boolFormWasCancled)
-                //    {
-                //        if (e2.ColumnIndex == ) //
-                //        {
-                //            actTraining. = formAlphanum.return_string;
-                //        }
-                        
-                //        //update Training in database
-                //        updateTrainingInDB(actTraining);
+                        case "CANCEL":
+                            boolFormWasCancled = true;
+                            break;
+                    }
+                    if (!boolFormWasCancled)
+                    {
+                        //update Training in database
+                        updateTrainingInDB(actTraining);
 
-                //        updateDisplay();
-                //    }
-                //}
-            }
+                        updateDisplay();
+                    }
+                }
+                    //else if (e2.ColumnIndex == ) //alpanumeric ************************
+                    //{
+                    //    if (e2.ColumnIndex == )
+                    //    {
+
+                    //    }
+                    //    defaultValueStr = 
+                    //    WindowKeyABC123 formAlphanum = new WindowKeyABC123(true, defaultValueStr);
+                    //    formAlphanum.Owner = App.Current.MainWindow;
+                    //    formAlphanum.ShowDialog();
+                    //    boolFormWasCancled = formAlphanum.wasCanceled;
+                    //    stringFormABCResult = formAlphanum.return_string;
+
+                    //    if (!boolFormWasCancled)
+                    //    {
+                    //        if (e2.ColumnIndex == ) //
+                    //        {
+                    //            actTraining. = formAlphanum.return_string;
+                    //        }
+
+                    //        //update Training in database
+                    //        updateTrainingInDB(actTraining);
+
+                    //        updateDisplay();
+                    //    }
+                    //}
+                }
             dataGridViewSummary.UnselectAllCells();
         }
 
