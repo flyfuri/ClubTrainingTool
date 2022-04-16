@@ -110,12 +110,10 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             dataGridViewDispTrnCosts.ItemsSource = displayTrainingCosts.DefaultView;  //DefaultView new due to WPF
 
             //set how table looks like
+            
             ///dataGridViewDispTrnCosts.ReadOnly = true;
             //dataGridViewDisplay.Columns[0].Width = 150;
             ///dataGridViewDispTrnCosts.Columns[0].Frozen = true;
-
-            ///DataGridViewCellStyle columnCellStyle = new DataGridViewCellStyle();
-            ///columnCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             //dataGridViewDisplay.Columns[dataGridViewDisplay.Columns.Count - 1].Frozen = true;
             ///dataGridViewDispTrnCosts.Columns[dataGridViewDispTrnCosts.Columns.Count - 1].DefaultCellStyle = columnCellStyle;
@@ -237,6 +235,9 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             setDataGridSummaryLooking();
             //dataGridViewSummary.SelectionUnit = DataGridSelectionUnit.Cell;
             dataGridViewSummary.UnselectAll();
+
+            ((App)Application.Current).globalBgColor = System.Drawing.Color.Cyan;
+            testlabel.Content = ((App)Application.Current).globalBgColor.ToString();
 
             ///dataGridViewSummary.ReadOnly = true;
             //dataGridViewSummary.Columns[0].Width = 200;

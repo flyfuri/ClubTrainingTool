@@ -7,8 +7,8 @@
     <Application.Resources>
 
         <!--standard background for Pages-->
-        <Style x:Key="{x:Type Window}" TargetType="{x:Type Window}">
-            <Setter Property="Background" Value="Gold" />
+        <Style x:Key="{x:Type Grid}" TargetType="{x:Type Grid}">
+            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=globalBgColor}" />
         </Style>
         
         <!--make scroolbar bigger-->

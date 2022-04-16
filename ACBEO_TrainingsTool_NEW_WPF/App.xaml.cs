@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,6 +14,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
     /// </summary>
     public partial class App : Application
     {
-        
+        private Color _globalBgColor;
+
+        public Color globalBgColor { get; set; }
     }
 }
