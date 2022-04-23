@@ -66,6 +66,16 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             dataGridViewSummary.setBgColorByRowColIndexes(5, 6, bgbrush);
             dataGridViewSummary.setBgColorByRowColIndexes(6, 5, bgbrush);
             dataGridViewSummary.UnselectAll();
+            if (actTraining.Finalized == true)
+            {
+                ((App)Application.Current).globalBgColor = System.Drawing.Color.LightGreen;
+            }
+            else
+            {
+                ((App)Application.Current).globalBgColor = System.Drawing.Color.LightGray;
+            }
+            //testlabel.Content = ((App)Application.Current).globalBgColor.ToString();
+            testlabel.Content = DataContext.ToString();
         }
         private void updateDisplay()
         {
@@ -236,7 +246,14 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             //dataGridViewSummary.SelectionUnit = DataGridSelectionUnit.Cell;
             dataGridViewSummary.UnselectAll();
 
-            ((App)Application.Current).globalBgColor = System.Drawing.Color.Cyan;
+            if(actTraining.Finalized)
+            {
+                ((App)Application.Current).globalBgColor = System.Drawing.Color.LightGreen;
+            }
+            {
+                ((App)Application.Current).globalBgColor = System.Drawing.Color.LightGray;
+            }
+
             testlabel.Content = ((App)Application.Current).globalBgColor.ToString();
 
             ///dataGridViewSummary.ReadOnly = true;
@@ -665,7 +682,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                             {
                                 if (!dayPilotCost.testIfPayed()) 
                                 {
-                                    actTraining.Finalized = false;
+                                    //actTraining.Finalized = false;
                                     break;
                                 }
                             }
