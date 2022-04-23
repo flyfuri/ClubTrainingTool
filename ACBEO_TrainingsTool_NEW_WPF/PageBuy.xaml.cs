@@ -22,7 +22,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
     /// </summary>
     public partial class PageBuy : Page
     {
-        private Training actTrning;
+        private Training actTraining;
 
         List<Participant> participants = new List<Participant>();
         List<DayPilotBuy> tempRowOfBuys = new List<DayPilotBuy>();
@@ -31,7 +31,9 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         public PageBuy(Training actualTraining)
         {
             InitializeComponent();
-            actTrning = actualTraining;
+            actTraining = actualTraining;
+            TrainingFinalizeHelper calcColor = new TrainingFinalizeHelper(actTraining);
+            mainGrid.Background = calcColor.calcBGBrush();
         }
 
         private void Page_Buy_Loaded(object sender, RoutedEventArgs e)
@@ -43,7 +45,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             display.Clear();
             DataAccess dbUpdate = new DataAccess();
-            participants = dbUpdate.getParticipants(actTrning.TrainingID);
+            participants = dbUpdate.getParticipants(actTraining.TrainingID);
 
             //add Pilot coumn
             if (display.Columns.Count == 0)
@@ -76,14 +78,14 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             foreach (Participant participant in participants)
             {
                 listTempRow.Clear();
-                tempRowOfBuys = dbUpdate.getDayPilotBuyByTrainIDParticipID(actTrning.TrainingID, participant.ParticipantID);
+                tempRowOfBuys = dbUpdate.getDayPilotBuyByTrainIDParticipID(actTraining.TrainingID, participant.ParticipantID);
                 if (tempRowOfBuys.Count > 0)
                 {
                     listTempRow = tempRowOfBuys[0].valueList;
 
                     //insert Abos to buy
                     List<AboFlight> abosToBuyInThisTraining = new List<AboFlight>();
-                    abosToBuyInThisTraining = dbUpdate.getAboFlightNrsDayPilot(participant.PilotID, actTrning.TrainingID);
+                    abosToBuyInThisTraining = dbUpdate.getAboFlightNrsDayPilot(participant.PilotID, actTraining.TrainingID);
                     string stringAbosToBuy = "";
                     if (abosToBuyInThisTraining.Count > 0)
                     {
@@ -166,10 +168,13 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             DataGridCellClickRowColumnFormStyle e2 = new DataGridCellClickRowColumnFormStyle();  //provide RowIndex and ColumnIndex from e in forms style
             e2.wpf_e = e;
 
-            if (e2.ColumnIndex > 0
-               & e2.ColumnIndex < dataGridViewDisplay.Columns.Count - 1
-               & e2.RowIndex >= 0
-               & e2.RowIndex < dataGridViewDisplay.Items.Count - 1)
+            TrainingFinalizeHelper trnFinalizHelper = new TrainingFinalizeHelper(actTraining);
+
+            if (trnFinalizHelper.checkNotFinalized()
+                & (e2.ColumnIndex > 0
+                    & e2.ColumnIndex < dataGridViewDisplay.Columns.Count - 1
+                    & e2.RowIndex >= 0
+                    & e2.RowIndex < dataGridViewDisplay.Items.Count - 1))
             {
                 DataAccess db = new DataAccess();
                 int participID = participants[e2.RowIndex].ParticipantID;
@@ -228,13 +233,13 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                                     }
                                 }
                                 newAboFlight.Abo_NrInYear = lowestUnused;
-                                newAboFlight.DateBought = actTrning.TrainingDate;
+                                newAboFlight.DateBought = actTraining.TrainingDate;
                                 newAboFlight.DateFlightPayedWith = DateTime.Parse("1753-01-01");
                                 newAboFlight.Comment = "Abo-Flug";
                                 newAboFlight.SellerID = 0;
                                 foreach (Participant participant in participants)
                                 {
-                                    if (participant.ParticipantID == actTrning.Leiter1_ID)
+                                    if (participant.ParticipantID == actTraining.Leiter1_ID)
                                     {
                                         newAboFlight.SellerID = participant.PilotID;
                                     }
@@ -256,7 +261,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                             if (listAbos.Count > 0)
                             {
                                 List<AboFlight> abosBuyThisTraining = new List<AboFlight>();
-                                abosBuyThisTraining = db.getAboFlightNrsDayPilot(actRowParticipant.PilotID, actTrning.TrainingID);
+                                abosBuyThisTraining = db.getAboFlightNrsDayPilot(actRowParticipant.PilotID, actTraining.TrainingID);
                                 if (abosBuyThisTraining.Count >= 1)
                                 {
                                     foreach (AboFlight aboFlght in abosBuyThisTraining)
@@ -264,7 +269,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                                         if (aboFlght.DateFlightPayedWith.Year < 1800)
                                         {
                                             List<AboFlight> abosToDelete = new List<AboFlight>();
-                                            abosToDelete = db.getAboFlightUsablePilotBoughtThisTraining(actRowParticipant.PilotID, actTrning.TrainingID, aboFlght.Abo_NrInYear);
+                                            abosToDelete = db.getAboFlightUsablePilotBoughtThisTraining(actRowParticipant.PilotID, actTraining.TrainingID, aboFlght.Abo_NrInYear);
                                             if (abosToDelete.Count == 10)
                                             {
                                                 db.deleteAboFlights(abosToDelete);
@@ -286,7 +291,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 {
                     string defaultValue = "";
                     string windowTitle = "";
-                    tempRowOfBuys = db.getDayPilotBuyByTrainIDParticipID(actTrning.TrainingID, participID);
+                    tempRowOfBuys = db.getDayPilotBuyByTrainIDParticipID(actTraining.TrainingID, participID);
                     if (tempRowOfBuys.Count > 0 & e2.ColumnIndex == 8)
                     {
                         defaultValue = tempRowOfBuys[0].Remarks;
@@ -344,12 +349,12 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 if (!boolFormWasCancled || e2.ColumnIndex == 1 & !boolNewAboCancled)
                 {
                     //Get record by cell position via partitipant and trainingNr
-                    tempRowOfBuys = db.getDayPilotBuyByTrainIDParticipID(actTrning.TrainingID, participID);
+                    tempRowOfBuys = db.getDayPilotBuyByTrainIDParticipID(actTraining.TrainingID, participID);
                     if (tempRowOfBuys.Count == 0)  //add
                     {
                         DayPilotBuy tempDayPilotBuy = new DayPilotBuy();
                         tempDayPilotBuy.ParticipantID = participID;
-                        tempDayPilotBuy.TrainingID = actTrning.TrainingID;
+                        tempDayPilotBuy.TrainingID = actTraining.TrainingID;
 
                         switch (e2.ColumnIndex)
                         {
@@ -425,12 +430,12 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     //..set costs
                     //..try to get record in order to know if add or update
                     List<DayPilotCost> tempDayPilotCost = new List<DayPilotCost>();
-                    tempDayPilotCost = db.getDayPilotCostsByTrainIDParticipID(actTrning.TrainingID, participID);
+                    tempDayPilotCost = db.getDayPilotCostsByTrainIDParticipID(actTraining.TrainingID, participID);
                     if (tempDayPilotCost.Count == 0)
                     {
                         //add
                         DayPilotCost dayPilotCostToUpdate = new DayPilotCost();
-                        dayPilotCostToUpdate.TrainingID = actTrning.TrainingID;
+                        dayPilotCostToUpdate.TrainingID = actTraining.TrainingID;
                         dayPilotCostToUpdate.ParticipantID = participID;
                         try
                         {

@@ -32,6 +32,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             InitializeComponent();
             actTraining = actualTraining;
+            TrainingFinalizeHelper trnFinalizHelper = new TrainingFinalizeHelper(actTraining);
+            mainGrid.Background = trnFinalizHelper.calcBGBrush();
         }
 
         private void TotalCostUpdateDisplay()
@@ -153,14 +155,17 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             DataGridCellClickRowColumnFormStyle e2 = new DataGridCellClickRowColumnFormStyle();  //provide RowIndex and ColumnIndex from e in forms style
             e2.wpf_e = e;
 
-            if (e2.RowIndex >= 0
-               & e2.RowIndex <= dataGridViewDisplay.Items.Count - 1
-               & (e2.ColumnIndex == 0
-               || e2.ColumnIndex == 6
-               || e2.ColumnIndex == 8
-               || e2.ColumnIndex == 9
-               || e2.ColumnIndex == 10
-               || e2.ColumnIndex == 11))
+            TrainingFinalizeHelper trnFinalizHelper = new TrainingFinalizeHelper(actTraining);
+
+            if (trnFinalizHelper.checkNotFinalized() 
+                & (e2.RowIndex >= 0
+                    & e2.RowIndex <= dataGridViewDisplay.Items.Count - 1
+                     & (e2.ColumnIndex == 0
+                        || e2.ColumnIndex == 6
+                        || e2.ColumnIndex == 8
+                        || e2.ColumnIndex == 9
+                        || e2.ColumnIndex == 10
+                        || e2.ColumnIndex == 11)))
             {
                 int actCellPilotID = participants[e2.RowIndex].PilotID;
                 Participant actCellParticipant = participants[e2.RowIndex];

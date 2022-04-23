@@ -7,8 +7,19 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageTraining" Loaded="Page_Training_Loaded">
-
-    <Grid>
+    <!--<Page.Resources>
+        <Style TargetType="Grid">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding }" Value="true">
+                    <Setter Property="Background" Value="LightGreen"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=readActTraiing.Finalized}" Value="false">
+                    <Setter Property="Background" Value="LightBlue"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>-->
+    <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>

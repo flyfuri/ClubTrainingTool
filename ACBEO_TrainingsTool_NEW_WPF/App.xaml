@@ -7,9 +7,17 @@
     <Application.Resources>
 
         <!--standard background for Pages-->
-        <Style x:Key="{x:Type Grid}" TargetType="{x:Type Grid}">
-            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=globalBgColor}"/>
-        </Style>
+        <!--<Style  x:Key="{x:Type Page}" TargetType="{x:Type Page}"> not working...
+            <Style.Triggers>
+                <DataTrigger Binding="{x:Reference Name= }" Value="2021">
+                    <Setter Property="Background" Value="LightGreen"></Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{x:Static local:MainWindow.actYEAR}, Path=}" Value="2020">
+                    <Setter Property="Background" Value="LightGray"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=globalBgColor}"/> 
+        </Style>-->
         
         <!--make scroolbar bigger-->
         <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">

@@ -33,6 +33,12 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private decimal totalCostTraining;
         private string tempMemory_Remark;
 
+        public Training readActTraining
+        {
+            get{return actTraining;}
+            private set { actTraining = value;}    
+        }
+
         public PageTrainingg(Training actualTraining)
         {
             InitializeComponent();
@@ -66,16 +72,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             dataGridViewSummary.setBgColorByRowColIndexes(5, 6, bgbrush);
             dataGridViewSummary.setBgColorByRowColIndexes(6, 5, bgbrush);
             dataGridViewSummary.UnselectAll();
-            if (actTraining.Finalized == true)
-            {
-                ((App)Application.Current).globalBgColor = System.Drawing.Color.LightGreen;
-            }
-            else
-            {
-                ((App)Application.Current).globalBgColor = System.Drawing.Color.LightGray;
-            }
-            //testlabel.Content = ((App)Application.Current).globalBgColor.ToString();
-            testlabel.Content = DataContext.ToString();
+            TrainingFinalizeHelper calcColor = new TrainingFinalizeHelper(actTraining);
+            mainGrid.Background = calcColor.calcBGBrush();
         }
         private void updateDisplay()
         {
@@ -246,16 +244,6 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             //dataGridViewSummary.SelectionUnit = DataGridSelectionUnit.Cell;
             dataGridViewSummary.UnselectAll();
 
-            if(actTraining.Finalized)
-            {
-                ((App)Application.Current).globalBgColor = System.Drawing.Color.LightGreen;
-            }
-            {
-                ((App)Application.Current).globalBgColor = System.Drawing.Color.LightGray;
-            }
-
-            testlabel.Content = ((App)Application.Current).globalBgColor.ToString();
-
             ///dataGridViewSummary.ReadOnly = true;
             //dataGridViewSummary.Columns[0].Width = 200;
             ///dataGridViewSummary.Columns[0].Frozen = true;
@@ -315,10 +303,13 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             DataGridCellClickRowColumnFormStyle e2 = new DataGridCellClickRowColumnFormStyle();  //provide RowIndex and ColumnIndex from e in forms style
             e2.wpf_e = e;
 
-            if (e2.ColumnIndex >= 0
-                & e2.ColumnIndex < dataGridViewDispTrnCosts.Columns.Count
-                & e2.RowIndex >= 0
-                & e2.RowIndex < dataGridViewDispTrnCosts.Items.Count & e2.isCell)
+            TrainingFinalizeHelper trnFinalizHelper = new TrainingFinalizeHelper(actTraining);
+
+            if (trnFinalizHelper.checkNotFinalized()
+                & (e2.ColumnIndex >= 0
+                    & e2.ColumnIndex < dataGridViewDispTrnCosts.Columns.Count
+                    & e2.RowIndex >= 0
+                    & e2.RowIndex < dataGridViewDispTrnCosts.Items.Count & e2.isCell))
             {
                 DataAccess db = new DataAccess();
                 List<TrainingCost> rowTrainingCostToEdit = new List<TrainingCost>();
@@ -543,17 +534,29 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             DataGridCellClickRowColumnFormStyle e2 = new DataGridCellClickRowColumnFormStyle();  //provide RowIndex and ColumnIndex from e in forms style
             e2.wpf_e = e;
 
-            if (e2.ColumnIndex == 1
-                & e2.RowIndex == 4
-                || e2.ColumnIndex == 2
-                & e2.RowIndex == 5
-                & actTrningID > 0 //old: & trainingOpen)
-                || e2.ColumnIndex == 5
-                & e2.RowIndex == 5
-                || e2.ColumnIndex == 6
-                & e2.RowIndex == 5
-                || e2.ColumnIndex == 5
-                & e2.RowIndex == 6)
+            bool tempIsNotFinalized;
+            if (e2.ColumnIndex == 5 & e2.RowIndex == 6)
+            {
+            tempIsNotFinalized = true;
+            }
+            else
+            {
+                TrainingFinalizeHelper trnFinalizHelper = new TrainingFinalizeHelper(actTraining);
+                tempIsNotFinalized = trnFinalizHelper.checkNotFinalized();
+            }
+
+            if (tempIsNotFinalized //(trnFinalizHelper.checkNotFinalized()
+                & (e2.ColumnIndex == 1
+                    & e2.RowIndex == 4
+                    || e2.ColumnIndex == 2
+                    & e2.RowIndex == 5
+                    & actTrningID > 0 //old: & trainingOpen)
+                    || e2.ColumnIndex == 5
+                    & e2.RowIndex == 5
+                    || e2.ColumnIndex == 6
+                    & e2.RowIndex == 5
+                    || e2.ColumnIndex == 5
+                    & e2.RowIndex == 6))
             {
                 decimal defaultValue = 0;
                 string defaultValueStr = "";
@@ -738,10 +741,16 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private void textBoxRemark_GotFocus(object sender, RoutedEventArgs e)
         {
             tempMemory_Remark = textBoxRemark.Text.ToString();
+            TrainingFinalizeHelper trnFinalizHelper = new TrainingFinalizeHelper(actTraining);
+            if(!trnFinalizHelper.checkNotFinalized())
+            {
+                textBoxRemark.IsEnabled = false;
+            }
         }
         private void textBoxRemark_LostFocus(object sender, RoutedEventArgs e)
         {
-            if(tempMemory_Remark != textBoxRemark.Text.ToString())
+            textBoxRemark.IsEnabled = true;
+            if (tempMemory_Remark != textBoxRemark.Text.ToString())
             {
                 actTraining.Remarks = textBoxRemark.Text.ToString();
                 //update Training in database

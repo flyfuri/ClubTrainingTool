@@ -30,6 +30,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             InitializeComponent();
             actTraining = actualTraining;
+            TrainingFinalizeHelper calcColor = new TrainingFinalizeHelper(actTraining);
+            mainGrid.Background = calcColor.calcBGBrush();
         }
 
         private void UpdateDisplay()
@@ -229,7 +231,10 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void buttonInsert_Click(object sender, RoutedEventArgs e)
         {
-            if (dataGridPilots.SelectedItems.Count == 1)
+            TrainingFinalizeHelper trnFinalizHelper = new TrainingFinalizeHelper(actTraining);
+
+            if (trnFinalizHelper.checkNotFinalized()
+                & (dataGridPilots.SelectedItems.Count == 1))
             {
                 CheckAndAddToParticipantList(pilots[dataGridPilots.SelectedIndex]);
             }
@@ -249,12 +254,17 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void buttonRemove_Click(object sender, RoutedEventArgs e)
         {
-            List<Participant> participantsToRemove = new List<Participant>();
-            participantsToRemove.Add(participants[dataGridViewParticipants.SelectedIndex]);
-            DataAccess dbRem = new DataAccess();
+            TrainingFinalizeHelper trnFinalizHelper = new TrainingFinalizeHelper(actTraining);
 
-            dbRem.deleteFromAllTblsParticipant(participantsToRemove);
-            UpdateDisplay();
+            if (trnFinalizHelper.checkNotFinalized())
+            {
+                List<Participant> participantsToRemove = new List<Participant>();
+                participantsToRemove.Add(participants[dataGridViewParticipants.SelectedIndex]);
+                DataAccess dbRem = new DataAccess();
+
+                dbRem.deleteFromAllTblsParticipant(participantsToRemove);
+                UpdateDisplay();
+            }
         }
     }
 }

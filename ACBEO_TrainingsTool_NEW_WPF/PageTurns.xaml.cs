@@ -42,6 +42,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             actTraining = actualTraining;
             actTrningID = actualTraining.TrainingID;
             actYear = actualYear;
+            TrainingFinalizeHelper calcColor = new TrainingFinalizeHelper(actTraining);
+            mainGrid.Background = calcColor.calcBGBrush();
         }
 
         public string setLeiter1or2(int nbr)
@@ -321,167 +323,172 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             DataGridCellClickRowColumnFormStyle e2 = new DataGridCellClickRowColumnFormStyle();  //provide RowIndex and ColumnIndex from e in forms style
             e2.wpf_e = e;
-            //show pilotinfos
-            if (e2.ColumnIndex == 0
-                & e2.RowIndex >= 0
-                & e2.RowIndex < dataGridViewDisplay.Items.Count & e2.isCell) //dataGridViewDisplay.Items.Count - 1)
+
+            TrainingFinalizeHelper trnFinalizHelper = new TrainingFinalizeHelper(actTraining);
+            if (trnFinalizHelper.checkNotFinalized())
             {
-                DataAccess db = new DataAccess();
-                List<AboFlight> validAboFlights = new List<AboFlight>();
-                string codeToShow = $"{participants[e2.RowIndex].ComplNameAndLicence}__{DateTime.Today.Year}{DateTime.Today.Month}{DateTime.Today.Day}";
-                validAboFlights = db.getUsableAboFlightsByPilotID(participants[e2.RowIndex].PilotID, actYear);
-                foreach (AboFlight validAboFlight in validAboFlights)
+                //show pilotinfos
+                if (e2.ColumnIndex == 0
+                    & e2.RowIndex >= 0
+                    & e2.RowIndex < dataGridViewDisplay.Items.Count & e2.isCell) //dataGridViewDisplay.Items.Count - 1)
                 {
-                    if (!codeToShow.Contains(validAboFlight.AboYearNr))
+                    DataAccess db = new DataAccess();
+                    List<AboFlight> validAboFlights = new List<AboFlight>();
+                    string codeToShow = $"{participants[e2.RowIndex].ComplNameAndLicence}__{DateTime.Today.Year}{DateTime.Today.Month}{DateTime.Today.Day}";
+                    validAboFlights = db.getUsableAboFlightsByPilotID(participants[e2.RowIndex].PilotID, actYear);
+                    foreach (AboFlight validAboFlight in validAboFlights)
                     {
-                        codeToShow = $"{codeToShow}__{validAboFlight.AboYearNr}";
-                    }
-                }
-                codeToShow = $"{codeToShow}__{validAboFlights.Count.ToString()}";
-                codeToShow = $"{codeToShow}{Environment.NewLine}{Environment.NewLine}Mehr Details anzeigen?";
-                MessageBoxResult msgBoxResult = MessageBox.Show(codeToShow,
-                                                            "",
-                                                            MessageBoxButton.YesNo,
-                                                            MessageBoxImage.Question);
-                if (msgBoxResult == MessageBoxResult.Yes)
-                {
-                    WindowAboPilotOverview formAboOverview = new WindowAboPilotOverview(participants[e2.RowIndex].PilotID, participants[e2.RowIndex].ComplNameAndLicence, actYear);
-                    formAboOverview.ShowDialog();
-                }
-
-            }
-            else if (e2.ColumnIndex > 0
-                & e2.ColumnIndex < dataGridViewDisplay.Columns.Count - 1
-                & e2.RowIndex >= 0
-                & e2.RowIndex < dataGridViewDisplay.Items.Count)
-            {
-                WindowFillTurn formFillTurn = new WindowFillTurn();
-                formFillTurn.Title = $"Select turn for {participants[e2.RowIndex].FirstName} {participants[e2.RowIndex].LastName}";
-                formFillTurn.ShowDialog();
-                if (formFillTurn.return_string != "CANCEL")
-                {
-                    //old: dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value = formFillTurn.return_string;
-                    dataGridViewDisplay.setStringValueByRowColIndexes(e2.RowIndex,e2.ColumnIndex,formFillTurn.return_string);
-                }
-
-                //Get record by cell position via partitipant and turnNr
-                int participantID = participants[e2.RowIndex].ParticipantID;
-                int turnNr = e2.ColumnIndex;
-                int turnID;
-
-                DataAccess db = new DataAccess();
-                tempRowOfTurns = db.getTurnsByTrainIDParticipID(actTrningID, participantID);
-                if (tempRowOfTurns.Count == 0)
-                {
-                    Turn tempTurn = new Turn();
-                    tempTurn.TrainingID = actTrningID;
-                    tempTurn.ParticipantID = participantID;
-                    tempTurn.TurnNr = turnNr;
-                    //old: tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
-                    tempTurn.Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex,e2.ColumnIndex);
-                    tempRowOfTurns.Clear();
-                    tempRowOfTurns.Add(tempTurn);
-
-                    db.addTurn(tempRowOfTurns);
-                    TurnsUpdateDisplay();
-                }
-                else
-                {
-                    //get turnID out of that record and set Flight in list
-                    turnID = -1;
-                    int i = -1;
-                    foreach (Turn turn in tempRowOfTurns)
-                    {
-                        i++;
-                        if (turn.TurnNr == turnNr)
+                        if (!codeToShow.Contains(validAboFlight.AboYearNr))
                         {
-                            turnID = turn.TurnID;
-                            //old: tempRowOfTurns[i].Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
-                            tempRowOfTurns[i].Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex,e2.ColumnIndex);
-                            break;
+                            codeToShow = $"{codeToShow}__{validAboFlight.AboYearNr}";
                         }
                     }
-                    //if turnID found.. 
-                    if (turnID >= 0)
+                    codeToShow = $"{codeToShow}__{validAboFlights.Count.ToString()}";
+                    codeToShow = $"{codeToShow}{Environment.NewLine}{Environment.NewLine}Mehr Details anzeigen?";
+                    MessageBoxResult msgBoxResult = MessageBox.Show(codeToShow,
+                                                                "",
+                                                                MessageBoxButton.YesNo,
+                                                                MessageBoxImage.Question);
+                    if (msgBoxResult == MessageBoxResult.Yes)
                     {
-                        //..try to get record in order to know if add or update
-                        List<Turn> tempCheckTurns = new List<Turn>();
-                        tempCheckTurns = db.getTurnByTurnID(turnID);
-                        if (tempCheckTurns.Count == 0)
+                        WindowAboPilotOverview formAboOverview = new WindowAboPilotOverview(participants[e2.RowIndex].PilotID, participants[e2.RowIndex].ComplNameAndLicence, actYear);
+                        formAboOverview.ShowDialog();
+                    }
+
+                }
+                else if (e2.ColumnIndex > 0
+                    & e2.ColumnIndex < dataGridViewDisplay.Columns.Count - 1
+                    & e2.RowIndex >= 0
+                    & e2.RowIndex < dataGridViewDisplay.Items.Count)
+                {
+                    WindowFillTurn formFillTurn = new WindowFillTurn();
+                    formFillTurn.Title = $"Select turn for {participants[e2.RowIndex].FirstName} {participants[e2.RowIndex].LastName}";
+                    formFillTurn.ShowDialog();
+                    if (formFillTurn.return_string != "CANCEL")
+                    {
+                        //old: dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value = formFillTurn.return_string;
+                        dataGridViewDisplay.setStringValueByRowColIndexes(e2.RowIndex, e2.ColumnIndex, formFillTurn.return_string);
+                    }
+
+                    //Get record by cell position via partitipant and turnNr
+                    int participantID = participants[e2.RowIndex].ParticipantID;
+                    int turnNr = e2.ColumnIndex;
+                    int turnID;
+
+                    DataAccess db = new DataAccess();
+                    tempRowOfTurns = db.getTurnsByTrainIDParticipID(actTrningID, participantID);
+                    if (tempRowOfTurns.Count == 0)
+                    {
+                        Turn tempTurn = new Turn();
+                        tempTurn.TrainingID = actTrningID;
+                        tempTurn.ParticipantID = participantID;
+                        tempTurn.TurnNr = turnNr;
+                        //old: tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                        tempTurn.Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex, e2.ColumnIndex);
+                        tempRowOfTurns.Clear();
+                        tempRowOfTurns.Add(tempTurn);
+
+                        db.addTurn(tempRowOfTurns);
+                        TurnsUpdateDisplay();
+                    }
+                    else
+                    {
+                        //get turnID out of that record and set Flight in list
+                        turnID = -1;
+                        int i = -1;
+                        foreach (Turn turn in tempRowOfTurns)
+                        {
+                            i++;
+                            if (turn.TurnNr == turnNr)
+                            {
+                                turnID = turn.TurnID;
+                                //old: tempRowOfTurns[i].Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                                tempRowOfTurns[i].Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex, e2.ColumnIndex);
+                                break;
+                            }
+                        }
+                        //if turnID found.. 
+                        if (turnID >= 0)
+                        {
+                            //..try to get record in order to know if add or update
+                            List<Turn> tempCheckTurns = new List<Turn>();
+                            tempCheckTurns = db.getTurnByTurnID(turnID);
+                            if (tempCheckTurns.Count == 0)
+                            {
+                                //add
+                                Turn tempTurn = new Turn();
+                                tempTurn.TrainingID = actTrningID;
+                                tempTurn.ParticipantID = participantID;
+                                tempTurn.TurnNr = turnNr;
+                                //old tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                                tempTurn.Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex, e2.ColumnIndex);
+                                tempRowOfTurns.Clear();
+                                tempRowOfTurns.Add(tempTurn);
+
+                                db.addTurn(tempRowOfTurns);
+                            }
+                            else if (tempCheckTurns.Count == 1)
+                            {
+                                //update
+                                //old: tempRowOfTurns[0].Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                                tempRowOfTurns[0].Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex, e2.ColumnIndex);
+                                db.updateTurns(tempRowOfTurns);
+                            }
+                        }
+                        else
                         {
                             //add
                             Turn tempTurn = new Turn();
                             tempTurn.TrainingID = actTrningID;
                             tempTurn.ParticipantID = participantID;
                             tempTurn.TurnNr = turnNr;
-                            //old tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
-                            tempTurn.Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex,e2.ColumnIndex);
+                            //old: tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
+                            tempTurn.Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex, e2.ColumnIndex);
                             tempRowOfTurns.Clear();
                             tempRowOfTurns.Add(tempTurn);
 
                             db.addTurn(tempRowOfTurns);
                         }
-                        else if (tempCheckTurns.Count == 1)
-                        {
-                            //update
-                            //old: tempRowOfTurns[0].Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
-                            tempRowOfTurns[0].Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex,e2.ColumnIndex);
-                            db.updateTurns(tempRowOfTurns);
-                        }
                     }
-                    else
+                    TurnsUpdateDisplay();
+                    SetCosts(participantID, e2.RowIndex);
+                    /*//..set costs
+                    //..try to get record in order to know if add or update
+                    List<DayPilotCost> tempDayPilotCost = new List<DayPilotCost>();
+                    tempDayPilotCost = db.getDayPilotCostsByTrainIDParticipID(actTrningID, participantID);
+                    if(tempDayPilotCost.Count == 0)
                     {
                         //add
-                        Turn tempTurn = new Turn();
-                        tempTurn.TrainingID = actTrningID;
-                        tempTurn.ParticipantID = participantID;
-                        tempTurn.TurnNr = turnNr;
-                        //old: tempTurn.Flight = dataGridViewDisplay.Items[e2.RowIndex].Cells[e2.ColumnIndex].Value.ToString();
-                        tempTurn.Flight = dataGridViewDisplay.getValueTextStringByRowColIndexes(e2.RowIndex,e2.ColumnIndex);
-                        tempRowOfTurns.Clear();
-                        tempRowOfTurns.Add(tempTurn);
-
-                        db.addTurn(tempRowOfTurns);
+                        DayPilotCost dayPilotCostToUpdate = new DayPilotCost();
+                        dayPilotCostToUpdate.TrainingID = actTrningID;
+                        dayPilotCostToUpdate.ParticipantID = participantID;
+                        try
+                        {
+                            dayPilotCostToUpdate.CostFlights = decimal.Parse(dataGridViewDisplay.Items[e.RowIndex].Cells[dataGridViewDisplay.Columns.Count - 1].Value.ToString());
+                        }
+                        catch (Exception exept)
+                        {
+                            MessageBox.Show("Error parsing CostBuy : '{exept}'");
+                                dayPilotCostToUpdate.CostFlights = 99999;
+                        }
+                        tempDayPilotCost.Clear();
+                        tempDayPilotCost.Add(dayPilotCostToUpdate);
+                        db.addDayPilotCost(tempDayPilotCost);
                     }
+                    else if(tempDayPilotCost.Count == 1)
+                    {
+                        try
+                        {
+                            tempDayPilotCost[0].CostFlights = decimal.Parse(dataGridViewDisplay.Items[e.RowIndex].Cells[dataGridViewDisplay.Columns.Count - 1].Value.ToString());
+                        }
+                        catch (Exception exept)
+                        {
+                            MessageBox.Show("Error parsing CostBuy : '{exept}'");
+                            tempDayPilotCost[0].CostFlights = 99999;
+                        }
+                        db.updateDayPilotCosts(tempDayPilotCost);
+                    }*/
                 }
-                TurnsUpdateDisplay();
-                SetCosts(participantID, e2.RowIndex);
-                /*//..set costs
-                //..try to get record in order to know if add or update
-                List<DayPilotCost> tempDayPilotCost = new List<DayPilotCost>();
-                tempDayPilotCost = db.getDayPilotCostsByTrainIDParticipID(actTrningID, participantID);
-                if(tempDayPilotCost.Count == 0)
-                {
-                    //add
-                    DayPilotCost dayPilotCostToUpdate = new DayPilotCost();
-                    dayPilotCostToUpdate.TrainingID = actTrningID;
-                    dayPilotCostToUpdate.ParticipantID = participantID;
-                    try
-                    {
-                        dayPilotCostToUpdate.CostFlights = decimal.Parse(dataGridViewDisplay.Items[e.RowIndex].Cells[dataGridViewDisplay.Columns.Count - 1].Value.ToString());
-                    }
-                    catch (Exception exept)
-                    {
-                        MessageBox.Show("Error parsing CostBuy : '{exept}'");
-                            dayPilotCostToUpdate.CostFlights = 99999;
-                    }
-                    tempDayPilotCost.Clear();
-                    tempDayPilotCost.Add(dayPilotCostToUpdate);
-                    db.addDayPilotCost(tempDayPilotCost);
-                }
-                else if(tempDayPilotCost.Count == 1)
-                {
-                    try
-                    {
-                        tempDayPilotCost[0].CostFlights = decimal.Parse(dataGridViewDisplay.Items[e.RowIndex].Cells[dataGridViewDisplay.Columns.Count - 1].Value.ToString());
-                    }
-                    catch (Exception exept)
-                    {
-                        MessageBox.Show("Error parsing CostBuy : '{exept}'");
-                        tempDayPilotCost[0].CostFlights = 99999;
-                    }
-                    db.updateDayPilotCosts(tempDayPilotCost);
-                }*/
             }
             dataGridViewDisplay.UnselectAllCells();
         }
