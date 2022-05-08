@@ -9,7 +9,7 @@
   <Identity
     Name="36dc78dd-8fc7-4a57-b993-f6d00d54b901"
     Publisher="CN=acbeo"
-    Version="1.0.0.0" />
+    Version="1.0.2.0" />
 
   <Properties>
     <DisplayName>AcbeoTrainingsToolWPFInstallerPackage</DisplayName>
@@ -45,8 +45,8 @@
   </Applications>
 
   <Capabilities>
-    <Capability Name="internetClient" />
     <rescap:Capability Name="runFullTrust" />
+    <Capability Name="internetClient"/>
     <DeviceCapability Name="webcam"/>
   </Capabilities>
 </Package>
