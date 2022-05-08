@@ -40,6 +40,8 @@
                     <MenuItem x:Name="menuItemSetActYear" Header="Change actual YEAR" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown"/>
                     <Separator/>
                     <MenuItem x:Name="menuItemExportAbos" Header="Export Abos to CSV" Click="menuItemExportAbos_Click"/>
+                    <Separator/>
+                    <MenuItem x:Name="BackupDB" Header="Backup Database" Click="BackupDB_Click"/>
                 </MenuItem>
                 <MenuItem x:Name="MenueScan" Header="SCAN" Click="MenueScan_Click">
                 </MenuItem>

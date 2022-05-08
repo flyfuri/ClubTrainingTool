@@ -92,6 +92,21 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             }
         }
 
+        private void backupDatabase(bool messagewhenOK)
+        {
+            string backuppath = "C:\\ACBEO_TrainingsDB\\Bckups\\";
+            DataAccess db = new DataAccess();
+            bool backupOK = db.backupdb("TrainingsRapport", backuppath);
+            if (!backupOK)
+            {
+                MessageBox.Show($"Backup not successfull! Folder \"{backuppath}\" existing?");
+            }
+            else if(messagewhenOK)
+            {
+                MessageBox.Show($"new Backup to be found in folder \"{backuppath}\".");
+            }
+        }
+
 
         /**********Main Menue Events**********************************************************/
         private void MenueTraining_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)  //routed event (tunneling mode) see https://docs.microsoft.com/en-us/archive/msdn-magazine/2008/september/advanced-wpf-understanding-routed-events-and-commands-in-wpf
@@ -366,6 +381,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
             if (!windowNewTraining.wasCanceled)
             {
+                backupDatabase(false);
                 actualTraining = windowNewTraining.lastNewTrainigWithID;
                 DataAccess db = new DataAccess();
                 actualTraining = db.getTrainingByID(windowNewTraining.lastNewTrainigWithID.TrainingID)[0];
@@ -473,6 +489,11 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             foreach (ItemsControl m in MenueMain.Items)
                 m.IsEnabled = true;
             MainFrame.Content = new PageTrainingOverview();
+        }
+
+        private void BackupDB_Click(object sender, RoutedEventArgs e)
+        {
+            backupDatabase(true);
         }
     }
 }

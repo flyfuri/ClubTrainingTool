@@ -11,6 +11,34 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 {
     class DataAccess
     {
+        //Backhup/restore DB*****************************************************
+        public bool backupdb(string dbName, string pathToSave)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DBHelper.CnnVal("TrainingsRapportConnectionString")))
+            {
+                string savePath = pathToSave;
+                if (!savePath.EndsWith("\\"))
+                {
+                    savePath = $"{pathToSave}\\";
+                }
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@nameDB", dbName);
+                parameters.Add("@pathToSave", savePath);
+
+                try
+                {
+                    connection.Execute(sql: "Backup_DB_Data_withTimestamp", parameters, commandTimeout:30 , commandType: CommandType.StoredProcedure);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+        }
+
+        //Training*****************************************************
         public List<Training> getLatestDate()
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DBHelper.CnnVal("TrainingsRapportConnectionString")))
@@ -121,7 +149,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             }
         }
 
-//Participant*****************************************************3        
+//Participant*****************************************************        
 
         public List<Participant> getParticipants(int trainingID)
         {

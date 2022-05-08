@@ -203,6 +203,7 @@
     <Build Include="dbo\Stored Procedures\DayPilotBuy_add.sql" />
     <Build Include="dbo\Stored Procedures\Training_GetByYEAR.sql" />
     <Build Include="dbo\Stored Procedures\DayPilotBuy_update.sql" />
+    <Build Include="dbo\Stored Procedures\Backup_DB_Data_withTimestamp.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SQL_DB_ACBEO_Trainingstool_laptopBF.publish.publish.xml" />
