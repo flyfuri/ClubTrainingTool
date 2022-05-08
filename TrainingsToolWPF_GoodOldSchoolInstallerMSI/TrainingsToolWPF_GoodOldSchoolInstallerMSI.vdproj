@@ -15,13 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_3167FB4C74084BD082DAD8B4DAD806C5"
+        "MsmKey" = "8:_0E62B5232E374DADA69B5E114160B3B3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_81BCD300A983494ABFF58688FED94801"
+        "MsmKey" = "8:_F0D6E2F6235A429699A4934389A6E937"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -90,9 +90,9 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_81BCD300A983494ABFF58688FED94801"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F0D6E2F6235A429699A4934389A6E937"
             {
-            "SourcePath" = "8:F:\\Beni\\Images\\iconACBEO48.ico"
+            "SourcePath" = "8:iconACBEO48.ico"
             "TargetName" = "8:iconACBEO48.ico"
             "Tag" = "8:"
             "Folder" = "8:_920CC5B9EB6B4CD28D5F0F4CB61273AE"
@@ -165,9 +165,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:TrainingsToolWPF_GoodOldSchoolInstallerMSI"
+        "ProductName" = "8:TrainingsToolWPF"
         "ProductCode" = "8:{63385D68-F57E-4297-A798-02ADC4AF9651}"
-        "PackageCode" = "8:{9282BDCC-162C-49A8-AC25-F3EAB6BC8397}"
+        "PackageCode" = "8:{325FB4C6-7449-4E65-B771-4A762818C61D}"
         "UpgradeCode" = "8:{F5292AAD-396D-49F4-A6BC-C8CC75F2EDEB}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -184,7 +184,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_81BCD300A983494ABFF58688FED94801"
+        "ARPPRODUCTICON" = "8:_F0D6E2F6235A429699A4934389A6E937"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -287,7 +287,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_4BC02320B5AA42F1952C1D9731746A68"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_19012784D7F341D6A76AC238E53EB128"
             {
             "Name" = "8:ACBEO_TrainingsTool_WPF"
             "Arguments" = "8:"
@@ -295,13 +295,13 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_3167FB4C74084BD082DAD8B4DAD806C5"
+            "Target" = "8:_0E62B5232E374DADA69B5E114160B3B3"
             "Folder" = "8:_E5BAC91A380E42F097FCD8780DFE7A6C"
             "WorkingFolder" = "8:_920CC5B9EB6B4CD28D5F0F4CB61273AE"
-            "Icon" = "8:_81BCD300A983494ABFF58688FED94801"
+            "Icon" = "8:_F0D6E2F6235A429699A4934389A6E937"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_811E71507ACD4B7B9F1136487097A50C"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6DCA59B5A6094EEE9CA2C651AD4774F1"
             {
             "Name" = "8:Shortcut to  ACBEO_TrainingsTool_WPF"
             "Arguments" = "8:"
@@ -309,10 +309,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_3167FB4C74084BD082DAD8B4DAD806C5"
+            "Target" = "8:_0E62B5232E374DADA69B5E114160B3B3"
             "Folder" = "8:_F42140D7D8774DCBA70DBB65BA601BCF"
             "WorkingFolder" = "8:_920CC5B9EB6B4CD28D5F0F4CB61273AE"
-            "Icon" = "8:_81BCD300A983494ABFF58688FED94801"
+            "Icon" = "8:_F0D6E2F6235A429699A4934389A6E937"
             "Feature" = "8:"
             }
         }
@@ -714,9 +714,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_3167FB4C74084BD082DAD8B4DAD806C5"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0E62B5232E374DADA69B5E114160B3B3"
             {
-            "SourcePath" = "8:..\\ACBEO_TrainingsTool_NEW_WPF\\obj\\x64\\Release\\net5.0-windows\\ACBEO_TrainingsTool_NEW_WPF.dll"
+            "SourcePath" = "8:..\\ACBEO_TrainingsTool_NEW_WPF\\obj\\x64\\Release\\net5.0-windows\\win-x64\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_920CC5B9EB6B4CD28D5F0F4CB61273AE"
@@ -735,9 +735,10 @@
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
+            "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{AC4B1649-09E2-4B22-9624-D3FA8F2008DF}"
             "ShowKeyOutput" = "11:TRUE"
+            "PublishProfilePath" = "8:Properties\\PublishProfiles\\ClickOnceProfile.pubxml"
                 "ExcludeFilters"
                 {
                 }

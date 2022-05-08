@@ -28,6 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Update="WindowDialogKeyNumDecimal - Copy.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>WindowDialogKeyNumDecimal.xaml.cs</DependentUpon>
@@ -36,6 +41,13 @@
 
   <ItemGroup>
     <Folder Include="NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>
