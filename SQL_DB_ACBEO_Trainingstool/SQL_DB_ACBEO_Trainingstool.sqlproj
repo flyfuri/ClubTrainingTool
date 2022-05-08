@@ -206,7 +206,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SQL_DB_ACBEO_Trainingstool_laptopBF.publish.publish.xml" />
-    <None Include="SQL_DB_ACBEO_Trainingstool_TargetTablet.publish.publish.xml" />
+    <None Include="SQL_DB_ACBEO_Trainingstool.publish.xml" />
+    <None Include="SQL_DB_ACBEO_Trainingstool_TargetLapi.publish.publish.xml" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SQL_DB_ACBEO_Trainingstool.refactorlog" />
