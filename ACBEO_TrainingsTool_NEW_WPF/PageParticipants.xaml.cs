@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AForge.Video;
+using AForge.Video.DirectShow;
 
 namespace ACBEO_TrainingsTool_NEW_WPF
 {
@@ -20,6 +22,15 @@ namespace ACBEO_TrainingsTool_NEW_WPF
     /// </summary>
     public partial class PageParticipant : Page
     {
+        //Webcam-Elemente
+        private int defaultCamNr = 2;
+        private int camNr = 0;
+        //Anlegen eines Webcam-Objekte
+        FilterInfoCollection videosources;
+        VideoCaptureDevice videoSource;
+        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+
+        //Training-Elemente
         private Training actTraining;
         private int pilotsColNrToOrderBy = 0; /*0=LastName ASC, 1 = LastName ASC*/
 
@@ -32,6 +43,9 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             actTraining = actualTraining;
             TrainingFinalizeHelper calcColor = new TrainingFinalizeHelper(actTraining);
             mainGrid.Background = calcColor.calcBGBrush();
+
+            //dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            //dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 800);  //800ms
         }
 
         private void UpdateDisplay()
@@ -266,5 +280,45 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 UpdateDisplay();
             }
         }
+
+        //******************SCAN WITH CAMERA*****************************************************************************
+        /*private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            // create a barcode reader instance
+            IBarcodeReader reader = new BarcodeReader();
+            // load a bitmap
+            var barcodeBitmap = (Bitmap)pictureBox_ShowCode.Image;
+
+            // detect and decode the barcode inside the bitmap
+            var result = reader.Decode(barcodeBitmap);
+            // do something with the result;
+            if (result != null)
+            {
+                //videoSource.Stop();
+                try
+                {
+                    string textNr;
+                    string textPilot;
+                    string textNameAndNumber;
+
+                    textNr = "";
+                    textNr = "";
+                    textNr = (result.Text.Substring(0, result.Text.IndexOf("__")));
+                    textPilot = (result.Text.Remove(0, result.Text.IndexOf("__") + 2));
+                    textPilot = (textPilot.Substring(0, textPilot.IndexOf("__")));
+                    textPilot = (textPilot.Replace("_", " "));
+                    textBox1.Text = result.Text;
+                    textNameAndNumber = ($"{textPilot} ({textNr})");
+
+                    //einfüllen
+                    //CheckAndAddToParcitipantList();                                        
+                }
+                catch { }
+            }
+            else
+            {
+                timer_QRcheck.Start();
+            }
+        }*/
     }
 }

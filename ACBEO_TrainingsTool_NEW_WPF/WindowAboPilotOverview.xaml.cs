@@ -77,5 +77,12 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             Close();
         }
+
+        private void buttonShowQR_Click(object sender, RoutedEventArgs e)
+        {
+            string codeToShow = $"{pltName}__{DateTime.Today.Year}{DateTime.Today.Month}{DateTime.Today.Day}";
+            WindowShowQRCode formShowQrCode = new WindowShowQRCode(codeToShow);
+            formShowQrCode.ShowDialog();
+        }
     }
 }

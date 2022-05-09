@@ -244,6 +244,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     i++;
                 }
             }
+            dataGridViewDisplay.ItemsSource = null;  //very quick and very dirty hack to enforce a refresh by Source change
             dataGridViewDisplay.ItemsSource = display.DefaultView;
 
             //set how table looks like
@@ -389,7 +390,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         tempRowOfTurns.Add(tempTurn);
 
                         db.addTurn(tempRowOfTurns);
-                        TurnsUpdateDisplay();
+                        //TurnsUpdateDisplay();
                     }
                     else
                     {
