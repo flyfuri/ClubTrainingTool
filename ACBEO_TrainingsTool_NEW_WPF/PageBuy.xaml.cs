@@ -193,7 +193,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     WindowPlusMinusDialog formPlusMinusDialog = new WindowPlusMinusDialog();
                     formPlusMinusDialog.ShowDialog();
 
-                    switch (formPlusMinusDialog.return_string.ToLower())
+                    switch (formPlusMinusDialog.return_string.ToUpper())
                     {
                         case "CANCEL":
                             boolNewAboCancled = true;

@@ -115,6 +115,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 displayTrainingCosts.Rows[displayTrainingCosts.Rows.Count - 1].ItemArray = trainingCost.valueList.ToArray();
                 totalCostTraining = totalCostTraining + trainingCost.Betrag;
             }
+            displayTrainingCosts.Rows.Add();  //to empty at end to be able to add one
             dataGridViewDispTrnCosts.ItemsSource = displayTrainingCosts.DefaultView;  //DefaultView new due to WPF
 
             //set how table looks like
