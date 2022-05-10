@@ -645,7 +645,34 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                         formShowSwissQRBill.ShowDialog();
                         if (e2.ColumnIndex == 6 || actTraining.PayedTwintReference == "" & formShowSwissQRBill.twintIcludedInQR) //edit "TwintRef" when clicked or still empty
                         {
-                            defaultValueStr = actTraining.PayedTwintReference;
+                            if (actTraining.PayedTwintReference != null & actTraining.PayedTwintReference != "")
+                            {
+                                defaultValueStr = actTraining.PayedTwintReference;
+                            }
+                            else
+                            {
+                                DateTime DT_now = new DateTime();
+                                DT_now = DateTime.Now;
+                                if (DT_now.Month < 10)
+                                {defaultValueStr = $"{DT_now.Year.ToString()}.0{DT_now.Month.ToString()}.";}
+                                else
+                                {defaultValueStr = $"{DT_now.Year.ToString()}.{DT_now.Month.ToString()}.";}
+
+                                if (DT_now.Day < 10)
+                                {defaultValueStr = $"{defaultValueStr}0{DT_now.Day.ToString()},";}
+                                else
+                                {defaultValueStr = $"{defaultValueStr}{DT_now.Day.ToString()},";}
+
+                                if (DT_now.Hour < 10)
+                                {defaultValueStr = $"{defaultValueStr}0{DT_now.Hour.ToString()}.";}
+                                else
+                                { defaultValueStr = $"{defaultValueStr}{DT_now.Hour.ToString()}.";}
+
+                                if (DT_now.Minute < 10)
+                                {defaultValueStr = $"{defaultValueStr}0{DT_now.Minute.ToString()}";}
+                                else
+                                {defaultValueStr = $"{defaultValueStr}{DT_now.Minute.ToString()}";}
+                            } 
                             WindowKeyABC123 formAlphanum2 = new WindowKeyABC123(true, defaultValueStr);
                             formAlphanum2.Title = "Please put here Date and Time from Twint-App as Reference";
                             formAlphanum2.Owner = App.Current.MainWindow;
