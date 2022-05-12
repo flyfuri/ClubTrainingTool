@@ -63,7 +63,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             return_canceled = true;
-            return_valueParticipant = actParticipants[comboBoxChoseLeiter.SelectedIndex];
+            //return_valueParticipant = actParticipants[comboBoxChoseLeiter.SelectedIndex];
             Close();
         }
     }

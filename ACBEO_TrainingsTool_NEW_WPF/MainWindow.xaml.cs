@@ -27,6 +27,10 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         public Training actualTraining { get; private set; } //actual training 
         public MainWindow()
         {
+            if (Environment.MachineName.ToString().Contains("Name of Target Tablet"))
+            {
+                WindowState = WindowState.Maximized;
+            }
             DataAccess db = new DataAccess();
             List<Training> trainings = new List<Training>();
 
@@ -381,13 +385,13 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
             if (!windowNewTraining.wasCanceled)
             {
-                backupDatabase(false);
                 actualTraining = windowNewTraining.lastNewTrainigWithID;
                 DataAccess db = new DataAccess();
                 actualTraining = db.getTrainingByID(windowNewTraining.lastNewTrainigWithID.TrainingID)[0];
                 textBoxActualTrainingDate.Text = actualTraining.TrainingDate.ToShortDateString();
                 trainingOpen = true;
                 MainFrame.Content = new PageTrainingg(actualTraining);
+                updateDisplayActTrainingAndLeiter1and2();
             }
         }
 

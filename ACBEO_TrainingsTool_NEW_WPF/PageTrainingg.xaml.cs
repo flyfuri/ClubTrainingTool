@@ -234,7 +234,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             tempRowSummary.Add("Money left");
             tempRowSummary.Add("");
             tempRowSummary.Add("");
-            tempRowSummary.Add((actTraining.CashAtBegin + totalPayedByPilots - totalCostTraining - actTraining.CashToACBEO - totalPayedByPltsTwint).ToString());
+            tempRowSummary.Add((actTraining.CashAtBegin + totalPayedByPilots - totalCostTraining - actTraining.CashToACBEO).ToString());
             tempRowSummary.Add("finalized");
             if (actTraining.Finalized) { tempRowSummary.Add("YES"); } else { tempRowSummary.Add("NOT YET"); }
             displaySummary.Rows.Add(tempRowSummary.ToArray());

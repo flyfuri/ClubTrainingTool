@@ -174,7 +174,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 & (e2.ColumnIndex > 0
                     & e2.ColumnIndex < dataGridViewDisplay.Columns.Count - 1
                     & e2.RowIndex >= 0
-                    & e2.RowIndex < dataGridViewDisplay.Items.Count - 1))
+                    & e2.RowIndex <= dataGridViewDisplay.Items.Count - 1))
             {
                 DataAccess db = new DataAccess();
                 int participID = participants[e2.RowIndex].ParticipantID;

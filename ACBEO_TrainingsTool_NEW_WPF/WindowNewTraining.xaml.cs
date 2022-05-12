@@ -33,6 +33,21 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             datePickerTrainingDate.SelectedDate = DateTime.Today.Date;
         }
 
+        private void backupDatabase(bool messagewhenOK)
+        {
+            string backuppath = "C:\\ACBEO_TrainingsDB\\Bckups\\";
+            DataAccess db = new DataAccess();
+            bool backupOK = db.backupdb("TrainingsRapport", backuppath);
+            if (!backupOK)
+            {
+                MessageBox.Show($"Backup not successfull! Folder \"{backuppath}\" existing?");
+            }
+            else if (messagewhenOK)
+            {
+                MessageBox.Show($"new Backup to be found in folder \"{backuppath}\".");
+            }
+        }
+
         private void BtnEnter_Click(object sender, RoutedEventArgs e)
         {
             List<Training> trainings = new List<Training>();
@@ -71,12 +86,15 @@ namespace ACBEO_TrainingsTool_NEW_WPF
             }
             else
             {
+                backupDatabase(false);
                 List<Training> listTrainingsToAdd = new List<Training>();
                 Training trainingToAdd = new Training();
                 Training trainingJustAdded = new Training();
 
                 trainingToAdd.TrainingDate = datePickerTrainingDate.SelectedDate.Value;
                 trainingToAdd.CashAtBegin = parseDecResult;
+                trainingToAdd.Leiter1_ID = 0;
+                trainingToAdd.Leiter2_ID = 0;
                 listTrainingsToAdd.Add(trainingToAdd);
                 db.addTrainings(listTrainingsToAdd);
 
