@@ -35,7 +35,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void backupDatabase(bool messagewhenOK)
         {
-            string backuppath = "C:\\ACBEO_TrainingsDB\\Bckups\\";
+            string backuppath = "C:\\TESTDATA_TrainingsTool\\Test_TrainingsDB\\Bckups\\";
             DataAccess db = new DataAccess();
             bool backupOK = db.backupdb("TrainingsRapport", backuppath);
             if (!backupOK)

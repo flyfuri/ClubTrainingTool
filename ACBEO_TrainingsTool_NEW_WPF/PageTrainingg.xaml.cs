@@ -297,7 +297,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void dataGridViewDispTrnCosts_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            string pathBelegPhoto = "C:/ACBEO_TrainingsBelege";
+            string pathBelegPhoto = "C:\\TESTDATA_TrainingsTool\\Receipts";
             string nameBelegPhoto;
             string belegPathComplete;
 
@@ -371,7 +371,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                             //nameBelegPhoto.Replace('.', '_');
                             //nameBelegPhoto = $"{nameBelegPhoto}_{rowTrainingCostToEdit[0].BelegNr}";
 
-                            nameBelegPhoto = $"Beleg{actTraining.TrainingDate.Year.ToString()}_{actTraining.TrainingDate.Month.ToString()}_{actTraining.TrainingDate.Date.Day.ToString()}_{rowTrainingCostToEdit[e2.RowIndex].BelegNr}.jpg";
+                            nameBelegPhoto = $"Receipt_{actTraining.TrainingDate.Year.ToString()}_{actTraining.TrainingDate.Month.ToString()}_{actTraining.TrainingDate.Date.Day.ToString()}_{rowTrainingCostToEdit[e2.RowIndex].BelegNr}.jpg";
 
                             WindowBelegPhoto formBelegPhoto = new WindowBelegPhoto(pathBelegPhoto, nameBelegPhoto);
                             formBelegPhoto.Owner = App.Current.MainWindow;
@@ -470,10 +470,10 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                     //update filename if "BelegNr" changed
                     if (e2.ColumnIndex == 2 || e2.ColumnIndex == 3)
                     {
-                        string oldNameBelegPhoto = $"Beleg{actTraining.TrainingDate.Year.ToString()}_{actTraining.TrainingDate.Month.ToString()}_{actTraining.TrainingDate.Date.Day.ToString()}_{oldBelegNrBeforeChanging}.jpg";
+                        string oldNameBelegPhoto = $"Receipt_{actTraining.TrainingDate.Year.ToString()}_{actTraining.TrainingDate.Month.ToString()}_{actTraining.TrainingDate.Date.Day.ToString()}_{oldBelegNrBeforeChanging}.jpg";
                         string oldBelegPathComplete = $"{pathBelegPhoto}/{oldNameBelegPhoto}";
 
-                        nameBelegPhoto = $"Beleg{actTraining.TrainingDate.Year.ToString()}_{actTraining.TrainingDate.Month.ToString()}_{actTraining.TrainingDate.Date.Day.ToString()}_{rowTrainingCostToEdit[0].BelegNr}.jpg";
+                        nameBelegPhoto = $"Receipt_{actTraining.TrainingDate.Year.ToString()}_{actTraining.TrainingDate.Month.ToString()}_{actTraining.TrainingDate.Date.Day.ToString()}_{rowTrainingCostToEdit[0].BelegNr}.jpg";
                         belegPathComplete = $"{pathBelegPhoto}/{nameBelegPhoto}";
 
                         if (System.IO.File.Exists(oldBelegPathComplete))

@@ -13,16 +13,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         {
             try
             {
-                if (Environment.MachineName.ToString().Contains("Name of Target Tablet"))
-                {
-                    return "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=somePathOnTargetMachine\\TrainingsRapport.mdf;Integrated Security" + "=True";
-                }
-                else
-                {
-                    //return ConfigurationManager.ConnectionStrings[name].ConnectionString;
-                    return "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=somePathOnDevelopMachine\\TrainingsRapport.mdf;Integrated Security" + "=True";
-                    //TO DO...
-                }
+                return ConfigurationManager.ConnectionStrings[name].ConnectionString;
             }
             catch
             {

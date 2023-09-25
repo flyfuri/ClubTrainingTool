@@ -98,7 +98,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
 
         private void backupDatabase(bool messagewhenOK)
         {
-            string backuppath = "C:\\ACBEO_TrainingsDB\\Bckups\\";
+            string backuppath = "C:\\TESTDATA_TrainingsTool\\Test_TrainingsDB\\Bckups\\";
             DataAccess db = new DataAccess();
             bool backupOK = db.backupdb("TrainingsRapport", backuppath);
             if (!backupOK)
@@ -398,7 +398,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
         private void menuItemExportAbos_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult msgResult = new MessageBoxResult();
-            msgResult = MessageBox.Show("Export a List of all unused AboFlights? (C:\\ACBEO_TrainingsDaten)", "", MessageBoxButton.OKCancel);
+            msgResult = MessageBox.Show("Export a List of all unused AboFlights? (C:\\TESTDATA_TrainingsTool\\AboBackups)", "", MessageBoxButton.OKCancel);
             if (msgResult == MessageBoxResult.OK)
             {
                 string month = actualTraining.TrainingDate.Month.ToString();
@@ -411,7 +411,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 {
                     day = $"0{day}";
                 }
-                string basicPath = "C:\\ACBEO_TrainingsDaten"; //"D:\\ACBEO\\TrainingBelegeTool";
+                string basicPath = "C:\\TESTDATA_TrainingsTool\\AboBackups";
                 string completePath = $"{basicPath}\\Abos_Stand_{actualTraining.TrainingDate.Year}{month}{day}";
                 string completePathWithName = "";
 

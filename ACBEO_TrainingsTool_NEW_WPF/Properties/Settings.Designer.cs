@@ -26,8 +26,8 @@ namespace ACBEO_TrainingsTool_NEW_WPF.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLEXPRESS;AttachDbFilename=C:\\ACBEO_TrainingsDB\\TrainingsRapport.m" +
-            "df;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=.\\SQLEXPRESS;AttachDbFilename=C:\\TESTDATA_TrainingsTool\\TrainingsRapp" +
+            "ort.mdf;Integrated Security=True")]
         public string TrainingsRapportConnectionString {
             get {
                 return ((string)(this["TrainingsRapportConnectionString"]));

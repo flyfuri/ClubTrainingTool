@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ACBEO_TrainingsTool_NEW_WPF"
         mc:Ignorable="d"
-        Title="Main Window" Height="600" Width="800 ">
+        Title="Main Window" Height="900" Width="1200 ">
 
     <Grid>
         <Grid.ColumnDefinitions>
