@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+#file for replacements with git filter-repor
+gtfilt_repostxt.txt
