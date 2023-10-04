@@ -6,6 +6,7 @@ using Dapper;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace ACBEO_TrainingsTool_NEW_WPF
 {
@@ -33,6 +34,7 @@ namespace ACBEO_TrainingsTool_NEW_WPF
                 }
                 catch (Exception e)
                 {
+                    MessageBox.Show(e.Message); 
                     return false;
                 }
             }
