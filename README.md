@@ -10,7 +10,7 @@ Database desktop application used to handle training of a Swiss Paragliding Aero
 - keeping track of prepaid flights. Pilots could buy a virtual 10 flight card (called “Abo”) and make a photo of a generated QR-Code appearing of the screen.
 - facilitate payments through TWINT (Swiss payment service like apple-Pay) or via e-banking app by generating corresponding QR-Codes. (added 2022). Pilots could then either scan that code with their TWINT- or e-banking app. Or just take a picture or it and scan it at home to make the payment.
 
-[![Watch the video](https://img.youtube.com/vi/S8m4GdPU8RI/maxresdefault.jpg)](youtu.be/S8m4GdPU8RI)
+[![Watch the video](https://img.youtube.com/vi/S8m4GdPU8RI/maxresdefault.jpg)](https://www.youtube.com/embed/S8m4GdPU8RI)
 
 ### How it's done: 
 Originaly written in 2016 using WinForms. For the Interaction with the database I chose to use dapper instead of relying on Entity Framework(). 2022 rewritten using WPF. It doesn't use any normaly used pattern like MVVM() and it rarely uses binding(*). This was done due to time restrictions for the project and specially to not break the already proven logic. Therefore even some WinForm methods which didn't exist in WPF where rebuilt with extention methods.
